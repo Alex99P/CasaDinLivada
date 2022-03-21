@@ -15,8 +15,6 @@ function App() {
      <Route path='/cazare' element={<Cazare />} exact/>
      <Route path='/relaxare' element={<Relaxare />} exact/>
      <Route path='/tarife' element={<Tarife />} exact/>
-
-  
    </Routes>
    </React.Fragment>
 
