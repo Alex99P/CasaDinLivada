@@ -24,26 +24,27 @@ const {showMenu,setShowMenu}=useContext(ThemeContext)
 
   return (
   <>
-  <AppBar sx={{backgroundColor:'transparent', boxShadow:0, alignItems:'flex-end'}} >
+ {!showMenu && <AppBar sx={{backgroundColor:'transparent', boxShadow:0, alignItems:'flex-end'}} >
       <Toolbar >  
         <Button 
         variant="contained"
-        size='large'
+        size='medium'
         sx={{ 
           backgroundColor:'transparent',
           marginRight:'20px',
+          boxShadow:'0',
+          border: '1px solid white',
           "&.MuiButtonBase-root:hover": {
             bgcolor: "transparent"
           }}}
         >
           Rezerva acum
         </Button>
-        {/* Nu merge sa maresc size-ul */}
-      <IconButton aria-label="app" size='medium' style={{color:'white', size:'100px' }} onClick={onCLick} >
-        <MenuIcon   />       
+      <IconButton aria-label="app" size='medium' style={{color:'white' }} onClick={onCLick} >
+        <MenuIcon  fontSize="large" />       
       </IconButton>
       </Toolbar>
-    </AppBar>
+    </AppBar>}
    
    
  

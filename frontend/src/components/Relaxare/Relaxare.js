@@ -5,8 +5,6 @@ import './Relaxare.scss'
 const Relaxare = () => {
   return (
     <>
-    <Navbar />
-
     <div>Relaxare</div>
     </>
   )
