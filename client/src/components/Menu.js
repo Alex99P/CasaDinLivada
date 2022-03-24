@@ -1,8 +1,6 @@
 import React,{useState} from 'react'
 //rface
-import img from '../../imagini/imaginea1.jpg'
-import './Home.scss'
-import Navbar from '../Navbar/Navbar';
+import Navbar from './Navbar/Navbar';
 import CloseIcon from '@mui/icons-material/Close';
 import {IconButton,Button, AppBar,Paper,Grid,Link,Box, Stack, Typography} from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -10,45 +8,44 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import MailIcon from '@mui/icons-material/Mail';
 import { FaAirbnb } from 'react-icons/fa';
 
-
-
 export const ThemeContext=React.createContext();
 
-
-const Home=()=>{
+const Menu = () => {
   const [showMenu, setShowMenu]=useState(false)
-  const onCLick = () => {
+  const handleMenu = () => {
     setShowMenu(!showMenu)
   }
- 
-
-
   return <>
-  <ThemeContext.Provider value={{showMenu,setShowMenu}}>
-        <div className='containerHome' >
-    <img className='imgHome' src={img}/>
-    {/* <Typography variant="h2" color="initial">Casa Din Livada</Typography> */}
-     <Grid container >
-        <Grid item ><Box bgcolor={'primary.light'} ><Navbar/></Box></Grid>
-    </Grid>
+   <ThemeContext.Provider value={{showMenu,setShowMenu}}>
+
+   {/* <Typography variant="h1" color="white">Casa din Livada</Typography> */}
+
+    <Navbar/>
     <Grid container
   direction="row"
   justifyContent="flex-end">
-     {/* xs={12} */}
-        
+    {/* <Grid  item > */}
+    {/* </Grid> */}
           {showMenu &&
-          <Grid item   >
+          <Grid item    >
            <Paper
-           sx={{ width:"400px", height:"100vh", opacity: '0.9'}} elevation={0} xs={12} >
-          <IconButton aria-label="app" size='medium' sx={{color:'black', size:'200px', marginLeft:'10px' }} onClick={onCLick}>
+           sx={{ width:"400px", height:"100vh", opacity: '0.9'}} elevation={0} >
+          <IconButton aria-label="app" size='medium' sx={{color:'black', size:'200px', marginLeft:'10px' }} onClick={handleMenu}>
             <CloseIcon  fontSize="large"    />       
           </IconButton>
           <Stack 
           direction="column"
           justifyContent="flex-start"
           alignItems="center"
-          spacing={0.5}>
-            <Typography variant="h3" color="initial" marginBottom={2}   marginTop={1}>Casa din Livada</Typography>
+          spacing={0.7}>
+             <Box 
+              height='30px'
+              width='30px'
+              bgcolor='rgb(33, 46, 36)'
+              borderRadius={50}
+             
+       ></Box>
+            <Typography variant="h3" color="initial" marginBottom={10}   marginTop={2}>Casa din Livada</Typography>
           <Link href="/ritualul" underline="hover" color="black" variant='h5' >Ritualul</Link>
           <Link href="/cazare" underline="hover" color="black" variant='h5'>Cazare</Link>
           <Link href="/relaxare" underline="hover" color="black" variant='h5'>Relaxare</Link>
@@ -84,18 +81,11 @@ const Home=()=>{
          
          </Grid>}
          
-         
-        
-
     </Grid>
    
-
-    </div>
     </ThemeContext.Provider>
+  
+  </>;
+};
 
-    
-    
-  </>
- 
-}
-export default Home;
+export default Menu;
