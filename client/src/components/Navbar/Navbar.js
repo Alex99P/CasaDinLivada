@@ -1,21 +1,15 @@
 import React, {useContext} from 'react'
 import {Toolbar,IconButton,Button, AppBar,Paper,Grid,Stack,Box} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import "./Navbar.scss";
 import {ThemeContext} from './../Menu'
 
 
 
-// const useStyles = makeStyles({
-  
-// });
 
-// const classes=useStyles();
 const Navbar = () => {
  
   const handleMenu = () => {
     setShowMenu(!showMenu)
-    // show=!show;
   }
 const {showMenu,setShowMenu}=useContext(ThemeContext)
   console.log(showMenu);
@@ -27,6 +21,7 @@ const {showMenu,setShowMenu}=useContext(ThemeContext)
  {!showMenu && <AppBar sx={{backgroundColor:'transparent', boxShadow:0, alignItems:'flex-end'}} >
       <Toolbar >  
         <Button 
+         href="/rezervare"
         variant="contained"
         size='medium'
         sx={{ 

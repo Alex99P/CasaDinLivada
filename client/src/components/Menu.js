@@ -29,27 +29,35 @@ const Menu = () => {
         {/* <Typography variant="h1" color="white">Casa din Livada</Typography> */}
 
         <Navbar />
-        <Grid container direction="row" justifyContent="flex-end" >
+        <Grid container direction="row" justifyContent="flex-end">
           {showMenu && (
             <Grid item>
               <Paper
-                sx={{ width: "400px", height: "100vh", opacity: "0.9", postion: 'sticky', top:"20px" }}
+                sx={{
+                  width: "400px",
+                  height: "100vh",
+                  opacity: "0.9",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
                 elevation={0}
               >
-                <IconButton
-                  aria-label="app"
-                  size="medium"
-                  sx={{ color: "black", size: "200px", marginLeft: "10px" }}
-                  onClick={handleMenu}
-                >
-                  <CloseIcon fontSize="large" />
-                </IconButton>
                 <Stack
                   direction="column"
                   justifyContent="flex-start"
                   alignItems="center"
                   spacing={0.7}
                 >
+              
+                  <IconButton
+                    aria-label="app"
+                    size="medium"
+                    sx={{ color: "black", size: "200px", marginLeft: "320px" }}
+                    onClick={handleMenu}
+                  >
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
                   <Box
                     height="30px"
                     width="30px"
@@ -59,11 +67,17 @@ const Menu = () => {
                   <Typography
                     variant="h3"
                     color="initial"
-                    marginBottom={10}
-                    marginTop={2}
                   >
                     Casa din Livada
                   </Typography>
+                </Stack>
+                <Stack
+                  direction="column"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  spacing={0.7}
+                  // mt={-40}
+                >
                   <Link
                     href="/ritualul"
                     underline="hover"
@@ -96,48 +110,48 @@ const Menu = () => {
                   >
                     Tarife
                   </Link>
+                  <Stack
+                    mt={3}
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                  >
+                    <Link
+                      href="/intrebari-frecvente"
+                      underline="hover"
+                      color="black"
+                      variant="body1"
+                    >
+                      Intrebari frecvente{" "}
+                    </Link>
+                    <Link
+                      href="/locatie"
+                      underline="hover"
+                      color="black"
+                      variant="body1"
+                    >
+                      Cum ajung aici?
+                    </Link>
+                    <Link
+                      href="/despre-noi"
+                      underline="hover"
+                      color="black"
+                      variant="body1"
+                    >
+                      Despre noi
+                    </Link>
+                    <Link
+                      href="/galerie-foto"
+                      underline="hover"
+                      color="black"
+                      variant="body1"
+                    >
+                      Galerie foto
+                    </Link>
+                  </Stack>
                 </Stack>
                 <Stack
-                  mt={3}
-                  direction="column"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Link
-                    href="/intrebari-frecvente"
-                    underline="hover"
-                    color="black"
-                    variant="body1"
-                  >
-                    Intrebari frecvente{" "}
-                  </Link>
-                  <Link
-                    href="/locatie"
-                    underline="hover"
-                    color="black"
-                    variant="body1"
-                  >
-                    Cum ajung aici?
-                  </Link>
-                  <Link
-                    href="/despre-noi"
-                    underline="hover"
-                    color="black"
-                    variant="body1"
-                  >
-                    Despre noi
-                  </Link>
-                  <Link
-                    href="/galerie-foto"
-                    underline="hover"
-                    color="black"
-                    variant="body1"
-                  >
-                    Galerie foto
-                  </Link>
-                </Stack>
-                <Stack
-                  mt={30}
+                  // mt={30}
                   direction="row"
                   justifyContent="center"
                   alignItems="flex-end"
@@ -158,6 +172,7 @@ const Menu = () => {
                     <FaAirbnb fontSize={22} />
                   </IconButton>
                 </Stack>
+                {/* </Paper> */}
               </Paper>
             </Grid>
           )}

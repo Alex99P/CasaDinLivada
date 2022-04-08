@@ -2,25 +2,79 @@ import React from "react";
 import img from "../../imagini/imaginea2.jpg";
 import Menu from "../Menu";
 import "../Home/Home.scss";
-import { Box, Grid, Stack,TextField } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Stack,
+  TextField,
+  Button,
+  Divider,
+  IconButton,
+} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { makeStyles } from "@material-ui/styles";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import MailIcon from "@mui/icons-material/Mail";
+import { FaAirbnb } from "react-icons/fa";
+import "./Ritualul.scss";
 //alt+shift+f  pentru indentare
 
-
+const useStyles = makeStyles({
+  textField: {
+    width: 300,
+    "& .MuiInputBase-root": {
+      color: "white",
+    },
+    "& label.Mui-focused": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+      },
+    },
+  },
+  //nu se mai aplica style-ul de aici
+  button: {
+    color: "black",
+    backgroundColor: "white",
+    border: "none",
+    "&:hover": {
+      backgroundColor: "#e1e3e1",
+      border: "none",
+    },
+  },
+});
 
 const Ritualul = () => {
+  const btnStyle = {
+    color: "black",
+    backgroundColor: "white",
+    border: "none",
+    "&:hover": {
+      backgroundColor: "#e1e3e1",
+      border: "none",
+    },
+  };
+
+  const classes = useStyles();
   return (
     <>
-
-      {/* <img className="imgHome" src={img} /> */}
-      <div  style={{height: "100vh",width: "100%" , backgroundColor: 'red' }}></div>
+        <img className="imgHome" src={img} />
       <Grid
         container
         mt={0}
         direction="column"
         // // justifyContent="center"
       >
-        <Grid item xs={12}>
+        <Grid className="menuWraper" item xs={12}>
           <Box className="containerHome">
             <Menu />
           </Box>
@@ -144,6 +198,7 @@ const Ritualul = () => {
               <Typography variant="h5" gutterBottom>
                 Pasul 4
               </Typography>
+
               <Typography variant="h4" gutterBottom>
                 <b>Ciubar</b>
               </Typography>
@@ -169,28 +224,57 @@ const Ritualul = () => {
         </Grid>
         <Grid item xs={12}>
           <Stack
-            direction="row"
+            direction="column"
             justifyContent="center"
             alignItems="center"
             bgcolor="black"
-            // color="white"
             p={4}
-            // px={20}
-            // spacing={3}
+            spacing={2}
+            divider={<Divider flexItem color="white" />}
           >
-           <TextField
-        
-          label="Email"
-          // size="small"
-          variant='outlined'
-          sx={{color: "white"}}
-          InputLabelProps={{
-            sx: { color: '#fff'}, 
-         }}
-         InputProps={{
-          sx: { color: '#fff'},
-         }}
-        />
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={3}
+            >
+              <TextField
+                className={classes.textField}
+                label="E-mail"
+                variant="outlined"
+                InputLabelProps={{
+                  sx: { color: "#fff" },
+                }}
+              />
+              <Button
+                variant="outlined"
+                style={btnStyle}
+                className={classes.button}
+              >
+                Aboneza-te
+              </Button>
+            </Stack>
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="flex-end"
+            >
+              <IconButton sx={{ color: "white" }}>
+                <FacebookIcon />
+              </IconButton>
+
+              <IconButton sx={{ color: "white" }}>
+                <InstagramIcon />
+              </IconButton>
+
+              <IconButton sx={{ color: "white" }}>
+                <MailIcon />
+              </IconButton>
+
+              <IconButton sx={{ color: "white" }}>
+                <FaAirbnb fontSize={22} />
+              </IconButton>
+            </Stack>
           </Stack>
         </Grid>
       </Grid>

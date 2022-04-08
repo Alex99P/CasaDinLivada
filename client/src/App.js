@@ -9,6 +9,8 @@ import Locatie from "./components/Locatie/Locatie";
 import Intrebari from "./components/IntrebariFrecvente/Intrebari";
 import DespreNoi from "./components/DespreNoi/DespreNoi";
 import Foto from "./components/GalerieFoto/Foto";
+import Rezervare from "./components/Rezervare/Rezervare"
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} exact />
         <Route path="/ritualul" element={<Ritualul />} exact />
+        <Route path="/rezervare" element={<Rezervare />} exact />
         <Route path="/cazare" element={<Cazare />} exact />
         <Route path="/relaxare" element={<Relaxare />} exact />
         <Route path="/tarife" element={<Tarife />} exact />

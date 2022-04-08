@@ -1,7 +1,7 @@
 import React from "react";
 import img from "../../imagini/imaginea1.jpg";
 import Menu from "../Menu";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import "./Home.scss";
 
 const Home = () => {
@@ -9,7 +9,9 @@ const Home = () => {
     <>
       <Box className="containerHome">
         <img className="imgHome" src={img} />
-        <Menu />
+        <Stack className="menuWraper">
+          <Menu />
+        </Stack>
       </Box>
     </>
   );
