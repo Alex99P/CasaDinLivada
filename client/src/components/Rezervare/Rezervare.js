@@ -7,15 +7,34 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
-  IconButton,
 } from "@mui/material";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Popup from "../controls/Popup";
 import { makeStyles } from "@material-ui/styles";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { DatePicker, Space } from "antd";
+import moment from "moment";
+
+import "antd/dist/antd.css";
+
+const { RangePicker } = DatePicker;
+
+function Dates(date) {
+  // const fromdate=moment(date[0]).format('DD-MM-YYYY');
+  // const todate=moment(date[1]).format('DD-MM-YYYY');
+  const fromdate = moment(date[0]);
+  const todate = moment(date[1]);
+  console.log(moment(date[0]).format("DD-MM-YYYY"));
+  console.log(moment(date[1]).format("DD-MM-YYYY"));
+  console.log(moment.duration(todate.diff(fromdate)).asDays());
+}
 
 const useStyles = makeStyles({
-
- 
+  p:{
+    fontSize: "1.25rem"
+  }
 });
 
 const Rezervare = () => {
@@ -32,8 +51,6 @@ const Rezervare = () => {
   };
   const classes = useStyles();
 
-
-
   const [showRoom, setShowRoom] = useState(false);
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -42,17 +59,13 @@ const Rezervare = () => {
     setShowRoom(false);
   };
 
-
-
-  const [showDataPicker, setShowDataPicker] = useState(false);
-  const handleShowDataPicker = () => {
-    setShowDataPicker(!showDataPicker);
-  };
-  const [checked, setChecked] = useState(false);
-
-
-
  
+  // const [showDataPicker, setShowDataPicker] = useState(false);
+  // const handleShowDataPicker = (event) => {
+  //   setShowDataPicker(true);
+  // };
+
+  const [checked, setChecked] = useState(false);
 
   return (
     <>
@@ -94,7 +107,11 @@ const Rezervare = () => {
                 pariatur esse commodo proident ad occaecat aute magna consequat
                 quis.
               </Typography>
-              <Button variant="outlined" style={btnStyle} onClick={handleRoomOpen}>
+              <Button
+                variant="outlined"
+                style={btnStyle}
+                onClick={handleRoomOpen}
+              >
                 Descriere camera
               </Button>
             </Grid>
@@ -115,26 +132,34 @@ const Rezervare = () => {
                   }
                   label="Cu mic dejun"
                 />
-                <Stack direction="row">
-                  <p>Rezervati perioada</p>
-                  <IconButton
-                    aria-label="app"
-                    // size="medium"
-                    style={{ color: "black" }}
-                    onClick={handleShowDataPicker}
-                  >
-                    <KeyboardArrowRightIcon fontSize="medium" />
-                  </IconButton>
-                </Stack>
+                {/* <Stack
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                > */}
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon size="large" />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <p className={classes.p}>Rezervati perioada</p>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Space direction="vertical">
+                        <RangePicker format="DD-MM-YYYY" onChange={Dates} />
+                      </Space>
+                    </AccordionDetails>
+                  </Accordion>
+                {/* </Stack> */}
               </Grid>
             </Grid>
             <Grid item>
               <Stack>
-              <Popup
-                openPopup={showRoom}
-                setOpenPopup={handleRoomClose}
-            >
-            </Popup>
+                <Popup
+                  openPopup={showRoom}
+                  setOpenPopup={handleRoomClose}
+                ></Popup>
               </Stack>
             </Grid>
           </Grid>

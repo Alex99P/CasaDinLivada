@@ -1,7 +1,10 @@
 import React from "react";
 
+
+
+
 const DespreNoi = () => {
-  return <div>DespreNoi</div>;
+  return <div></div>;
 };
 
 export default DespreNoi;

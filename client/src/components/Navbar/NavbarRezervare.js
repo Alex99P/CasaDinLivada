@@ -46,6 +46,12 @@ const useStyles = makeStyles({
       border: "none",
     },
   },
+  link: {
+    "&:hover": {
+      backgroundColor: "black",
+  
+    },
+  },
 });
 
 const currencies = [
@@ -115,10 +121,13 @@ const NavbarRezervare = () => {
                 spacing={0.2}
               >
                  <Link
+                  // className={classes.link}
                     href="/"
-                    underline="hover"
+                    // underline="hover"
+                    underline="none"
                     color="black"
                     variant="h5"
+                
                   >
                   <Typography variant="h6" color="white" mr={2} >
                   Casa Din Livada

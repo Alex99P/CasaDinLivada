@@ -31,7 +31,10 @@ const {showMenu,setShowMenu}=useContext(ThemeContext)
           border: '1px solid white',
           "&.MuiButtonBase-root:hover": {
             bgcolor: "transparent"
-          }}}
+          },
+          "&:hover": {
+            color: "white",}
+        }}
         >
           Rezerva acum
         </Button>

@@ -15,14 +15,25 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailIcon from "@mui/icons-material/Mail";
 import { FaAirbnb } from "react-icons/fa";
+import { makeStyles } from "@material-ui/styles";
 
 export const ThemeContext = React.createContext();
+
+const useStyles = makeStyles({
+  link: {
+    "&:hover": {
+      color: "black",
+    },
+  },
+});
 
 const Menu = () => {
   const [showMenu, setShowMenu] = useState(false);
   const handleMenu = () => {
     setShowMenu(!showMenu);
   };
+  const classes = useStyles();
+
   return (
     <>
       <ThemeContext.Provider value={{ showMenu, setShowMenu }}>
@@ -49,7 +60,6 @@ const Menu = () => {
                   alignItems="center"
                   spacing={0.7}
                 >
-              
                   <IconButton
                     aria-label="app"
                     size="medium"
@@ -64,10 +74,7 @@ const Menu = () => {
                     bgcolor="rgb(33, 46, 36)"
                     borderRadius={50}
                   ></Box>
-                  <Typography
-                    variant="h3"
-                    color="initial"
-                  >
+                  <Typography variant="h3" color="initial">
                     Casa din Livada
                   </Typography>
                 </Stack>
@@ -79,6 +86,7 @@ const Menu = () => {
                   // mt={-40}
                 >
                   <Link
+                    className={classes.link}
                     href="/ritualul"
                     underline="hover"
                     color="black"
@@ -87,6 +95,7 @@ const Menu = () => {
                     Ritualul
                   </Link>
                   <Link
+                    className={classes.link}
                     href="/cazare"
                     underline="hover"
                     color="black"
@@ -95,6 +104,7 @@ const Menu = () => {
                     Cazare
                   </Link>
                   <Link
+                    className={classes.link}
                     href="/relaxare"
                     underline="hover"
                     color="black"
@@ -103,6 +113,7 @@ const Menu = () => {
                     Relaxare
                   </Link>
                   <Link
+                    className={classes.link}
                     href="/tarife"
                     underline="hover"
                     color="black"
@@ -117,6 +128,7 @@ const Menu = () => {
                     alignItems="center"
                   >
                     <Link
+                      className={classes.link}
                       href="/intrebari-frecvente"
                       underline="hover"
                       color="black"
@@ -125,6 +137,7 @@ const Menu = () => {
                       Intrebari frecvente{" "}
                     </Link>
                     <Link
+                      className={classes.link}
                       href="/locatie"
                       underline="hover"
                       color="black"
@@ -133,6 +146,7 @@ const Menu = () => {
                       Cum ajung aici?
                     </Link>
                     <Link
+                      className={classes.link}
                       href="/despre-noi"
                       underline="hover"
                       color="black"
@@ -141,6 +155,7 @@ const Menu = () => {
                       Despre noi
                     </Link>
                     <Link
+                      className={classes.link}
                       href="/galerie-foto"
                       underline="hover"
                       color="black"

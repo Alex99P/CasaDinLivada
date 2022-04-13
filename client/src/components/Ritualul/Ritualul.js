@@ -90,7 +90,7 @@ const Ritualul = () => {
             px={20}
             spacing={3}
           >
-            <Typography variant="h3">
+            <Typography variant="h3" sx={{color: "white"}}>
               Experimenteaza cei 4 pasi ai ritualului
             </Typography>
             <Box width="800px">
@@ -117,7 +117,7 @@ const Ritualul = () => {
               width="500px"
             ></Grid>
             {/* aici o sa vina poza */}
-            <Grid item ml={8} xs={12} md={6} width="600px" direction="column">
+            <Grid item ml={8} xs={12} md={6} width="600px" >
               <Typography variant="h5" gutterBottom>
                 Pasul 1
               </Typography>
@@ -136,7 +136,7 @@ const Ritualul = () => {
         </Grid>
         <Grid mt={6} item ml={5} mr={5}>
           <Grid container direction="row" xs={12} p={2}>
-            <Grid item ml={8} xs={12} md={6} width="600px" direction="column">
+            <Grid item ml={8} xs={12} md={6} width="600px">
               <Typography variant="h5" gutterBottom>
                 Pasul 2
               </Typography>
@@ -175,7 +175,7 @@ const Ritualul = () => {
               width="500px"
             ></Grid>
             {/* aici o sa vina poza */}
-            <Grid item ml={8} xs={12} md={6} width="600px" direction="column">
+            <Grid item ml={8} xs={12} md={6} width="600px">
               <Typography variant="h5" gutterBottom>
                 Pasul 3
               </Typography>
@@ -194,7 +194,7 @@ const Ritualul = () => {
         </Grid>
         <Grid mt={6} item ml={5} mr={5}>
           <Grid container direction="row" xs={12} p={2}>
-            <Grid item ml={8} xs={12} md={6} width="600px" direction="column">
+            <Grid item ml={8} xs={12} md={6} width="600px" >
               <Typography variant="h5" gutterBottom>
                 Pasul 4
               </Typography>

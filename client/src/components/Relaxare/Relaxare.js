@@ -1,13 +1,8 @@
-import React from 'react'
-import Navbar from '../Navbar/Navbar'
-import './Relaxare.scss'
-
+import * as React from "react";
+import { DateRangePicker } from "rsuite";
 const Relaxare = () => {
-  return (
-    <>
-    <div>Relaxare</div>
-    </>
-  )
-}
+  const [value, setValue] = React.useState([null, null]);
+  return <DateRangePicker />;
+};
 
-export default Relaxare
+export default Relaxare;
