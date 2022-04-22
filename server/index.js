@@ -3,6 +3,7 @@ import route from './Routes/router.js';
 import connectDB from './database/connection.js'
 import bodyparser from "body-parser";
 import cors from "cors";
+import userRouter from "./Routes/user.js";
 
 const app =express();
 const port=5000;
@@ -14,5 +15,6 @@ app.use(cors());
 
 
 app.use('/',route);
+app.use('/user',userRouter);
 app.listen(port,()=>console.log( `Running on http://localhost:${port}`))
 

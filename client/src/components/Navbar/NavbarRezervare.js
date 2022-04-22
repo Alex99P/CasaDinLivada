@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
+import decode from "jwt-decode"
 import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { makeStyles } from "@material-ui/styles";
@@ -118,6 +119,13 @@ const NavbarRezervare = () => {
   useEffect(() => {
     const token = user?.token;
 
+    if(token){
+      const decodeToken=decode(token);
+      if(decodeToken.exp *1000 < new Date().getTime())
+      {
+        logout();
+      }
+    }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
@@ -166,7 +174,7 @@ const NavbarRezervare = () => {
               alignItems="center"
               mr={3}
             >
-              <Typography variant="body1">Buna, {user?.result?.givenName}!</Typography>
+              <Typography variant="body1">Buna, {user?.result?.name}!</Typography>
             </Stack>
           ) : null}
 
