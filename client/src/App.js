@@ -10,6 +10,7 @@ import Intrebari from "./components/IntrebariFrecvente/Intrebari";
 import DespreNoi from "./components/DespreNoi/DespreNoi";
 import Foto from "./components/GalerieFoto/Foto";
 import Rezervare from "./components/Rezervare/Rezervare"
+import Auth from "./components/Auth/Auth";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <React.Fragment>
       <Routes>
         <Route path="/" element={<Home />} exact />
+        <Route path="/auth" element={<Auth />} exact />
         <Route path="/ritualul" element={<Ritualul />} exact />
         <Route path="/rezervare" element={<Rezervare />} exact />
         <Route path="/cazare" element={<Cazare />} exact />

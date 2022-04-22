@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import img from "../../imagini/imaginea2.jpg";
 import Menu from "../Menu";
 import "../Home/Home.scss";
@@ -54,6 +54,8 @@ const useStyles = makeStyles({
 });
 
 const Ritualul = () => {
+  
+
   const btnStyle = {
     color: "black",
     backgroundColor: "white",

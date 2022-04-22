@@ -22,6 +22,7 @@ import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PhoneIcon from "@mui/icons-material/Phone";
 
+
 // import "antd/dist/antd.css";
 import "antd/dist/antd.min.css";
 
@@ -61,6 +62,8 @@ const useStyles = makeStyles({
 });
 
 const Rezervare = () => {
+ 
+
   const btnStyle = {
     marginTop: "20px",
     padding: "10px",
@@ -127,10 +130,7 @@ const Rezervare = () => {
           direction="column"
           justifyContent="space-between"
           alignItems="flex-start"
-          // spacing={10}
           mt={12}
-          // ml={4}
-          // mr={4}
         >
           <Grid
             marginBottom={10}

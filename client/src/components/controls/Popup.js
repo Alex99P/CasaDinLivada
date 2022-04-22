@@ -22,8 +22,7 @@ const useStyles = makeStyles(() => ({
   // }
 }));
 
-export default function Popup(props) {
-  const { title, openPopup, setOpenPopup } = props;
+export default function Popup( {  openPopup, setOpenPopup }) {
   const classes = useStyles();
   // const [maxWidth, setMaxWidth] = React.useState<DialogProps['maxWidth']>('sm');
 

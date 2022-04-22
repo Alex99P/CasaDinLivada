@@ -12,7 +12,7 @@ const Navbar = () => {
     setShowMenu(!showMenu)
   }
 const {showMenu,setShowMenu}=useContext(ThemeContext)
-  console.log(showMenu);
+  // console.log(showMenu);
   
 
 

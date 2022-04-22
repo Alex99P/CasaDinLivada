@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Toolbar,
   IconButton,
@@ -11,8 +11,10 @@ import {
   Typography,
   Divider,
   InputAdornment,
-  Link
+  Link,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { makeStyles } from "@material-ui/styles";
@@ -49,7 +51,6 @@ const useStyles = makeStyles({
   link: {
     "&:hover": {
       backgroundColor: "black",
-  
     },
   },
 });
@@ -95,8 +96,17 @@ const NavbarRezervare = () => {
   };
   const [currency, setCurrency] = useState("RON");
   const [language, setLanguage] = useState("Romana");
-  // console.log(currency);
-  // console.log(language);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  console.log(user);
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/rezervare");
+    setUser(null);
+  };
 
   const handleChangeCurrency = (event) => {
     setCurrency(event.target.value);
@@ -104,6 +114,13 @@ const NavbarRezervare = () => {
   const handleChangeLanguage = (event) => {
     setLanguage(event.target.value);
   };
+
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+
   return (
     <>
       <AppBar sx={{ backgroundColor: "black", boxShadow: 0 }}>
@@ -120,20 +137,19 @@ const NavbarRezervare = () => {
                 alignItems="center"
                 spacing={0.2}
               >
-                 <Link
+                <Link
                   // className={classes.link}
-                    href="/"
-                    // underline="hover"
-                    underline="none"
-                    color="black"
-                    variant="h5"
-                
-                  >
-                  <Typography variant="h6" color="white" mr={2} >
-                  Casa Din Livada
-                </Typography>
-                  </Link>
-                
+                  href="/"
+                  // underline="hover"
+                  underline="none"
+                  color="black"
+                  variant="h5"
+                >
+                  <Typography variant="h6" color="white" mr={2}>
+                    Casa Din Livada
+                  </Typography>
+                </Link>
+
                 <StarIcon fontSize={"small"} />
                 <StarIcon fontSize="small" />
                 <StarIcon fontSize="small" />
@@ -143,17 +159,46 @@ const NavbarRezervare = () => {
               </Typography>
             </Stack>
           </Box>
+          {user ? (
+            <Stack
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              mr={3}
+            >
+              <Typography variant="body1">Buna, {user?.result?.givenName}!</Typography>
+            </Stack>
+          ) : null}
+
           <Stack
             direction="row"
             // spacing={0.5}
             divider={<Divider orientation="vertical" color="white" flexItem />}
           >
-            <Button style={btnStyle} variant="text" size="small" sx={{mr:2}}>
-              Autentificare
-            </Button>
+            {user ? (
+              <Button
+                style={btnStyle}
+                variant="text"
+                size="small"
+                sx={{ mr: 2 }}
+                onClick={logout}
+              >
+                LogOut
+              </Button>
+            ) : (
+              <Button
+                style={btnStyle}
+                variant="text"
+                size="small"
+                sx={{ mr: 2 }}
+                component={Link}
+                href="/auth"
+              >
+                SignIn
+              </Button>
+            )}
 
             <TextField
-  
               className={classes.textField}
               id="outlined-select-currency"
               select
@@ -161,7 +206,7 @@ const NavbarRezervare = () => {
               onChange={handleChangeCurrency}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="start" >
+                  <InputAdornment position="start">
                     <KeyboardArrowDownIcon
                       sx={{ color: "white", margin: 0, cursor: "pointer" }}
                     />
@@ -187,7 +232,7 @@ const NavbarRezervare = () => {
               onChange={handleChangeLanguage}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="start" >
+                  <InputAdornment position="start">
                     <KeyboardArrowDownIcon
                       sx={{ color: "white", margin: 0, cursor: "pointer" }}
                     />
