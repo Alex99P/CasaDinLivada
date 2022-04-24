@@ -3,6 +3,8 @@ import {bookingDB} from "../model/bookingModel.js"
 import {servicesDB} from "../model/servicesModel.js"
 import {houseDB} from "../model/houseModel.js"
 import {reviewDB} from "../model/reviewModel.js"
+import UserModal from "../model/userModel.js";
+
 
 
 
@@ -47,7 +49,7 @@ export const find = (req, res)=>{
   if(req.params.id){
       const id = req.params.id;
 
-      userDB.findById(id)
+      UserModal.findById(id)
           .then(data =>{
               if(!data){
                   res.status(404).send({ message : "Not found user with id "+ id})
@@ -60,7 +62,7 @@ export const find = (req, res)=>{
           })
 
   }else{
-      userDB.find()
+    UserModal.find()
           .then(user => {
               res.send(user)
           })
@@ -97,7 +99,7 @@ export const update = (req, res)=>{
 export const remove = (req, res)=>{
   const id = req.params.id;
 
-  userDB.findByIdAndDelete(id)
+  UserModal.findByIdAndDelete(id)
       .then(data => {
           if(!data){
               res.status(404).send({ message : `Cannot Delete with id ${id}. Maybe id is wrong`})

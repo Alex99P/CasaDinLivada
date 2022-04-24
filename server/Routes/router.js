@@ -8,7 +8,7 @@ const route=express.Router();
 
 
 route.post('/users',createUser);
-route.get('/',find);
+route.get('/users',find);
 route.get('/:id',find);
 route.put('/users/:id',update);
 route.delete('/users/:id',remove);

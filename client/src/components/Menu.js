@@ -17,7 +17,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import { FaAirbnb } from "react-icons/fa";
 import { makeStyles } from "@material-ui/styles";
 
-export const ThemeContext = React.createContext();
 
 const useStyles = makeStyles({
   link: {
@@ -36,10 +35,12 @@ const Menu = () => {
 
   return (
     <>
-      <ThemeContext.Provider value={{ showMenu, setShowMenu }}>
         {/* <Typography variant="h1" color="white">Casa din Livada</Typography> */}
 
-        <Navbar />
+        <Navbar
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        />
         <Grid container direction="row" justifyContent="flex-end">
           {showMenu && (
             <Grid item>
@@ -192,7 +193,6 @@ const Menu = () => {
             </Grid>
           )}
         </Grid>
-      </ThemeContext.Provider>
     </>
   );
 };

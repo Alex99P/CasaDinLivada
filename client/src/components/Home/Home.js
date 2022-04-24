@@ -10,13 +10,14 @@ import {useSelector} from 'react-redux';
 
 
 const Home = () => {
-  const dispatch=useDispatch();
-  useEffect(()=>{
-    dispatch(getUsers());
-  },[dispatch])
+  
+  // const dispatch=useDispatch();
+  // useEffect(()=>{
+  //   dispatch(getUsers());
+  // },[dispatch])
 
-  const users=useSelector((state)=> state.users)
-  console.log(users);
+  // const users=useSelector((state)=> state.users)
+  // console.log(users);
 
   return (
     <>

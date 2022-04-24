@@ -12,12 +12,16 @@ import { useDispatch } from "react-redux";
 import { AUTH } from "../../constants/actionTypes";
 import { useNavigate } from "react-router-dom";
 import { signin, signup } from "../../redux/actions/auth";
-
+import {  useSelector } from "react-redux";
+import ErrorMessage from "../controls/ErrorMessage";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Input from "./Input";
 import Icon from "./Icon";
 import { makeStyles } from "@material-ui/core";
+
+
+
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +30,7 @@ const useStyles = makeStyles({
     },
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: "24px",
   },
 });
@@ -34,6 +38,7 @@ const useStyles = makeStyles({
 const initialState = {
   firstName: "",
   lastName: "",
+  phoneNumber: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -49,6 +54,10 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
+  const authData = useSelector((state) => state.auth.authData);
+
+console.log(authData);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(form);
@@ -58,13 +67,25 @@ const Auth = () => {
       dispatch(signin(form, navigate));
     }
   };
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleChange = (e) =>setForm({ ...form, [e.target.name]: e.target.value });
+
+    const removeError = () => {
+      dispatch({ type: "REMOVE_ERROR" });
+    };
+
   const switchMode = () => {
+    console.log("Acum");
+    
     setForm(initialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
+    
+    removeError();
   };
+
+
+
   const googleSuccess = async (res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
@@ -124,6 +145,11 @@ const Auth = () => {
                   handleChange={handleChange}
                   half
                 />
+                <Input
+                  name="phoneNumber"
+                  label="Numarul de telefon"
+                  handleChange={handleChange}
+                />
               </>
             )}
             <Input
@@ -158,6 +184,7 @@ const Auth = () => {
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
+          {authData?.message && <ErrorMessage errorMessage={authData?.message} />}
           <GoogleLogin
             //Cand ii fac deploy o sa am nevoie de alt id
             clientId="273141484757-hjflq7amm10g8fpfrth44rvs7tmkiapd.apps.googleusercontent.com"
@@ -181,7 +208,7 @@ const Auth = () => {
           />
           <Grid container justify="flex-end">
             <Grid item>
-              <Button onClick={switchMode}>
+              <Button onClick={switchMode} sx={{color:"black"}}>
                 {isSignup
                   ? "Already have an account? Sign in"
                   : "Don't have an account? Sign Up"}

@@ -2,12 +2,9 @@ import React from "react";
 import {
   makeStyles,
   Typography,
-  DialogContentText,
-  DialogActions,
-  Button,
 } from "@material-ui/core";
-import { Stack, IconButton, ListItemText } from "@mui/material";
-import Dialog, { DialogProps } from "@mui/material/Dialog";
+import { Stack, IconButton } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import SignalWifi4BarIcon from "@mui/icons-material/SignalWifi4Bar";

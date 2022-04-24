@@ -1,21 +1,12 @@
-import React, {useContext} from 'react'
-import {Toolbar,IconButton,Button, AppBar,Paper,Grid,Stack,Box} from '@mui/material';
+import React from 'react'
+import {Toolbar,IconButton,Button, AppBar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import {ThemeContext} from './../Menu'
 
 
 
 
-const Navbar = () => {
- 
-  const handleMenu = () => {
-    setShowMenu(!showMenu)
-  }
-const {showMenu,setShowMenu}=useContext(ThemeContext)
-  // console.log(showMenu);
+const Navbar = ({showMenu,setShowMenu}) => {
   
-
-
   return (
   <>
  {!showMenu && <AppBar sx={{backgroundColor:'transparent', boxShadow:0, alignItems:'flex-end'}} >
@@ -38,7 +29,7 @@ const {showMenu,setShowMenu}=useContext(ThemeContext)
         >
           Rezerva acum
         </Button>
-      <IconButton aria-label="app" size='medium' style={{color:'white' }} onClick={handleMenu} >
+      <IconButton aria-label="app" size='medium' style={{color:'white' }} onClick={setShowMenu} >
         <MenuIcon  fontSize="large" />       
       </IconButton>
       </Toolbar>

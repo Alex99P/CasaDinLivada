@@ -19,6 +19,9 @@ import decode from "jwt-decode"
 import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { makeStyles } from "@material-ui/styles";
+import {  useSelector } from "react-redux";
+
+
 
 const useStyles = makeStyles({
   textField: {
@@ -128,6 +131,11 @@ const NavbarRezervare = () => {
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
+
+  const authData = useSelector((state) => state.auth.authData);
+  // console.log(authData?.message);
+  
+
 
   return (
     <>

@@ -21,9 +21,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PhoneIcon from "@mui/icons-material/Phone";
-
-
-// import "antd/dist/antd.css";
 import "antd/dist/antd.min.css";
 
 // Style

@@ -1,10 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// import UserModal from "../models/user.js";
-import UserModal from "../model/userModel.js"
+import UserModal from "../model/userModel.js";
 
-const secret = 'test';
+const secret = "test";
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -13,40 +12,66 @@ export const signin = async (req, res) => {
     const oldUser = await UserModal.findOne({ email });
 
     if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
-
+    
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
-    
 
-    if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
-    
-    // secret=test
-    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
+    if (!isPasswordCorrect)
+      return res.status(400).json({ message: "Invalid credentials" });
 
+    const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
+      expiresIn: "1h",
+    });
 
-    res.status(200).json({ result: oldUser, token });
+    res.status(200).json({ result: oldUser, token,message: "Login succeed" });
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
 
 export const signup = async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, confirmPassword,firstName, lastName,phoneNumber } = req.body;
+  // console.log(req.body);
+  
 
   try {
     const oldUser = await UserModal.findOne({ email });
 
-    if (oldUser) return res.status(400).json({ message: "User already exists" });
+    if (oldUser)
+      return res.status(400).json({ message: "User already exists" });
+
+      function ValidateEmail(mail) 
+      {
+       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+        {
+          return (true)
+        }
+          return (false)
+      }
+
+      if(!ValidateEmail(email)) 
+      return res.status(400).json({ message: "The email is dont't valid" });
+      
+
+      if (password!=confirmPassword)
+      return res.status(400).json({ message: "The passwords don't match" });
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await UserModal.create({ email, password: hashedPassword, name: `${firstName} ${lastName}` });
+    const result = await UserModal.create({
+      email,
+      password: hashedPassword,
+      name: `${firstName} ${lastName}`,
+      phoneNumber,
+    });
 
-    const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
+    const token = jwt.sign({ email: result.email, id: result._id }, secret, {
+      expiresIn: "1h",
+    });
 
     res.status(201).json({ result, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
-    
+
     console.log(error);
   }
 };
