@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   // }
 }));
 
-export default function Popup( {  openPopup, setOpenPopup }) {
+export default function Popup( {  openPopup, setOpenPopup, title }) {
   const classes = useStyles();
   // const [maxWidth, setMaxWidth] = React.useState<DialogProps['maxWidth']>('sm');
 
@@ -39,7 +39,7 @@ export default function Popup( {  openPopup, setOpenPopup }) {
         p={2}
       >
         <Stack>
-          <Typography variant="h6">Casa din Livada</Typography>
+          <Typography variant="h6">{title}</Typography>
         </Stack>
         <Stack>
           <IconButton

@@ -9,7 +9,6 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./redux/reducers";
 
-// const store = createStore(reducers, compose(applyMiddleware(thunk)));
 const middleware = [thunk];
 
 const store = createStore(

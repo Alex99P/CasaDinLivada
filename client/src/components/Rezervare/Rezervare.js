@@ -2,21 +2,13 @@ import React, { useState } from "react";
 import NavbarRezervare from "../Navbar/NavbarRezervare";
 import {
   Stack,
-  Grid,
   Typography,
   Button,
-  FormControlLabel,
-  Checkbox,
   TextField,
 } from "@mui/material";
-import Popup from "../controls/Popup";
 import { makeStyles } from "@material-ui/styles";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { DatePicker, Space } from "antd";
 import moment from "moment";
+import RezervareTeamplate from "./RezervareTeamplate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -59,8 +51,6 @@ const useStyles = makeStyles({
 });
 
 const Rezervare = () => {
- 
-
   const btnStyle = {
     marginTop: "20px",
     padding: "10px",
@@ -73,7 +63,6 @@ const Rezervare = () => {
     },
   };
 
-  const { RangePicker } = DatePicker;
 
   const classes = useStyles();
 
@@ -100,15 +89,20 @@ const Rezervare = () => {
   const [checked, setChecked] = useState(false);
 
   function Dates(date) {
+    console.log(moment(date[0]).format("DD-MM-YYYY"));
+    console.log(moment(date[1]).format("DD-MM-YYYY"));
     const fromdate = moment(date[0]);
     setfromDate(fromdate.format("DD-MM-YYYY"));
     setfromMonth(fromdate.format("MMMM"));
     setfromDay(fromdate.format("DD"));
+    console.log(fromMonth);
+
 
     const todate = moment(date[1]);
     settoDate(todate.format("DD-MM-YYYY"));
     settoMonth(todate.format("MMMM"));
     settoDay(todate.format("DD"));
+    console.log(toMonth);
 
     setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
   }
@@ -122,100 +116,28 @@ const Rezervare = () => {
         justifyContent="space-between"
         alignItems="flex-start"
       >
-        <Grid
-          container
+        <Stack
           direction="column"
-          justifyContent="space-between"
-          alignItems="flex-start"
-          mt={12}
         >
-          <Grid
-            marginBottom={10}
-            item
-            ml={3}
-            mr={5}
-            sx={{ border: "1px solid black" }}
-          >
-            <Grid container direction="row" alignItems="center" p={2}>
-              <Grid item md={2} mr={10}>
-                <Stack height="200px" bgcolor="#9e9e9e" width="240px"></Stack>
-              </Grid>
-              <Grid item ml={3} md={7}>
-                <Typography variant="h6" gutterBottom>
-                  CASA DIN LIVADA(ADULTI/FAMILII)
-                </Typography>
-                <Typography variant="body2">
-                  Irure esse mollit laborum duis et proident elit quis et
-                  exercitation esse fugiat in velit. Incididunt nisi sit sunt do
-                  voluptate cillum aute nulla ea magna non. Fugiat velit est
-                  nisi velit culpa in ea. Do amet Lorem eu quis quis dolore
-                  pariatur consequat sit adipisicing. Cupidatat est ea fugiat
-                  eiusmod. Dolore nisi cupidatat quis laboris aute incididunt
-                  exercitation sunt voluptate id incididunt. Consectetur duis
-                  deserunt cillum pariatur esse commodo proident ad occaecat
-                  aute magna consequat quis.
-                </Typography>
-                <Button
-                  variant="outlined"
-                  style={btnStyle}
-                  onClick={handleRoomOpen}
-                >
-                  Descriere camera
-                </Button>
-              </Grid>
-              {/* sx={{ border: "1px solid black", borderBottom: "none" }} */}
-              <Grid item xs={12} mt={2} p={1}>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={checked}
-                        onChange={() => setChecked(!checked)}
-                      />
-                    }
-                    label="Cu mic dejun"
-                  />
-                  {/* <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                > */}
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon size="large" />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <p className={classes.p}>Rezervati perioada</p>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Space direction="vertical">
-                        <RangePicker format="DD-MM-YYYY" onChange={Dates} />
-                      </Space>
-                    </AccordionDetails>
-                  </Accordion>
-                  {/* </Stack> */}
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Stack>
-                  <Popup
-                    openPopup={showRoom}
-                    setOpenPopup={handleRoomClose}
-                  ></Popup>
-                </Stack>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+          <RezervareTeamplate 
+          title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
+          body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
+          textBtn={"Descriere camera"}
+          checkBox={true}
+          mTop={true}
+          />
+          <RezervareTeamplate 
+          title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
+          body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
+          textBtn={"Descriere camera"}
+          checkBox={false}
+          mTop={false}
+          />
+        </Stack>
+
         <Stack
           mt={12}
-          sx={{ border: "1px solid black", width: "380px", height: "200px" }}
+          sx={{ border: "1px solid black", width: "1000px", height: "200px" }}
           p={2}
           mr={2}
           spacing={3}
