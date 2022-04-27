@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import NavbarRezervare from "../Navbar/NavbarRezervare";
 import {
   Stack,
   Grid,
@@ -18,7 +17,7 @@ import moment from "moment";
 import "antd/dist/antd.min.css";
 
 
-const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop}) => {
+const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop,setnumberNights,setfromMonth,settoMonth,setfromDay,settoDay}) => {
   const btnStyle = {
     marginTop: "20px",
     padding: "10px",
@@ -55,38 +54,35 @@ const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop}) => {
     //whole date
     const [fromDate, setfromDate] = useState();
     const [toDate, settoDate] = useState();
-    //Months
-    const [fromMonth, setfromMonth] = useState();
-    const [toMonth, settoMonth] = useState();
-    //Days
-    const [fromDay, setfromDay] = useState();
-    const [toDay, settoDay] = useState();
+
   
-    const [numberNights, setnumberNights] = useState(0);
   
 
     function Dates(date) {
-      // console.log(moment(date[0]).format("DD-MM-YYYY"));
-      // console.log(moment(date[1]).format("MMMM"));
-      // const fromdate = moment(date[0]);
+    //   console.log(moment(date[0]).format("DD-MM-YYYY"));
+    //   console.log(moment(date[1]).format("DD-MM-YYYY"));
+      const fromdate = moment(date[0]);
       setfromDate(moment(date[0]).format("DD-MM-YYYY"));
       setfromMonth(moment(date[0]).format("MMMM"));
       setfromDay(moment(date[0]).format("DD"));
       
-      // console.log(fromdate);
+      // console.log(fromDate);
   
-      // const todate = moment(date[1]);
+      const todate = moment(date[1]);
       settoDate(moment(date[1]).format("DD-MM-YYYY"));
       settoMonth(moment(date[1]).format("MMMM"));
       settoDay(moment(date[1]).format("DD"));
+      // console.log(toDate);
 
-      console.log(fromDate+"-"+toDate);
-      console.log(fromMonth+"-"+toMonth);
-      console.log(fromDay+"-"+toDay);
+      setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
       
-  
-      // setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
+      // setnumberNights(2);
     }
+    // console.log(fromDate+"-"+toDate);
+    // console.log(fromMonth+"-"+toMonth);
+    // console.log(fromDay+"-"+toDay);
+
+
   
   
   return (
@@ -110,7 +106,7 @@ const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop}) => {
             <Grid item md={2} mr={10}>
               <Stack height="200px" bgcolor="#9e9e9e" width="240px"></Stack>
             </Grid>
-            <Grid item ml={3} md={7}>
+            <Grid item ml={7} md={7}>
               <Typography variant="h6" gutterBottom>
                 {title}
               </Typography>

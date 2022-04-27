@@ -78,34 +78,6 @@ const Rezervare = () => {
 
   const [numberNights, setnumberNights] = useState(0);
 
-  const [showRoom, setShowRoom] = useState(false);
-  const handleRoomOpen = () => {
-    setShowRoom(true);
-  };
-  const handleRoomClose = () => {
-    setShowRoom(false);
-  };
-
-  const [checked, setChecked] = useState(false);
-
-  function Dates(date) {
-    console.log(moment(date[0]).format("DD-MM-YYYY"));
-    console.log(moment(date[1]).format("DD-MM-YYYY"));
-    const fromdate = moment(date[0]);
-    setfromDate(fromdate.format("DD-MM-YYYY"));
-    setfromMonth(fromdate.format("MMMM"));
-    setfromDay(fromdate.format("DD"));
-    console.log(fromMonth);
-
-
-    const todate = moment(date[1]);
-    settoDate(todate.format("DD-MM-YYYY"));
-    settoMonth(todate.format("MMMM"));
-    settoDay(todate.format("DD"));
-    console.log(toMonth);
-
-    setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
-  }
 
   return (
     <>
@@ -125,7 +97,13 @@ const Rezervare = () => {
           textBtn={"Descriere camera"}
           checkBox={true}
           mTop={true}
+          setnumberNights={setnumberNights}
+          setfromMonth={setfromMonth}
+          settoMonth={settoMonth}
+          setfromDay={setfromDay}
+          settoDay={settoDay}
           />
+          {/* Trebuie sa trimit props-utile si pt sauna */}
           <RezervareTeamplate 
           title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
           body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
