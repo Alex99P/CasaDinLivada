@@ -15,6 +15,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
 import "antd/dist/antd.min.css";
+import { bookingHouse } from "../../redux/actions/booking.js";
+import { useDispatch } from "react-redux";
+
 
 
 const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop,setnumberNights,setfromMonth,settoMonth,setfromDay,settoDay}) => {
@@ -54,6 +57,8 @@ const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop,setnumberNights,se
     //whole date
     const [fromDate, setfromDate] = useState();
     const [toDate, settoDate] = useState();
+    const dispatch = useDispatch();
+
 
   
   
@@ -82,7 +87,22 @@ const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop,setnumberNights,se
     // console.log(fromMonth+"-"+toMonth);
     // console.log(fromDay+"-"+toDay);
 
+    function bookNow(){
+      const reqObj={
+        user: JSON.parse(localStorage.getItem('profile')).result._id,
+        // cabana sau ciubar trebuie sa le fac un id
+        bookTime: {
+          fromDate,
+          toDate
+        }
 
+      }
+      // console.log(JSON.parse(localStorage.getItem('profile')).result._id);
+      // console.log(fromDate);
+      console.log(reqObj);
+      dispatch(bookingHouse(reqObj));
+      
+    }
   
   
   return (
@@ -147,10 +167,12 @@ const RezervareTeamplate = ({title,body,textBtn,checkBox,mTop,setnumberNights,se
                   >
                     <p style={{fontSize:"1.25rem"}}>Rezervati perioada</p>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails >
                      <Space direction="vertical"> 
                       <RangePicker format="DD-MM-YYYY" onChange={Dates} />
                     </Space>
+                  <Button variant="text" onClick={bookNow} >Book now
+                  </Button>
                   </AccordionDetails>
                 </Accordion>
                 {/* </Stack> */}

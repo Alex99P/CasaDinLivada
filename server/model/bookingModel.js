@@ -1,16 +1,24 @@
 import  mongoose  from "mongoose";
 
-let booking =new  mongoose.Schema({
 
-  user : {type : mongoose.Schema.Types.ObjectID , ref:'userdbs'},
-  extraServices : {type : mongoose.Schema.Types.ObjectID , ref:'servicesdb'},
-  house : {type : mongoose.Schema.Types.ObjectID , ref:'userdbs'},
-  dateFrom: { type: String },
-  dateTo: { type: String }
-  // dateFrom: { type: Date, default: Date.now },
-  // dateTo: { type: Date, default: Date.now },
+const bookingSchema = new mongoose.Schema({
 
-})
+      // car : {type : mongoose.Schema.Types.ObjectID , ref:'cars'},
+      user : {type : mongoose.Schema.Types.ObjectID , ref:'users'},
+      bookTime : {
+          fromDate : {type : String} ,
+          toDate : {type : String}
+      } ,
+      // totalAmount : {type : Number},
+      // transactionId : {type : String},
 
-export const bookingDB= mongoose.model('bookingdb',booking);
 
+},
+  {timestamps : true}
+)
+
+export default mongoose.model("bookings", bookingSchema);
+
+// const bookingModel = mongoose.model('bookings' , bookingSchema)
+
+// module.exports = bookingModel

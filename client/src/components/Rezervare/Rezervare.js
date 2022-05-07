@@ -14,6 +14,7 @@ import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PhoneIcon from "@mui/icons-material/Phone";
 import "antd/dist/antd.min.css";
+import axios from "axios";
 
 // Style
 const useStyles = makeStyles({
@@ -78,10 +79,19 @@ const Rezervare = () => {
 
   const [numberNights, setnumberNights] = useState(0);
 
-
+  async function getUser() {
+    try {
+    const response = await axios.get('http://localhost:5000/booking/bookings');
+    console.log(response?.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+getUser();
   return (
     <>
       <NavbarRezervare />
+
 
       <Stack
         direction="row"
@@ -103,7 +113,7 @@ const Rezervare = () => {
           setfromDay={setfromDay}
           settoDay={settoDay}
           />
-          {/* Trebuie sa trimit props-utile si pt sauna */}
+          {/* Trebuie sa trimit props-rile si pt sauna */}
           <RezervareTeamplate 
           title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
           body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
@@ -175,7 +185,7 @@ const Rezervare = () => {
                 </Typography>
               </Stack>
             </Stack>
-            <Typography variant="body2" mt={2}>
+            <Typography variant="body2" mt={2} >
               Rezervare pentru {numberNights}{" "}
               {numberNights === 1 ? "o noapte" : "nopti"}
             </Typography>

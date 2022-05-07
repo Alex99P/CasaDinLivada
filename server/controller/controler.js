@@ -1,5 +1,5 @@
 // import {userDB} from "../model/userModel.js"
-import {bookingDB} from "../model/bookingModel.js"
+import {bookingDB} from "../model/bookingModel1.js"
 import {servicesDB} from "../model/servicesModel.js"
 import {houseDB} from "../model/houseModel.js"
 import {reviewDB} from "../model/reviewModel.js"
@@ -58,7 +58,7 @@ export const find = (req, res)=>{
               }
           })
           .catch(err =>{
-              res.status(500).send({ message: "Erro retrieving user with id " + id})
+              res.status(500).send({ message: "Erro retrieving user with iddd " + id})
           })
 
   }else{
