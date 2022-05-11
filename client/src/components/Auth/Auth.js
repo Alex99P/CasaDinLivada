@@ -56,8 +56,6 @@ const Auth = () => {
 
   const authData = useSelector((state) => state.auth.authData);
 
-console.log(authData);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(form);
@@ -74,9 +72,7 @@ console.log(authData);
       dispatch({ type: "REMOVE_ERROR" });
     };
 
-  const switchMode = () => {
-    console.log("Acum");
-    
+  const switchMode = () => {    
     setForm(initialState);
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
