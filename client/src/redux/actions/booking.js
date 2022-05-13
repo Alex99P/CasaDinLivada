@@ -10,8 +10,6 @@ export const bookingHouse = (reqObj) => async (dispatch) => {
     console.log(data);
     
   
-    // dispatch({ type: AUTH, data });
-  
   } catch (error) {
     console.log(error);
     dispatch({ type: "ERROR", data: error?.response.data });

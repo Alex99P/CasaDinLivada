@@ -3,6 +3,27 @@ import {Toolbar,IconButton,Button, AppBar} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 
+// Toggle the .pa-fixed-header class when the user 
+// scroll 100px 
+
+// window.onscroll = () => {scrollNavbar()};
+// let style;
+
+// function scrollNavbar() {
+
+//   if (document.documentElement.scrollTop > 100) {
+//     console.log("se apeleaza");
+    
+//      style={
+//       backgroundColor: "black"
+//     }
+
+//     }
+
+
+// }
+
+
 
 
 const Navbar = ({showMenu,setShowMenu}) => {

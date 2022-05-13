@@ -6,11 +6,6 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
 } from "@mui/material";
 import Popup from "../controls/Popup";
 import Accordion from "@mui/material/Accordion";
@@ -23,6 +18,7 @@ import "antd/dist/antd.min.css";
 import { bookingHouse } from "../../redux/actions/booking.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import StripeCheckout from "react-stripe-checkout";
 
 const RezervareTeamplate = ({
   title,
@@ -36,6 +32,7 @@ const RezervareTeamplate = ({
   setfromDay,
   settoDay,
 }) => {
+
   const btnStyle = {
     marginTop: "20px",
     padding: "10px",
@@ -75,65 +72,58 @@ const RezervareTeamplate = ({
   const dispatch = useDispatch();
   const dateFormat = "DD-MM-YYYY";
   const disabledDates = [];
-
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  let amount=10;
 
   function Dates(date) {
-    //   console.log(moment(date[0]).format("DD-MM-YYYY"));
-    //   console.log(moment(date[1]).format("DD-MM-YYYY"));
-    const fromdate = moment(date[0]);
-    setfromDate(moment(date[0]).format("DD-MM-YYYY"));
-    setfromMonth(moment(date[0]).format("MMMM"));
-    setfromDay(moment(date[0]).format("DD"));
+    // Trebuie sa fac sa apara disable toate zilele selectate
+    // var today = moment();
+    // var tomorrow = moment(today).add(-1, 'days');
 
-    const todate = moment(date[1]);
-    settoDate(moment(date[1]).format("DD-MM-YYYY"));
-    settoMonth(moment(date[1]).format("MMMM"));
-    settoDay(moment(date[1]).format("DD"));
 
-    setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
+    if (date !== null) {
+      const fromdate = moment(date[0]).add(-1, "days");
+      setfromDate(moment(date[0]).format("DD-MM-YYYY"));
+      setfromMonth(moment(date[0]).format("MMMM"));
+      setfromDay(moment(date[0]).format("DD"));
+
+      const todate = moment(date[1]).add(1, "days");
+      settoDate(moment(date[1]).format("DD-MM-YYYY"));
+      settoMonth(moment(date[1]).format("MMMM"));
+      settoDay(moment(date[1]).format("DD"));
+
+      setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
+    }
   }
-  // console.log(fromDate+"-"+toDate);
-  // console.log(fromMonth+"-"+toMonth);
-  // console.log(fromDay+"-"+toDay);
 
-  function bookNow() {
+  function onToken(token) {
+    console.log(token);
     const reqObj = {
+      token,
       user: JSON.parse(localStorage.getItem("profile")).result._id,
       // cabana sau ciubar trebuie sa le fac un id
       bookTime: {
         fromDate,
         toDate,
       },
+      amount
     };
-    // console.log(id);
 
     dispatch(bookingHouse(reqObj));
   }
 
-
   async function getAllBookings() {
-    // TODO trebuie sa trec prin toate bookingurile
     const response = await axios.get("http://localhost:5000/booking/bookings");
     console.log(response?.data.length);
-    
-    for(let i=0; i<response?.data.length;i++){
-    const from = response?.data[i]?.bookTime?.fromDate;
-    const to = response?.data[i]?.bookTime?.toDate;
-    console.log(from, " - ", to);
-    disabledDates.push({
-      start: moment(from, dateFormat),
-      end: moment(to, dateFormat),
-    });
-  }
+
+    for (let i = 0; i < response?.data.length; i++) {
+      const from = response?.data[i]?.bookTime?.fromDate;
+      const to = response?.data[i]?.bookTime?.toDate;
+      console.log(from, " - ", to);
+      disabledDates.push({
+        start: moment(from, dateFormat),
+        end: moment(to, dateFormat),
+      });
+    }
   }
   useEffect(() => {
     getAllBookings();
@@ -142,7 +132,6 @@ const RezervareTeamplate = ({
   // function disabledDate(current) {
   //   // Can not select days before today and today
   //   console.log("Se apeleaza");
-    
   //   return current && current < moment().endOf('day');
   // }
   return (
@@ -220,48 +209,23 @@ const RezervareTeamplate = ({
                               moment(date["start"], dateFormat),
                               moment(date["end"], dateFormat),
                               "day"
-                            ) 
+                            )
                           )
-                          // return current && current < moment().endOf('day');
                         }
                       />
                     </Space>
-                    <Button
-                      variant="text"
-                      onClick={(event) => {
-                        // bookNow();
-                        handleClickOpen();
-                      }}
+                    <StripeCheckout
+                      token={onToken}
+                      currency="RON"
+                      amount={amount * 100}
+                      stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                     >
-                      Book now
-                    </Button>
-                    <div>
-                      <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
+                      <Button
+                        variant="text"
                       >
-
-                        <DialogContent>
-                          <DialogContentText id="alert-dialog-description">
-                          Sunteti sigur ca doriti sa continuati ?
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={handleClose}>Cancel</Button>
-                          <Button
-                            onClick={(event) => {
-                              bookNow();
-                              handleClose();
-                            }}
-                            autoFocus
-                          >
-                            Da
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </div>
+                        Book now
+                      </Button>
+                    </StripeCheckout>
                   </AccordionDetails>
                 </Accordion>
                 {/* </Stack> */}
