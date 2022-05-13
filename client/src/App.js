@@ -11,6 +11,8 @@ import DespreNoi from "./components/DespreNoi/DespreNoi";
 import Foto from "./components/GalerieFoto/Foto";
 import Rezervare from "./components/Rezervare/Rezervare"
 import Auth from "./components/Auth/Auth";
+import Userdashboard from "./components/Dashboard/Userdashboard";
+import Admindashboard from "./components/Dashboard/Admindashboard";
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
     <React.Fragment>
       <Routes>
         <Route path="/" element={<Home />} exact />
+        <Route path="/myprofile" element={<Userdashboard />} exact />
+        <Route path="/admin" element={<Admindashboard />} exact />
         <Route path="/auth" element={<Auth />} exact />
         <Route path="/ritualul" element={<Ritualul />} exact />
         <Route path="/rezervare" element={<Rezervare />} exact />

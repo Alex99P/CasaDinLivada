@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Toolbar,
-  IconButton,
   MenuItem,
-  TextField,
   Button,
   AppBar,
   Stack,
   Box,
   Typography,
   Divider,
-  InputAdornment,
   Link,
+  Select,
+  ClickAwayListener,
+  Grow,
+  Paper,
+  Popper,
+  MenuList,
 } from "@mui/material";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import decode from "jwt-decode"
+import decode from "jwt-decode";
 import StarIcon from "@mui/icons-material/Star";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { makeStyles } from "@material-ui/styles";
-import {  useSelector } from "react-redux";
-
-
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   textField: {
@@ -111,10 +112,17 @@ const NavbarRezervare = () => {
     navigate("/rezervare");
     setUser(null);
   };
+  const myprofile = () => {
+    navigate("/myprofile");
+
+  };
 
   const handleChangeCurrency = (event) => {
+    console.log("first");
+
     setCurrency(event.target.value);
   };
+
   const handleChangeLanguage = (event) => {
     setLanguage(event.target.value);
   };
@@ -122,10 +130,9 @@ const NavbarRezervare = () => {
   useEffect(() => {
     const token = user?.token;
 
-    if(token){
-      const decodeToken=decode(token);
-      if(decodeToken.exp *1000 < new Date().getTime())
-      {
+    if (token) {
+      const decodeToken = decode(token);
+      if (decodeToken.exp * 1000 < new Date().getTime()) {
         logout();
       }
     }
@@ -134,8 +141,42 @@ const NavbarRezervare = () => {
 
   const authData = useSelector((state) => state.auth.authData);
   // console.log(authData?.message);
-  
 
+  // Dropdown menu
+
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
 
   return (
     <>
@@ -176,95 +217,120 @@ const NavbarRezervare = () => {
             </Stack>
           </Box>
           {user ? (
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              mr={3}
-            >
-              <Typography variant="body1">Buna, {user?.result?.name}!</Typography>
-            </Stack>
+            <div>
+              <Button
+                ref={anchorRef}
+                id="composition-button"
+                aria-controls={open ? "composition-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
+                onClick={handleToggle}
+                sx={{color:"white"}}
+                endIcon={<KeyboardArrowDownIcon />}
+              >
+                {user?.result?.name}
+              </Button>
+              <Popper
+                open={open}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === "bottom-start"
+                          ? "left top"
+                          : "left bottom",
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={open}
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <MenuItem onClick={myprofile}>My profile</MenuItem>
+                          <MenuItem onClick={logout}>Logout</MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </div>
           ) : null}
 
           <Stack
             direction="row"
             // spacing={0.5}
+            marginRight={-3.5}
             divider={<Divider orientation="vertical" color="white" flexItem />}
           >
-            {user ? (
+            {!user ? (
               <Button
-                style={btnStyle}
-                variant="text"
-                size="small"
-                sx={{ mr: 2 }}
-                onClick={logout}
-              >
-                LogOut
-              </Button>
+              style={btnStyle}
+              variant="text"
+              size="small"
+              sx={{ mr: 2 }}
+              component={Link}
+              href="/auth"
+            >
+              SignIn
+            </Button>
             ) : (
-              <Button
-                style={btnStyle}
-                variant="text"
-                size="small"
-                sx={{ mr: 2 }}
-                component={Link}
-                href="/auth"
-              >
-                SignIn
-              </Button>
+             null
             )}
-
-            <TextField
-              className={classes.textField}
-              id="outlined-select-currency"
-              select
+            <Select
+              variant="outlined"
+              sx={{
+                marginRight: 2,
+                color: "#fff",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                  borderColor: "white",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "black",
+                },
+              }}
               value={currency}
               onChange={handleChangeCurrency}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <KeyboardArrowDownIcon
-                      sx={{ color: "white", margin: 0, cursor: "pointer" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              InputLabelProps={{
-                sx: { color: "#fff" },
-              }}
             >
               {currencies.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
 
-            <TextField
-              className={classes.textField}
-              id="outlined-select-language"
-              select
+            <Select
+              variant="outlined"
+              sx={{
+                marginRight: 1,
+                color: "#fff",
+                "& .MuiSvgIcon-root": {
+                  color: "white",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "black",
+                },
+              }}
               value={language}
               onChange={handleChangeLanguage}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    <KeyboardArrowDownIcon
-                      sx={{ color: "white", margin: 0, cursor: "pointer" }}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-              InputLabelProps={{
-                sx: { color: "#fff" },
-              }}
             >
               {languages.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
-            </TextField>
+            </Select>
           </Stack>
         </Toolbar>
       </AppBar>
