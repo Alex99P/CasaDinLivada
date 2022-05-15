@@ -7,8 +7,8 @@ const bookingSchema = new mongoose.Schema({
       transactionId : {type : String},  
       user : {type : mongoose.Schema.Types.ObjectID , ref:'users'},
       bookTime : {
-          fromDate : {type : String} ,
-          toDate : {type : String}
+        fromDateCiubar : {type : String} ,
+        toDateCiubar : {type : String}
       },
       name: {type: String}
       // totalAmount : {type : Number},
@@ -16,5 +16,5 @@ const bookingSchema = new mongoose.Schema({
   {timestamps : true}
 )
 
-export default mongoose.model("bookings", bookingSchema);
+export default mongoose.model("bookingsC", bookingSchema);
 

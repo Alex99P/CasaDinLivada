@@ -81,7 +81,7 @@ const Rezervare = () => {
 
   async function getUser() {
     try {
-    const response = await axios.get('http://localhost:5000/booking/bookings');
+    const response = await axios.get('http://localhost:5000/booking/house');
     console.log(response?.data);
   } catch (error) {
     console.error(error);
@@ -102,6 +102,7 @@ getUser();
           direction="column"
         >
           <RezervareTeamplate 
+          name={"cabana"}
           title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
           body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
           textBtn={"Descriere camera"}
@@ -115,11 +116,17 @@ getUser();
           />
           {/* Trebuie sa trimit props-rile si pt sauna */}
           <RezervareTeamplate 
+          name={"sauna"}
           title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
           body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
           textBtn={"Descriere camera"}
           checkBox={false}
           mTop={false}
+          setnumberNights={setnumberNights}
+          setfromMonth={setfromMonth}
+          settoMonth={settoMonth}
+          setfromDay={setfromDay}
+          settoDay={settoDay}
           />
         </Stack>
 

@@ -1,4 +1,5 @@
 import bookingModel from "../model/bookingModel.js";
+import bookingCiubar from "../model/bookingCiubar.js";
 import Stripe from "stripe";
 import { v4 as uuidv4 } from "uuid";
 const stripe = new Stripe(
@@ -9,7 +10,6 @@ export const booking = async (req, res) => {
   const { token } = req.body;
 
   try {
-
     const customer = await stripe.customers.create({
       email: token.email,
       source: token.id,
@@ -27,17 +27,24 @@ export const booking = async (req, res) => {
       }
     );
 
-      
     if (payment) {
       req.body.transactionId = payment.source.id;
-      const newbooking = new bookingModel(req.body);
-      console.log(newbooking);
-
-      await newbooking.save();
-
-      res
+      // console.log(req.body);
+      if (req.body.name === "cabana") {
+        let newbooking = new bookingModel(req.body);
+        await newbooking.save();
+        res
         .status(200)
         .json({ newbooking, message: "Your booking is successfullyy" });
+      } else {
+        let newbooking = new bookingCiubar(req.body);
+        await newbooking.save();
+        res
+        .status(200)
+        .json({ newbooking, message: "Your booking is successfullyy" });
+      }
+  
+
     } else {
       return res.status(400).json(error);
     }
@@ -47,8 +54,10 @@ export const booking = async (req, res) => {
 };
 
 export const find = (req, res) => {
+
   if (req.params.id) {
     const id = req.params.id;
+    
 
     bookingModel
       .findById(id)
@@ -63,7 +72,41 @@ export const find = (req, res) => {
         res.status(500).send({ message: "Erro retrieving user with id " + id });
       });
   } else {
+    //bookingCiubar
     bookingModel
+      .find()
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message || "Error Occurred while retriving user information",
+        });
+      });
+  }
+};
+
+export const findCiubar = (req, res) => {
+
+  if (req.params.id) {
+    const id = req.params.id;
+    
+
+    bookingCiubar
+      .findById(id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({ message: "Not found user with id " + id });
+        } else {
+          res.send(data);
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({ message: "Erro retrieving user with id " + id });
+      });
+  } else {
+    bookingCiubar
       .find()
       .then((data) => {
         res.send(data);

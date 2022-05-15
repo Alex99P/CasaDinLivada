@@ -15,12 +15,13 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
 import "antd/dist/antd.min.css";
-import { bookingHouse } from "../../redux/actions/booking.js";
+import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import StripeCheckout from "react-stripe-checkout";
 
 const RezervareTeamplate = ({
+  name,
   title,
   body,
   textBtn,
@@ -32,7 +33,6 @@ const RezervareTeamplate = ({
   setfromDay,
   settoDay,
 }) => {
-
   const btnStyle = {
     marginTop: "20px",
     padding: "10px",
@@ -44,6 +44,7 @@ const RezervareTeamplate = ({
       border: "black",
     },
   };
+
   let margin;
   if (mTop) {
     margin = {
@@ -56,69 +57,125 @@ const RezervareTeamplate = ({
   }
   // variables for room
   const [showRoom, setShowRoom] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const { RangePicker } = DatePicker;
+  const [fromDate, setfromDate] = useState();
+  const [toDate, settoDate] = useState();
+  const [fromDateCiubar, setfromDateCiubar] = useState();
+  const [toDateCiubar, settoDateCiubar] = useState();
+  const dispatch = useDispatch();
+  const dateFormat = "DD-MM-YYYY";
+  const disabledDates = [];
+  const disabledHours = [];
+  const [totalHours, setTotalHours] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  let amount = 10;
+  const [id, setid] = useState("");
+
   const handleRoomOpen = () => {
     setShowRoom(true);
   };
   const handleRoomClose = () => {
     setShowRoom(false);
   };
-  const [checked, setChecked] = useState(false);
-
-  // variables for date
-  const { RangePicker } = DatePicker;
-  //whole date
-  const [fromDate, setfromDate] = useState();
-  const [toDate, settoDate] = useState();
-  const dispatch = useDispatch();
-  const dateFormat = "DD-MM-YYYY";
-  const disabledDates = [];
-  let amount=10;
-
   function Dates(date) {
     // Trebuie sa fac sa apara disable toate zilele selectate
     // var today = moment();
     // var tomorrow = moment(today).add(-1, 'days');
 
-
     if (date !== null) {
-      const fromdate = moment(date[0]).add(-1, "days");
       setfromDate(moment(date[0]).format("DD-MM-YYYY"));
       setfromMonth(moment(date[0]).format("MMMM"));
       setfromDay(moment(date[0]).format("DD"));
 
-      const todate = moment(date[1]).add(1, "days");
       settoDate(moment(date[1]).format("DD-MM-YYYY"));
       settoMonth(moment(date[1]).format("MMMM"));
       settoDay(moment(date[1]).format("DD"));
-
-      setnumberNights(moment.duration(todate.diff(fromdate)).asDays());
+      setid("cabana");
+      // setnumberNights(moment.duration(toDate.diff(fromDate)).asDays());
     }
   }
+  console.log(totalHours);
+
+  function ciubarDates(date) {
+    console.log("!!!", date);
+    if (date !== null) {
+      setfromDateCiubar(moment(date[0]).format("MMM DD yyyy HH"));
+      settoDateCiubar(moment(date[1]).format("MMM DD yyyy HH"));
+
+      setTotalHours(date[1].diff(date[0], "hours"));
+      console.log("Ore", totalHours);
+
+      setid("ciubar");
+    }
+    //   for (let i = 0; i < moment().hour(); i++) {
+    //     if(moment()){
+    //     // hours.push(i);
+    //   }
+    // }
+  }
+  console.log("Ore", totalHours);
 
   function onToken(token) {
-    console.log(token);
-    const reqObj = {
-      token,
-      user: JSON.parse(localStorage.getItem("profile")).result._id,
-      // cabana sau ciubar trebuie sa le fac un id
-      bookTime: {
-        fromDate,
-        toDate,
-      },
-      amount
-    };
-
-    dispatch(bookingHouse(reqObj));
+    if (id === "cabana") {
+      const reqObj = {
+        token,
+        user: JSON.parse(localStorage.getItem("profile")).result._id,
+        // cabana sau ciubar trebuie sa le fac un id
+        bookTime: {
+          fromDate,
+          toDate,
+        },
+        name: id,
+        amount,
+      };
+      // console.log(reqObj);
+      dispatch(bookingHouse(reqObj));
+      // window.location.reload();
+    } else {
+      const reqObj = {
+        token,
+        user: JSON.parse(localStorage.getItem("profile")).result._id,
+        bookTime: {
+          fromDateCiubar,
+          toDateCiubar,
+        },
+        name: id,
+        amount,
+      };
+      dispatch(bookingCiubar(reqObj));
+      // window.location.reload();
+    }
   }
+  function getDisabledHours() {
+    var hours = [];
+    console.log(moment());
 
+    for (let i = 0; i < moment().hour(); i++) {
+      if (moment()) {
+        hours.push(i);
+      }
+    }
+    return hours;
+  }
   async function getAllBookings() {
-    const response = await axios.get("http://localhost:5000/booking/bookings");
-    console.log(response?.data.length);
+    const response = await axios.get("http://localhost:5000/booking/house");
+    const responseC = await axios.get("http://localhost:5000/booking/ciubar");
+    //Trebuie sa fac ca si la dates
+    console.log(responseC?.data?.[0]?.bookTime?.fromDateCiubar);
+    var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr(
+      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
+    );
+    var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr(
+      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
+    );
+
+    console.log(lastFive + " " + lastFivee);
 
     for (let i = 0; i < response?.data.length; i++) {
       const from = response?.data[i]?.bookTime?.fromDate;
       const to = response?.data[i]?.bookTime?.toDate;
-      console.log(from, " - ", to);
+      // console.log(from, " - ", to);
       disabledDates.push({
         start: moment(from, dateFormat),
         end: moment(to, dateFormat),
@@ -198,33 +255,51 @@ const RezervareTeamplate = ({
                     <p style={{ fontSize: "1.25rem" }}>Rezervati perioada</p>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Space direction="vertical">
-                      <RangePicker
-                        format="DD-MM-YYYY"
-                        onChange={Dates}
-                        // disabledDate={disabledDate}
-                        disabledDate={(current) =>
-                          disabledDates.some((date) =>
-                            current.isBetween(
-                              moment(date["start"], dateFormat),
-                              moment(date["end"], dateFormat),
-                              "day"
+                    {name === "cabana" ? (
+                      <Space direction="vertical">
+                        <RangePicker
+                          format="DD-MM-YYYY"
+                          onChange={Dates}
+                          disabledDate={(current) => {
+                            disabledDates.some((date) =>
+                              current.isBetween(
+                                moment(date["start"], dateFormat),
+                                moment(date["end"], dateFormat),
+                                "day"
+                              )
+                            );
+                           
+                           
+                          }}
+                        />
+                      </Space>
+                    ) : (
+                      <Space direction="vertical">
+                        <RangePicker
+                          showTime={{ format: "HH" }}
+                          format="MMM DD yyyy HH"
+                          onChange={ciubarDates}
+                          disabledHours={getDisabledHours}
+                          disabledDate={(current) =>
+                            disabledDates.some((date) =>
+                              current.isBetween(
+                                moment(date["start"], dateFormat),
+                                moment(date["end"], dateFormat),
+                                "day"
+                              )
                             )
-                          )
-                        }
-                      />
-                    </Space>
+                          }
+                        />
+                      </Space>
+                    )}
+
                     <StripeCheckout
                       token={onToken}
                       currency="RON"
                       amount={amount * 100}
                       stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                     >
-                      <Button
-                        variant="text"
-                      >
-                        Book now
-                      </Button>
+                      <Button variant="text">Book now</Button>
                     </StripeCheckout>
                   </AccordionDetails>
                 </Accordion>

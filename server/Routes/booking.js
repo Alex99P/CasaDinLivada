@@ -1,11 +1,13 @@
 import express from "express";
 const router = express.Router();
 
-import { booking,find,remove,update } from "../controller/booking.js";
+import { booking,find,findCiubar,remove,update } from "../controller/booking.js";
 
 
 router.post("/bookingHouse", booking);
-router.get('/bookings',find);
+router.post("/bookingCiubar", booking);
+router.get('/house',find);
+router.get('/ciubar',findCiubar);
 router.delete('/booking/:id',remove);
 router.put('/booking/:id',update);
 
