@@ -65,12 +65,14 @@ const RezervareTeamplate = ({
   const [toDateCiubar, settoDateCiubar] = useState();
   const dispatch = useDispatch();
   const dateFormat = "DD-MM-YYYY";
-  const disabledDates = [];
+  // const disabledDates = [];
   const disabledHours = [];
   const [totalHours, setTotalHours] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   let amount = 10;
   const [id, setid] = useState("");
+  const [disabledDates, setDisabledDates] = useState([]);
+  const [finalDate,setFinalDate] =useState([]);
 
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -96,25 +98,25 @@ const RezervareTeamplate = ({
     }
   }
   console.log(totalHours);
-
+  
   function ciubarDates(date) {
-    console.log("!!!", date);
+    console.log("!!!",date);
     if (date !== null) {
       setfromDateCiubar(moment(date[0]).format("MMM DD yyyy HH"));
       settoDateCiubar(moment(date[1]).format("MMM DD yyyy HH"));
 
       setTotalHours(date[1].diff(date[0], "hours"));
-      console.log("Ore", totalHours);
+      console.log("Ore",totalHours);
 
       setid("ciubar");
     }
-    //   for (let i = 0; i < moment().hour(); i++) {
-    //     if(moment()){
-    //     // hours.push(i);
-    //   }
-    // }
+  //   for (let i = 0; i < moment().hour(); i++) {
+  //     if(moment()){
+  //     // hours.push(i);
+  //   }
+  // }
   }
-  console.log("Ore", totalHours);
+  console.log("Ore",totalHours);
 
   function onToken(token) {
     if (id === "cabana") {
@@ -144,18 +146,20 @@ const RezervareTeamplate = ({
         amount,
       };
       dispatch(bookingCiubar(reqObj));
-      // window.location.reload();
+      // window.location.reload();  
+      
     }
   }
   function getDisabledHours() {
+
     var hours = [];
     console.log(moment());
-
+    
     for (let i = 0; i < moment().hour(); i++) {
-      if (moment()) {
-        hours.push(i);
-      }
+      if(moment()){
+      hours.push(i);
     }
+  }
     return hours;
   }
   async function getAllBookings() {
@@ -163,29 +167,51 @@ const RezervareTeamplate = ({
     const responseC = await axios.get("http://localhost:5000/booking/ciubar");
     //Trebuie sa fac ca si la dates
     console.log(responseC?.data?.[0]?.bookTime?.fromDateCiubar);
-    var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr(
-      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    );
-    var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr(
-      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    );
-
-    console.log(lastFive + " " + lastFivee);
-
-    for (let i = 0; i < response?.data.length; i++) {
-      const from = response?.data[i]?.bookTime?.fromDate;
-      const to = response?.data[i]?.bookTime?.toDate;
-      // console.log(from, " - ", to);
-      disabledDates.push({
-        start: moment(from, dateFormat),
-        end: moment(to, dateFormat),
-      });
-    }
+    var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr((responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5);
+    var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr((responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5);
+    
+    // console.log("!!!!!!!",response?.data);
+    
+    const result=response?.data.map(res=>{
+      return {
+        start: moment(res?.bookTime?.fromDate, dateFormat),
+        end: moment(res?.bookTime?.toDate, dateFormat),
+      }
+    })
+    // console.log("Result",result);
+    setDisabledDates(...disabledDates,...result)
+    
+    // for (let i = 0; i < response?.data.length; i++) {
+    //   const from = response?.data[i]?.bookTime?.fromDate;
+    //   const to = response?.data[i]?.bookTime?.toDate;
+    //   // console.log(from, " - ", to);
+    //   disabledDates.push({
+    //     start: moment(from, dateFormat),
+    //     end: moment(to, dateFormat),
+    //   });
+      
+    // }
+    // console.log(disabledDates);
+   
   }
   useEffect(() => {
     getAllBookings();
   }, []);
 
+  function disableDatesGood(current){
+    console.log(disabledDates);
+    
+    // return current && current < moment().endOf('day')
+    // return [current && current < moment().endOf('day'), ...disabledDates]
+
+  //  return disabledDates.some((date) =>
+  //     current.isBetween(
+  //       moment(date["start"], dateFormat),
+  //       moment(date["end"], dateFormat),
+  //       "day"
+  //     )
+  //   ) 
+  }
   // function disabledDate(current) {
   //   // Can not select days before today and today
   //   console.log("Se apeleaza");
@@ -260,17 +286,7 @@ const RezervareTeamplate = ({
                         <RangePicker
                           format="DD-MM-YYYY"
                           onChange={Dates}
-                          disabledDate={(current) => {
-                            disabledDates.some((date) =>
-                              current.isBetween(
-                                moment(date["start"], dateFormat),
-                                moment(date["end"], dateFormat),
-                                "day"
-                              )
-                            );
-                           
-                           
-                          }}
+                          disabledDate={disableDatesGood}
                         />
                       </Space>
                     ) : (
