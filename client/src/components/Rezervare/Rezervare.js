@@ -82,7 +82,7 @@ const Rezervare = () => {
   async function getUser() {
     try {
     const response = await axios.get('http://localhost:5000/booking/house');
-    console.log(response?.data);
+    // console.log(response?.data);
   } catch (error) {
     console.error(error);
   }

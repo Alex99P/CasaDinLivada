@@ -1,0 +1,15 @@
+.container{
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(246,246,242);
+  overflow: hidden; 
+}
+.list{
+  background-color: rgb(255, 255, 255);
+}
+.paper{
+  /* height: 500px; */
+  width: 100%;
+  padding: 2;
+}

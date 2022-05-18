@@ -74,7 +74,7 @@ const Ritualul = () => {
         container
         mt={0}
         direction="column"
-        // // justifyContent="center"
+         // justifyContent="center"
       >
         <Grid className="menuWraper" item xs={12}>
           <Box className="containerHome">

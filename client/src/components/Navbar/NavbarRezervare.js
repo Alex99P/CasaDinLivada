@@ -16,7 +16,7 @@ import {
   Popper,
   MenuList,
 } from "@mui/material";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
@@ -89,7 +89,7 @@ const languages = [
   },
 ];
 
-const NavbarRezervare = () => {
+const NavbarRezervare = (from) => {
   const classes = useStyles();
   const btnStyle = {
     color: "white",
@@ -113,8 +113,11 @@ const NavbarRezervare = () => {
     setUser(null);
   };
   const myprofile = () => {
-    navigate("/myprofile");
-
+    if (from.from === "userDashboard") {
+      navigate("/rezervare");
+    } else {
+      navigate("/myprofile");
+    }
   };
 
   const handleChangeCurrency = (event) => {
@@ -177,6 +180,7 @@ const NavbarRezervare = () => {
 
     prevOpen.current = open;
   }, [open]);
+  
 
   return (
     <>
@@ -225,7 +229,7 @@ const NavbarRezervare = () => {
                 aria-expanded={open ? "true" : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
-                sx={{color:"white"}}
+                sx={{ color: "white" }}
                 endIcon={<KeyboardArrowDownIcon />}
               >
                 {user?.result?.name}
@@ -256,7 +260,11 @@ const NavbarRezervare = () => {
                           aria-labelledby="composition-button"
                           onKeyDown={handleListKeyDown}
                         >
-                          <MenuItem onClick={myprofile}>My profile</MenuItem>
+                          {from.from === "userDashboard" ? (
+                            <MenuItem onClick={myprofile}>Rezervare</MenuItem>
+                          ) : (
+                            <MenuItem onClick={myprofile}>My profile</MenuItem>
+                          )}
                           <MenuItem onClick={logout}>Logout</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
@@ -275,18 +283,16 @@ const NavbarRezervare = () => {
           >
             {!user ? (
               <Button
-              style={btnStyle}
-              variant="text"
-              size="small"
-              sx={{ mr: 2 }}
-              component={Link}
-              href="/auth"
-            >
-              SignIn
-            </Button>
-            ) : (
-             null
-            )}
+                style={btnStyle}
+                variant="text"
+                size="small"
+                sx={{ mr: 2 }}
+                component={Link}
+                href="/auth"
+              >
+                SignIn
+              </Button>
+            ) : null}
             <Select
               variant="outlined"
               sx={{
