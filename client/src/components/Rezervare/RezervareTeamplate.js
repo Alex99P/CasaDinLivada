@@ -99,7 +99,6 @@ const RezervareTeamplate = ({
   // console.log(totalHours);
 
   function ciubarDates(date) {
-    // console.log("!!!",date);
     if (date !== null) {
       setfromDateCiubar(moment(date[0]).format("MMM DD yyyy HH"));
       settoDateCiubar(moment(date[1]).format("MMM DD yyyy HH"));
@@ -191,6 +190,7 @@ const RezervareTeamplate = ({
       !(fromDate || fromDateCiubar)
     )
   }, [fromDate, fromDateCiubar])
+  
   function disableDatesGood(current) {
     return (
       (current && current < moment().endOf("day")) ||

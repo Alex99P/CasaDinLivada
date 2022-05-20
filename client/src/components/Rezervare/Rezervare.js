@@ -80,15 +80,7 @@ const Rezervare = () => {
 
   const [numberNights, setnumberNights] = useState(0);
 
-  async function getUser() {
-    try {
-      const response = await axios.get('http://localhost:5000/booking/house');
-      // console.log(response?.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  getUser();
+
   return (
     <>
       <NavbarRezervare />

@@ -104,9 +104,10 @@ const NavbarRezervare = (from) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  // console.log(user);
+  const [isAdmin, setIsAdmin] = useState(user?.result?.admin);
+
+  // console.log(isAdmin);
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/rezervare");
@@ -140,7 +141,7 @@ const NavbarRezervare = (from) => {
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
-  const authData = useSelector((state) => state.auth.authData);
+  // const authData = useSelector((state) => state.auth.authData);
   // console.log(authData?.message);
 
   // Dropdown menu
@@ -178,7 +179,6 @@ const NavbarRezervare = (from) => {
 
     prevOpen.current = open;
   }, [open]);
-  
 
   return (
     <>
@@ -263,6 +263,7 @@ const NavbarRezervare = (from) => {
                           ) : (
                             <MenuItem onClick={myprofile}>My profile</MenuItem>
                           )}
+                          <MenuItem onClick={myprofile}>Dashboard</MenuItem>
                           <MenuItem onClick={logout}>Logout</MenuItem>
                         </MenuList>
                       </ClickAwayListener>

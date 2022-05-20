@@ -3,9 +3,8 @@ import  mongoose  from "mongoose";
 
 const bookingSchema = new mongoose.Schema({
 
-      // car : {type : mongoose.Schema.Types.ObjectID , ref:'cars'},
       transactionId : {type : String},  
-      user : {type : mongoose.Schema.Types.ObjectID , ref:'users'},
+      user : {type : mongoose.Schema.Types.ObjectID , ref:'User'},
       bookTime : {
         fromDateCiubar : {type : String} ,
         toDateCiubar : {type : String}

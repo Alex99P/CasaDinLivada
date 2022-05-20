@@ -1,5 +1,6 @@
 import bookingModel from "../model/bookingModel.js";
 import bookingCiubar from "../model/bookingCiubar.js";
+import userModel from "../model/userModel.js";
 import Stripe from "stripe";
 import { v4 as uuidv4 } from "uuid";
 const stripe = new Stripe(
@@ -68,10 +69,27 @@ export const find = (req, res) => {
         res.status(500).send({ message: "Erro retrieving user with id " + id });
       });
   } else {
+
+    /*
+    // get all users with reservation
+
     bookingModel
       .find()
-      .then((data) => {
-        res.send(data);
+      .then(async (data) => {
+        const users = []
+        for(let booking of data) {
+          // console.log(booking);
+          const user = await userModel.findById(booking.user).lean()
+          users.push(user)
+        }
+        res.send(users.filter(el => !!el));
+      })
+    */
+      bookingModel
+      .find()
+      .populate('user', ['name', 'email', 'phoneNumber'])
+      .then( (data) => {
+        res.send(data)
       })
       .catch((err) => {
         res.status(500).send({
@@ -100,16 +118,17 @@ export const findCiubar = (req, res) => {
       });
   } else {
     bookingCiubar
-      .find()
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Error Occurred while retriving user information",
-        });
+    .find()
+    .populate('user', ['name', 'email', 'phoneNumber'])
+    .then( (data) => {
+      res.send(data)
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Error Occurred while retriving user information",
       });
+    });
   }
 };
 

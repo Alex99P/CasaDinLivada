@@ -69,6 +69,7 @@ const Userdashboard = () => {
   const [dataCiubar, setDataCiubar] = useState([]);
   const [reservationId, setReservationId] = useState();
   const [nameId, setNameId] = useState();
+  const [isAdmin, setIsAdmin] = useState(user?.result?.admin);
 
   const [open, setOpen] = useState(false);
 
@@ -153,13 +154,42 @@ const Userdashboard = () => {
 
   async function getDate() {
     try {
-      const response = await axios.get(`http://localhost:5000/booking/house/${id}`);
-      const responseCiubar = await axios.get(
-        `http://localhost:5000/booking/ciubar/${id}`
-      );
+      let response;
+      let responseCiubar;
+      if (isAdmin) {
+        response = await axios.get(`http://localhost:5000/booking/house`);
 
-      setData(response?.data);
-      setDataCiubar(responseCiubar?.data);
+        responseCiubar = await axios.get(
+          `http://localhost:5000/booking/ciubar`
+        );
+
+      } else {
+        response = await axios.get(`http://localhost:5000/booking/house/${id}`);
+        responseCiubar = await axios.get(
+          `http://localhost:5000/booking/ciubar/${id}`
+        );
+      }
+
+      setData(
+        [
+          ...response?.data.map((cabana) => ({
+            ...cabana,
+            bookTime: {
+              fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
+              toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
+            },
+          })),
+          ...responseCiubar?.data.map((ciubar) => ({
+            ...ciubar,
+            bookTime: {
+              fromDate: ciubar.bookTime.fromDateCiubar,
+              toDate: ciubar.bookTime.toDateCiubar,
+            },
+          })),
+        ].sort((a, b) =>
+          new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
+        )
+      );
     } catch (error) {
       console.error(error);
     }
@@ -176,13 +206,13 @@ const Userdashboard = () => {
       </Grid>
     );
   }
-
+  console.log(data);
   return (
     <>
       <NavbarRezervare from="userDashboard" />
       <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 }}>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={6} md={4} className="list">
+          <Grid item xs={4} md={2} className="list">
             <List component="nav">
               <ListItem>
                 <Button
@@ -215,7 +245,7 @@ const Userdashboard = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={6} md={8}>
+          <Grid item xs={8} md={10}>
             {nav === "account" && (
               <Paper variant="outlined" className="paper" sx={{ p: 3 }}>
                 <Typography variant="h3" color="initial">
@@ -275,7 +305,14 @@ const Userdashboard = () => {
                   <Table size="medium" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Name </TableCell>
+                        {isAdmin && (
+                          <>
+                            <TableCell align="left">User Name </TableCell>
+                            <TableCell align="left">Email</TableCell>
+                            <TableCell align="left">Phone Number</TableCell>
+                          </>
+                        )}
+                        <TableCell align="left">Select</TableCell>
                         <TableCell align="left">From Date</TableCell>
                         <TableCell align="left">To Date</TableCell>
                         <TableCell align="left"></TableCell>
@@ -289,6 +326,20 @@ const Userdashboard = () => {
                             "&:last-child td, &:last-child th": { border: 0 },
                           }}
                         >
+                          {isAdmin && (
+                            <>
+                              <TableCell align="left">
+                                {reservation.user?.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {reservation.user?.email}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {reservation.user?.phoneNumber}
+                              </TableCell>
+                              
+                            </>
+                          )}
                           <TableCell component="th" scope="row">
                             {reservation.name}
                           </TableCell>
@@ -314,38 +365,48 @@ const Userdashboard = () => {
                           </TableCell>
                         </TableRow>
                       ))}
-                      {dataCiubar.map((reservation) => (
-                        <TableRow
-                          key={reservation._id}
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {reservation.name}
-                          </TableCell>
-                          <TableCell align="left">
-                            {reservation.bookTime.fromDateCiubar}
-                          </TableCell>
-                          <TableCell align="left">
-                            {reservation.bookTime.toDateCiubar}
-                          </TableCell>
-                          <TableCell align="left">
-                            <Button
-                              variant="outlined"
-                              color="error"
-                              onClick={() =>
-                                handleClickOpen(
-                                  reservation._id,
-                                  reservation.name
-                                )
-                              }
-                            >
-                              Delete
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
+                      {/* {dataCiubar.map((reservation) => {
+                        console.log(reservation)
+                        return (
+                          <TableRow
+                            key={reservation._id}
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {reservation.name}
+                            </TableCell>
+                            <TableCell align="left">
+                              {reservation.bookTime.fromDateCiubar}
+                            </TableCell>
+                            <TableCell align="left">
+                              {reservation.bookTime.toDateCiubar}
+                            </TableCell>
+
+                            <TableCell align="left">
+                              {isAdmin && reservation.user?.name}
+                            </TableCell><TableCell align="left">
+                              {isAdmin && reservation.user?.email}
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <Button
+                                variant="outlined"
+                                color="error"
+                                onClick={() =>
+                                  handleClickOpen(
+                                    reservation._id,
+                                    reservation.name
+                                  )
+                                }
+                              >
+                                Delete
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })} */}
                     </TableBody>
                   </Table>
                 </TableContainer>
