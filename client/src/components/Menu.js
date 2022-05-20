@@ -35,8 +35,6 @@ const Menu = () => {
 
   return (
     <>
-        {/* <Typography variant="h1" color="white">Casa din Livada</Typography> */}
-
         <Navbar
         showMenu={showMenu}
         setShowMenu={setShowMenu}

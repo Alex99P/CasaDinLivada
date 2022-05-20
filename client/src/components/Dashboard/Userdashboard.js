@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
   List,
   ListItem,
-  ListItemText,
   Divider,
   Paper,
   Typography,
   Button,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import Input from "../Auth/Input";
 import axios from "axios";
-import { message } from "antd";
 import "./style.css";
 import NavbarRezervare from "../Navbar/NavbarRezervare";
 
@@ -53,6 +62,40 @@ const Userdashboard = () => {
   const lastName = words[1];
   const phoneNumber = user?.result?.phoneNumber;
   const id = user?.result?._id;
+  const [fromDate, setfromDate] = useState([]);
+  const [toDate, settoDate] = useState([]);
+  const [data, setData] = useState([]);
+  const [dataCiubar, setDataCiubar] = useState([]);
+  const [reservationId, setReservationId] = useState();
+  const [nameId, setNameId] = useState();
+
+  const [open, setOpen] = useState(false);
+
+  
+
+  const handleClickOpen = (id, name) => {
+    if (name === "cabana") {
+      setReservationId(id);
+      setNameId("cabana");
+    } else {
+      setReservationId(id);
+      setNameId("ciubar");
+    }
+    setOpen(true);
+  };
+  const handleDelete = () => {
+    deleteBooking(reservationId);
+    setOpen(false);
+  };
+  const handleDeleteCiubar = () => {
+    deleteBookingCiubar(reservationId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [form, setForm] = useState({
     firstName: firstName,
     lastName: lastName,
@@ -60,7 +103,30 @@ const Userdashboard = () => {
     email: email,
   });
 
-
+  const deleteBooking = (id) => {
+    axios
+      .delete(`http://localhost:5000/booking/house/${id}`)
+      .then(() => {
+        setData(data.filter(({ _id }) => _id !== id));
+        console.log("Delete successful");
+      })
+      .catch((error) => {
+        console.log(`Error: ${error.message}`);
+        console.error("There was an error!", error);
+      });
+  };
+  const deleteBookingCiubar = (id) => {
+    axios
+      .delete(`http://localhost:5000/booking/ciubar/${id}`)
+      .then(() => {
+        setDataCiubar(data.filter(({ _id }) => _id !== id));
+        console.log("Delete successful");
+      })
+      .catch((error) => {
+        console.log(`Error: ${error.message}`);
+        console.error("There was an error!", error);
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -80,10 +146,26 @@ const Userdashboard = () => {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  async function getDate() {
+    try {
+      const response = await axios.get("http://localhost:5000/booking/house");
+      const responseCiubar = await axios.get(
+        "http://localhost:5000/booking/ciubar"
+      );
+      console.log("!!!!", responseCiubar);
+      setData(response?.data);
+      setDataCiubar(responseCiubar?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    getDate();
+  }, []);
+
   return (
     <>
       <NavbarRezervare from="userDashboard" />
-
       <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 }}>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={6} md={4} className="list">
@@ -109,17 +191,6 @@ const Userdashboard = () => {
                   }}
                 >
                   My Bookings
-                </Button>
-              </ListItem>
-              <ListItem>
-                <Button
-                  style={btnStyle}
-                  fullWidth
-                  onClick={() => {
-                    setNav("email");
-                  }}
-                >
-                  Email and Passwords
                 </Button>
               </ListItem>
               <Divider light />
@@ -181,6 +252,115 @@ const Userdashboard = () => {
                 </form>
               </Paper>
             )}
+            {nav === "bookings" && (
+              <Paper variant="outlined" className="paper" sx={{ p: 3 }}>
+                <Typography variant="h3" color="initial">
+                  My bookings
+                </Typography>
+                <TableContainer component={Paper}>
+                  <Table size="medium" aria-label="a dense table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name </TableCell>
+                        <TableCell align="left">From Date</TableCell>
+                        <TableCell align="left">To Date</TableCell>
+                        <TableCell align="left"></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data.map((reservation) => (
+                        <TableRow
+                          key={reservation._id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {reservation.name}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.fromDate}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.toDate}
+                          </TableCell>
+                          <TableCell align="left">
+                            <Button
+                              variant="outlined"
+                              color="error"
+                              onClick={() =>
+                                handleClickOpen(
+                                  reservation._id,
+                                  reservation.name
+                                )
+                              }
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {dataCiubar.map((reservation) => (
+                        <TableRow
+                          key={reservation._id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {reservation.name}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.fromDateCiubar}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.toDateCiubar}
+                          </TableCell>
+                          <TableCell align="left">
+                            <Button
+                              variant="outlined"
+                              color="error"
+                              onClick={() =>
+                                handleClickOpen(
+                                  reservation._id,
+                                  reservation.name
+                                )
+                              }
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            )}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Sunteti sigur ca doriti sa anulati rezervarea ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Renunta</Button>
+                {nameId === "cabana" ? (
+                  <Button onClick={handleDelete} autoFocus>
+                    Sterge rezervarea
+                  </Button>
+                ) : (
+                  <Button onClick={handleDeleteCiubar} autoFocus>
+                    Sterge rezervarea
+                  </Button>
+                )}
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       </Box>

@@ -123,7 +123,6 @@ const RezervareTeamplate = ({
       const reqObj = {
         token,
         user: JSON.parse(localStorage.getItem("profile")).result._id,
-        // cabana sau ciubar trebuie sa le fac un id
         bookTime: {
           fromDate,
           toDate,
@@ -165,12 +164,12 @@ const RezervareTeamplate = ({
     const responseC = await axios.get("http://localhost:5000/booking/ciubar");
     //Trebuie sa fac ca si la dates
     // console.log(responseC?.data?.[0]?.bookTime?.fromDateCiubar);
-    var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr(
-      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    );
-    var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr(
-      (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    );
+    // var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr(
+    //   (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
+    // );
+    // var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr(
+    //   (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
+    // );
 
     // console.log("!!!!!!!",response?.data);
 

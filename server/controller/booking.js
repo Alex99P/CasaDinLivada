@@ -143,6 +143,31 @@ export const remove = (req, res) => {
     });
 };
 
+export const removeCiubar = (req, res) => {
+  const id = req.params.id;
+
+  bookingCiubar
+    .findByIdAndDelete(id)
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: `Cannot Delete with id ${id}. Maybe id is wrong` });
+      } else {
+        res.send({
+          message: "Rezervarea a fost stearsa cu succes",
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete User with id=" + id,
+      });
+    });
+};
+
+
+
 export const update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({ message: "Data to update can not be empty" });
