@@ -121,8 +121,6 @@ const NavbarRezervare = (from) => {
   };
 
   const handleChangeCurrency = (event) => {
-    console.log("first");
-
     setCurrency(event.target.value);
   };
 

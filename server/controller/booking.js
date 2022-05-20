@@ -34,17 +34,15 @@ export const booking = async (req, res) => {
         let newbooking = new bookingModel(req.body);
         await newbooking.save();
         res
-        .status(200)
-        .json({ newbooking, message: "Your booking is successfullyy" });
+          .status(200)
+          .json({ newbooking, message: "Your booking is successfullyy" });
       } else {
         let newbooking = new bookingCiubar(req.body);
         await newbooking.save();
         res
-        .status(200)
-        .json({ newbooking, message: "Your booking is successfullyy" });
+          .status(200)
+          .json({ newbooking, message: "Your booking is successfullyy" });
       }
-  
-
     } else {
       return res.status(400).json(error);
     }
@@ -54,13 +52,11 @@ export const booking = async (req, res) => {
 };
 
 export const find = (req, res) => {
-  console.log('gere')
   if (req.params.id) {
     const id = req.params.id;
-    
 
     bookingModel
-      .findById(id)
+      .find({ user: id })
       .then((data) => {
         if (!data) {
           res.status(404).send({ message: "Not found user with id " + id });
@@ -72,7 +68,6 @@ export const find = (req, res) => {
         res.status(500).send({ message: "Erro retrieving user with id " + id });
       });
   } else {
-    //bookingCiubar
     bookingModel
       .find()
       .then((data) => {
@@ -88,13 +83,11 @@ export const find = (req, res) => {
 };
 
 export const findCiubar = (req, res) => {
-
   if (req.params.id) {
     const id = req.params.id;
-    
 
     bookingCiubar
-      .findById(id)
+      .find({ user: id })
       .then((data) => {
         if (!data) {
           res.status(404).send({ message: "Not found user with id " + id });
@@ -165,8 +158,6 @@ export const removeCiubar = (req, res) => {
       });
     });
 };
-
-
 
 export const update = (req, res) => {
   if (!req.body) {

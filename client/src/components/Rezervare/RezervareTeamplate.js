@@ -117,9 +117,7 @@ const RezervareTeamplate = ({
   }
   // console.log("Ore",totalHours);
 
-  function onToken(token) {
-    console.log("first");
-    
+  function onToken(token) {    
     if (id === "cabana") {
       const reqObj = {
         token,

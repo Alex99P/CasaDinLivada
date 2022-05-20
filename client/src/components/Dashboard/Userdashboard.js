@@ -15,7 +15,6 @@ import {
   TableCell,
   TableBody,
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
@@ -53,7 +52,7 @@ const btnStyle = {
 
 const Userdashboard = () => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const [nav, setNav] = useState("account");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -72,8 +71,6 @@ const Userdashboard = () => {
   const [nameId, setNameId] = useState();
 
   const [open, setOpen] = useState(false);
-
-  
 
   const handleClickOpen = (id, name) => {
     if (name === "cabana") {
@@ -132,7 +129,7 @@ const Userdashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     axios
       .put(`http://localhost:5000/user/edit/${id}`, {
         name: `${form.firstName} ${form.lastName}`,
@@ -140,15 +137,15 @@ const Userdashboard = () => {
         phoneNumber: form.phoneNumber,
       })
       .then(({ data }) => {
-        const profile = JSON.parse(localStorage.getItem('profile'))
-        profile.result = data
+        const profile = JSON.parse(localStorage.getItem("profile"));
+        profile.result = data;
         localStorage.setItem("profile", JSON.stringify({ ...profile }));
-        setUser(profile)
-        setLoading(false)
+        setUser(profile);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false)
+        setLoading(false);
       });
   };
   const handleChange = (e) =>
@@ -156,11 +153,11 @@ const Userdashboard = () => {
 
   async function getDate() {
     try {
-      const response = await axios.get("http://localhost:5000/booking/house");
+      const response = await axios.get(`http://localhost:5000/booking/house/${id}`);
       const responseCiubar = await axios.get(
-        "http://localhost:5000/booking/ciubar"
+        `http://localhost:5000/booking/ciubar/${id}`
       );
-      console.log("!!!!", responseCiubar);
+
       setData(response?.data);
       setDataCiubar(responseCiubar?.data);
     } catch (error) {
@@ -174,10 +171,10 @@ const Userdashboard = () => {
 
   if (loading) {
     return (
-        <Grid container spacing={2} justifyContent="center" marginTop={'50%'}>
-          <CircularProgress />
-        </Grid>
-    )
+      <Grid container spacing={2} justifyContent="center" marginTop={"50%"}>
+        <CircularProgress />
+      </Grid>
+    );
   }
 
   return (
