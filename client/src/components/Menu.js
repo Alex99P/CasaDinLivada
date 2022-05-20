@@ -46,7 +46,7 @@ const Menu = () => {
                 sx={{
                   width: "400px",
                   height: "100vh",
-                  opacity: "0.9",
+                  opacity: "0.95",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",

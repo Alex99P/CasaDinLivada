@@ -19,6 +19,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  CircularProgress,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import Input from "../Auth/Input";
@@ -38,20 +39,21 @@ const useStyles = makeStyles({
   },
 });
 
-const Userdashboard = () => {
-  const btnStyle = {
-    textTransform: "none",
-    color: "black",
-    // backgroundColor: "white",
-    height: 45,
-    border: "none",
-    "&:hover": {
-      backgroundColor: "#c7c9c7",
-      border: "black",
-    },
-  };
+const btnStyle = {
+  textTransform: "none",
+  color: "black",
+  // backgroundColor: "white",
+  height: 45,
+  border: "none",
+  "&:hover": {
+    backgroundColor: "#c7c9c7",
+    border: "black",
+  },
+};
 
+const Userdashboard = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false)
 
   const [nav, setNav] = useState("account");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -130,17 +132,23 @@ const Userdashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     axios
       .put(`http://localhost:5000/user/edit/${id}`, {
         name: `${form.firstName} ${form.lastName}`,
         email: form.email,
         phoneNumber: form.phoneNumber,
       })
-      .then((response) => {
-        console.log(response);
+      .then(({ data }) => {
+        const profile = JSON.parse(localStorage.getItem('profile'))
+        profile.result = data
+        localStorage.setItem("profile", JSON.stringify({ ...profile }));
+        setUser(profile)
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false)
       });
   };
   const handleChange = (e) =>
@@ -159,9 +167,18 @@ const Userdashboard = () => {
       console.error(error);
     }
   }
+
   useEffect(() => {
     getDate();
   }, []);
+
+  if (loading) {
+    return (
+        <Grid container spacing={2} justifyContent="center" marginTop={'50%'}>
+          <CircularProgress />
+        </Grid>
+    )
+  }
 
   return (
     <>

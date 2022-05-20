@@ -58,6 +58,7 @@ const RezervareTeamplate = ({
   // variables for room
   const [showRoom, setShowRoom] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [isPayDisabled, setIsPayDisabled] = useState(false);
   const { RangePicker } = DatePicker;
   const [fromDate, setfromDate] = useState();
   const [toDate, settoDate] = useState();
@@ -186,6 +187,12 @@ const RezervareTeamplate = ({
     getAllBookings();
   }, []);
 
+
+  useEffect(() => {
+    setIsPayDisabled(
+      !(fromDate || fromDateCiubar)
+    )
+  }, [fromDate, fromDateCiubar])
   function disableDatesGood(current) {
     return (
       (current && current < moment().endOf("day")) ||
@@ -266,6 +273,7 @@ const RezervareTeamplate = ({
                     {name === "cabana" ? (
                       <Space direction="vertical">
                         <RangePicker
+                          allowClear={false}
                           format="DD-MM-YYYY"
                           onChange={Dates}
                           disabledDate={disableDatesGood}
@@ -274,6 +282,7 @@ const RezervareTeamplate = ({
                     ) : (
                       <Space direction="vertical">
                         <RangePicker
+                          allowClear={false}
                           showTime={{ format: "HH" }}
                           format="MMM DD yyyy HH"
                           onChange={ciubarDates}
@@ -284,12 +293,13 @@ const RezervareTeamplate = ({
                     )}
 
                     <StripeCheckout
+                      disabled={isPayDisabled}
                       token={onToken}
                       currency="RON"
                       amount={amount * 100}
                       stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                     >
-                      <Button variant="text">Book now</Button>
+                      <Button disabled={isPayDisabled} variant="text">Book now</Button>
                     </StripeCheckout>
                   </AccordionDetails>
                 </Accordion>

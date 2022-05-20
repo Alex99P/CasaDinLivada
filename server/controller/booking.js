@@ -54,7 +54,7 @@ export const booking = async (req, res) => {
 };
 
 export const find = (req, res) => {
-
+  console.log('gere')
   if (req.params.id) {
     const id = req.params.id;
     

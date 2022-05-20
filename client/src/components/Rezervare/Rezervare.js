@@ -5,6 +5,7 @@ import {
   Typography,
   Button,
   TextField,
+  Container,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import moment from "moment";
@@ -81,58 +82,55 @@ const Rezervare = () => {
 
   async function getUser() {
     try {
-    const response = await axios.get('http://localhost:5000/booking/house');
-    // console.log(response?.data);
-  } catch (error) {
-    console.error(error);
+      const response = await axios.get('http://localhost:5000/booking/house');
+      // console.log(response?.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
-}
-getUser();
+  getUser();
   return (
     <>
       <NavbarRezervare />
-
 
       <Stack
         direction="row"
         justifyContent="space-between"
         alignItems="flex-start"
       >
-        <Stack
-          direction="column"
-        >
-          <RezervareTeamplate 
-          name={"cabana"}
-          title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
-          body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
-          textBtn={"Descriere camera"}
-          checkBox={true}
-          mTop={true}
-          setnumberNights={setnumberNights}
-          setfromMonth={setfromMonth}
-          settoMonth={settoMonth}
-          setfromDay={setfromDay}
-          settoDay={settoDay}
+        <Container>
+          <RezervareTeamplate
+            name={"cabana"}
+            title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
+            body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
+            textBtn={"Descriere camera"}
+            checkBox={true}
+            mTop={true}
+            setnumberNights={setnumberNights}
+            setfromMonth={setfromMonth}
+            settoMonth={settoMonth}
+            setfromDay={setfromDay}
+            settoDay={settoDay}
           />
           {/* Trebuie sa trimit props-rile si pt sauna */}
-          <RezervareTeamplate 
-          name={"sauna"}
-          title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
-          body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
-          textBtn={"Descriere camera"}
-          checkBox={false}
-          mTop={false}
-          setnumberNights={setnumberNights}
-          setfromMonth={setfromMonth}
-          settoMonth={settoMonth}
-          setfromDay={setfromDay}
-          settoDay={settoDay}
+          <RezervareTeamplate
+            name={"sauna"}
+            title={"SAUNA DIN LIVADA(ADULTI/FAMILII)"}
+            body={"Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."}
+            textBtn={"Descriere camera"}
+            checkBox={false}
+            mTop={false}
+            setnumberNights={setnumberNights}
+            setfromMonth={setfromMonth}
+            settoMonth={settoMonth}
+            setfromDay={setfromDay}
+            settoDay={settoDay}
           />
-        </Stack>
+        </Container>
 
         <Stack
           mt={12}
-          sx={{ border: "1px solid black", width: "1000px", height: "200px" }}
+          sx={{ border: "1px solid black", maxWidth: "400px", height: "200px" }}
           p={2}
           mr={2}
           spacing={3}

@@ -86,7 +86,7 @@ export const update = (req, res) => {
 
   const id = req.params.id;
   UserModal
-    .findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .findByIdAndUpdate(id, req.body, { returnDocument: 'after' })
     .then((data) => {
       if (!data) {
         res.status(404).send({
