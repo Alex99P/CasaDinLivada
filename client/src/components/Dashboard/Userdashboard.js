@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Grid,
-  List,
-  ListItem,
-  Divider,
-  Paper,
-  Typography,
-  Button,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  CircularProgress,
-} from "@mui/material";
 import { makeStyles } from "@material-ui/core";
-import Input from "../Auth/Input";
+import {
+  Box, Button, CircularProgress, Dialog, DialogActions, DialogContent,
+  DialogContentText, Divider, Grid, Link, List,
+  ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead,
+  TableRow, Typography
+} from "@mui/material";
 import axios from "axios";
-import "./style.css";
+import React, { useEffect, useState } from "react";
+import Input from "../Auth/Input";
 import NavbarRezervare from "../Navbar/NavbarRezervare";
+import "./style.css";
 
 const useStyles = makeStyles({
   root: {
@@ -211,9 +196,9 @@ const Userdashboard = () => {
     <>
       <NavbarRezervare from="userDashboard" />
       <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 }}>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={4} md={2} className="list">
-            <List component="nav">
+        <Grid container spacing={2} justifyContent="center" height='100%'>
+          <Grid item xs={12} md={2} className="list">
+            <List component="nav" >
               <ListItem>
                 <Button
                   style={btnStyle}
@@ -239,13 +224,13 @@ const Userdashboard = () => {
               </ListItem>
               <Divider light />
               <ListItem>
-                <Button style={btnStyle} fullWidth>
+                <Button style={btnStyle} fullWidth component={Link}>
                   LogOut
                 </Button>
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={8} md={10}>
+          <Grid item xs={12} md={10}>
             {nav === "account" && (
               <Paper variant="outlined" className="paper" sx={{ p: 3 }}>
                 <Typography variant="h3" color="initial">
@@ -297,12 +282,12 @@ const Userdashboard = () => {
               </Paper>
             )}
             {nav === "bookings" && (
-              <Paper variant="outlined" className="paper" sx={{ p: 3 }}>
+              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh' }}>
                 <Typography variant="h3" color="initial">
                   My bookings
                 </Typography>
-                <TableContainer component={Paper}>
-                  <Table size="medium" aria-label="a dense table">
+                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '80vh' }}>
+                  <Table size="medium" aria-label="a dense table" height="100%">
                     <TableHead>
                       <TableRow>
                         {isAdmin && (

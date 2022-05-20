@@ -1,132 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
-  Toolbar,
-  MenuItem,
-  Button,
-  AppBar,
-  Stack,
-  Box,
-  Typography,
-  Divider,
-  Link,
-  Select,
-  ClickAwayListener,
-  Grow,
-  Paper,
-  Popper,
-  MenuList,
+  AppBar, Box, Divider, IconButton, Stack, Toolbar, useMediaQuery, useTheme
 } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
 import decode from "jwt-decode";
-import StarIcon from "@mui/icons-material/Star";
-import { makeStyles } from "@material-ui/styles";
-import { useSelector } from "react-redux";
-
-const useStyles = makeStyles({
-  textField: {
-    "& .MuiInputBase-root": {
-      color: "white",
-    },
-    "& label.Mui-focused": {
-      color: "white",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "none",
-      },
-      "&:hover fieldset": {
-        borderColor: "none",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "white",
-      },
-    },
-  },
-  btn: {
-    color: "black",
-    backgroundColor: "white",
-    border: "none",
-    "&:hover": {
-      backgroundColor: "#e1e3e1",
-      border: "none",
-    },
-  },
-  link: {
-    "&:hover": {
-      backgroundColor: "black",
-    },
-  },
-});
-
-const currencies = [
-  {
-    value: "RON",
-    label: "RON",
-  },
-  {
-    value: "USD",
-    label: "USD",
-  },
-  {
-    value: "EUR",
-    label: "EURO",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-];
-const languages = [
-  {
-    value: "Romana",
-    label: "RO",
-  },
-  {
-    value: "Engleza",
-    label: "EN",
-  },
-];
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import Currencies from "./Currencies";
+import Languages from "./Languages";
+import Logo from "./Logo";
+import User from "./User";
 
 const NavbarRezervare = (from) => {
-  const classes = useStyles();
-  const btnStyle = {
-    color: "white",
-    border: "none",
-    "&:hover": {
-      backgroundColor: "#e1e3e1",
-      border: "none",
-    },
-  };
-  const [currency, setCurrency] = useState("RON");
-  const [language, setLanguage] = useState("Romana");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isAdmin, setIsAdmin] = useState(user?.result?.admin);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // console.log(isAdmin);
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/rezervare");
     setUser(null);
-  };
-  const myprofile = () => {
-    if (from.from === "userDashboard") {
-      navigate("/rezervare");
-    } else {
-      navigate("/myprofile");
-    }
-  };
-
-  const handleChangeCurrency = (event) => {
-    setCurrency(event.target.value);
-  };
-
-  const handleChangeLanguage = (event) => {
-    setLanguage(event.target.value);
   };
 
   useEffect(() => {
@@ -161,17 +60,9 @@ const NavbarRezervare = (from) => {
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setOpen(false);
-    } else if (event.key === "Escape") {
-      setOpen(false);
-    }
-  }
-
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
@@ -180,164 +71,43 @@ const NavbarRezervare = (from) => {
     prevOpen.current = open;
   }, [open]);
 
+  const handleMenuClick = () => setIsMenuOpen(!isMenuOpen)
+
   return (
     <>
       <AppBar sx={{ backgroundColor: "black", boxShadow: 0 }}>
         <Toolbar>
           <Box display="flex" flexGrow={1}>
-            <Stack
-              direction="column"
-              justifyContent="center"
-              alignItems="flex-start"
+            <Logo />
+          </Box>
+          {isMobile ?
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleMenuClick}
             >
+              <MenuIcon />
+            </IconButton>
+            :
+            <>
+              <User from={from} />
               <Stack
                 direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={0.2}
+                marginRight={-3.5}
+                divider={<Divider orientation="vertical" color="white" flexItem />}
               >
-                <Link
-                  // className={classes.link}
-                  href="/"
-                  // underline="hover"
-                  underline="none"
-                  color="black"
-                  variant="h5"
-                >
-                  <Typography variant="h6" color="white" mr={2}>
-                    Casa Din Livada
-                  </Typography>
-                </Link>
-
-                <StarIcon fontSize={"small"} />
-                <StarIcon fontSize="small" />
-                <StarIcon fontSize="small" />
+                <Currencies />
+                <Languages />
               </Stack>
-              <Typography fontSize={11} color="white" mr={2}>
-                Sistemul oficial de rezervare
-              </Typography>
-            </Stack>
-          </Box>
-          {user ? (
-            <div>
-              <Button
-                ref={anchorRef}
-                id="composition-button"
-                aria-controls={open ? "composition-menu" : undefined}
-                aria-expanded={open ? "true" : undefined}
-                aria-haspopup="true"
-                onClick={handleToggle}
-                sx={{ color: "white" }}
-                endIcon={<KeyboardArrowDownIcon />}
-              >
-                {user?.result?.name}
-              </Button>
-              <Popper
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                placement="bottom-start"
-                transition
-                disablePortal
-              >
-                {({ TransitionProps, placement }) => (
-                  <Grow
-                    {...TransitionProps}
-                    style={{
-                      transformOrigin:
-                        placement === "bottom-start"
-                          ? "left top"
-                          : "left bottom",
-                    }}
-                  >
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <MenuList
-                          autoFocusItem={open}
-                          id="composition-menu"
-                          aria-labelledby="composition-button"
-                          onKeyDown={handleListKeyDown}
-                        >
-                          {from.from === "userDashboard" ? (
-                            <MenuItem onClick={myprofile}>Rezervare</MenuItem>
-                          ) : (
-                            <MenuItem onClick={myprofile}>My profile</MenuItem>
-                          )}
-                          <MenuItem onClick={myprofile}>Dashboard</MenuItem>
-                          <MenuItem onClick={logout}>Logout</MenuItem>
-                        </MenuList>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-            </div>
-          ) : null}
-
-          <Stack
-            direction="row"
-            // spacing={0.5}
-            marginRight={-3.5}
-            divider={<Divider orientation="vertical" color="white" flexItem />}
-          >
-            {!user ? (
-              <Button
-                style={btnStyle}
-                variant="text"
-                size="small"
-                sx={{ mr: 2 }}
-                component={Link}
-                href="/auth"
-              >
-                SignIn
-              </Button>
-            ) : null}
-            <Select
-              variant="outlined"
-              sx={{
-                marginRight: 2,
-                color: "#fff",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                  borderColor: "white",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black",
-                },
-              }}
-              value={currency}
-              onChange={handleChangeCurrency}
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-
-            <Select
-              variant="outlined"
-              sx={{
-                marginRight: 1,
-                color: "#fff",
-                "& .MuiSvgIcon-root": {
-                  color: "white",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "black",
-                },
-              }}
-              value={language}
-              onChange={handleChangeLanguage}
-            >
-              {languages.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </Stack>
+            </>}
         </Toolbar>
+        {isMenuOpen && <Box display="flex" flexDirection='column' alignItems='end' paddingRight={2} sx={{borderTop: '1px solid gray'}} >
+          <User from={from}  />
+          <Currencies />
+          <Languages />
+        </Box>}
       </AppBar>
     </>
   );

@@ -214,17 +214,15 @@ const RezervareTeamplate = ({
         style={margin}
       >
         <Grid
-          marginBottom={4}
-          item
-          ml={3}
-          mr={5}
+          mb={4}
+          item          
           sx={{ border: "1px solid black" }}
         >
-          <Grid container direction="row" alignItems="center" p={2}>
-            <Grid item md={2} mr={10}>
+          <Grid container direction="row" alignItems="center" p={2} columnGap={4} rowGap={2}>
+            <Grid item md={5} lg={3}>
               <Stack height="200px" bgcolor="#9e9e9e" width="240px"></Stack>
             </Grid>
-            <Grid item ml={7} md={7}>
+            <Grid item md={6} lg={8}>
               <Typography variant="h6" gutterBottom>
                 {title}
               </Typography>

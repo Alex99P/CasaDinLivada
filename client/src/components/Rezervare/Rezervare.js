@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarRezervare from "../Navbar/NavbarRezervare";
 import {
   Stack,
@@ -6,6 +6,8 @@ import {
   Button,
   TextField,
   Container,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import moment from "moment";
@@ -67,7 +69,9 @@ const Rezervare = () => {
 
 
   const classes = useStyles();
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  
   //whole date
   const [fromDate, setfromDate] = useState();
   const [toDate, settoDate] = useState();
@@ -80,17 +84,16 @@ const Rezervare = () => {
 
   const [numberNights, setnumberNights] = useState(0);
 
-
   return (
     <>
       <NavbarRezervare />
 
       <Stack
-        direction="row"
+        direction={isMobile ? "column" : "row"}
         justifyContent="space-between"
         alignItems="flex-start"
       >
-        <Container>
+        <Container maxWidth='lg'>
           <RezervareTeamplate
             name={"cabana"}
             title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
@@ -122,16 +125,20 @@ const Rezervare = () => {
 
         <Stack
           mt={12}
-          sx={{ border: "1px solid black", maxWidth: "400px", height: "200px" }}
           p={2}
+          pt={0}
           mr={2}
           spacing={3}
+          width={'100%'}
+          sx={{ maxWidth: '400px' }}
         >
           <Stack
+            sx={{ border: "1px solid black", borderBottom: 'none' }}
             direction="row"
             justifyContent="flex-start"
             alignItems="baseline"
             spacing={2}
+            p={2}
           >
             <Stack
               height="50px"
@@ -148,8 +155,7 @@ const Rezervare = () => {
             </Stack>
             <Typography variant="h6">Excelent</Typography>
           </Stack>
-
-          <Stack justifyContent="center" alignItems="flex-start">
+          <Stack p={2} mt={0} sx={{ border: "1px solid black", borderTop: 'none', margin: '0 !important' }}>
             <Typography variant="body1">Rezervarea mea</Typography>
             <Stack direction="row" justifyContent="center" mt={1}>
               <Stack
