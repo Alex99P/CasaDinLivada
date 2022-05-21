@@ -191,7 +191,7 @@ const Userdashboard = () => {
       </Grid>
     );
   }
-  console.log(data);
+  console.log("Aici",data);
   return (
     <>
       <NavbarRezervare from="userDashboard" />
@@ -350,48 +350,6 @@ const Userdashboard = () => {
                           </TableCell>
                         </TableRow>
                       ))}
-                      {/* {dataCiubar.map((reservation) => {
-                        console.log(reservation)
-                        return (
-                          <TableRow
-                            key={reservation._id}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell component="th" scope="row">
-                              {reservation.name}
-                            </TableCell>
-                            <TableCell align="left">
-                              {reservation.bookTime.fromDateCiubar}
-                            </TableCell>
-                            <TableCell align="left">
-                              {reservation.bookTime.toDateCiubar}
-                            </TableCell>
-
-                            <TableCell align="left">
-                              {isAdmin && reservation.user?.name}
-                            </TableCell><TableCell align="left">
-                              {isAdmin && reservation.user?.email}
-                            </TableCell>
-
-                            <TableCell align="left">
-                              <Button
-                                variant="outlined"
-                                color="error"
-                                onClick={() =>
-                                  handleClickOpen(
-                                    reservation._id,
-                                    reservation.name
-                                  )
-                                }
-                              >
-                                Delete
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      })} */}
                     </TableBody>
                   </Table>
                 </TableContainer>

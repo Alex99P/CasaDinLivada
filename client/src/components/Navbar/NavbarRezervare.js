@@ -43,22 +43,10 @@ const NavbarRezervare = (from) => {
   // const authData = useSelector((state) => state.auth.authData);
   // console.log(authData?.message);
 
-  // Dropdown menu
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);
@@ -77,7 +65,7 @@ const NavbarRezervare = (from) => {
     <>
       <AppBar sx={{ backgroundColor: "black", boxShadow: 0 }}>
         <Toolbar>
-          <Box display="flex" flexGrow={1}>
+          <Box display="flex" flexGrow={1} >
             <Logo />
           </Box>
           {isMobile ?
@@ -103,10 +91,12 @@ const NavbarRezervare = (from) => {
               </Stack>
             </>}
         </Toolbar>
-        {isMenuOpen && <Box display="flex" flexDirection='column' alignItems='end' paddingRight={2} sx={{borderTop: '1px solid gray'}} >
+        {isMenuOpen && <Box display="flex" flexDirection='column' alignItems='end' paddingRight={2} sx={{borderTop: '1px solid gray'}}  >
+          <div  className="navbar">
           <User from={from}  />
           <Currencies />
           <Languages />
+          </div>
         </Box>}
       </AppBar>
     </>

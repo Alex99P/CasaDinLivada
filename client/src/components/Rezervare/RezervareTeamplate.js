@@ -15,10 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
 import "antd/dist/antd.min.css";
-import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
-import { useDispatch } from "react-redux";
 import axios from "axios";
-import StripeCheckout from "react-stripe-checkout";
 
 const RezervareTeamplate = ({
   name,
@@ -32,6 +29,11 @@ const RezervareTeamplate = ({
   settoMonth,
   setfromDay,
   settoDay,
+  setfromDate,
+  settoDate,
+  setid,
+  setfromDateCiubar,
+  settoDateCiubar,
 }) => {
   const btnStyle = {
     marginTop: "20px",
@@ -58,20 +60,13 @@ const RezervareTeamplate = ({
   // variables for room
   const [showRoom, setShowRoom] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [isPayDisabled, setIsPayDisabled] = useState(false);
   const { RangePicker } = DatePicker;
-  const [fromDate, setfromDate] = useState();
-  const [toDate, settoDate] = useState();
-  const [fromDateCiubar, setfromDateCiubar] = useState();
-  const [toDateCiubar, settoDateCiubar] = useState();
-  const dispatch = useDispatch();
   const dateFormat = "DD-MM-YYYY";
   const disabledHours = [];
   const [totalHours, setTotalHours] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [id, setid] = useState("");
+  // const [id, setid] = useState("");
   const [disabledDates, setDisabledDates] = useState([]);
-  let amount = 10;
 
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -80,6 +75,8 @@ const RezervareTeamplate = ({
     setShowRoom(false);
   };
   function Dates(date) {
+    console.log(moment(date[0]).format("DD-MM-YYYY"));
+
     // Trebuie sa fac sa apara disable toate zilele selectate
     // var today = moment();
     // var tomorrow = moment(today).add(-1, 'days');
@@ -99,53 +96,20 @@ const RezervareTeamplate = ({
   // console.log(totalHours);
 
   function ciubarDates(date) {
+    // console.log(moment(date[0]).format("DD MM yyyy HH"));
+    
     if (date !== null) {
-      setfromDateCiubar(moment(date[0]).format("MMM DD yyyy HH"));
-      settoDateCiubar(moment(date[1]).format("MMM DD yyyy HH"));
+      setfromDateCiubar(moment(date[0]).format("DD MM yyyy HH"));
+      settoDateCiubar(moment(date[1]).format("DD MM yyyy HH"));
 
       setTotalHours(date[1].diff(date[0], "hours"));
       // console.log("Ore",totalHours);
 
       setid("ciubar");
     }
-    //   for (let i = 0; i < moment().hour(); i++) {
-    //     if(moment()){
-    //     // hours.push(i);
-    //   }
-    // }
   }
   // console.log("Ore",totalHours);
 
-  function onToken(token) {    
-    if (id === "cabana") {
-      const reqObj = {
-        token,
-        user: JSON.parse(localStorage.getItem("profile")).result._id,
-        bookTime: {
-          fromDate,
-          toDate,
-        },
-        name: id,
-        amount,
-      };
-      // console.log(reqObj);
-      dispatch(bookingHouse(reqObj));
-      // window.location.reload();
-    } else {
-      const reqObj = {
-        token,
-        user: JSON.parse(localStorage.getItem("profile")).result._id,
-        bookTime: {
-          fromDateCiubar,
-          toDateCiubar,
-        },
-        name: id,
-        amount,
-      };
-      dispatch(bookingCiubar(reqObj));
-      // window.location.reload();
-    }
-  }
   function getDisabledHours() {
     var hours = [];
     // console.log(moment());
@@ -177,20 +141,18 @@ const RezervareTeamplate = ({
         end: moment(res?.bookTime?.toDate, dateFormat),
       };
     });
-    // console.log("Result",result);
     setDisabledDates([...disabledDates, ...result]);
   }
   useEffect(() => {
     getAllBookings();
   }, []);
 
+  // useEffect(() => {
+  //   setIsPayDisabled(
+  //     !(fromDate || fromDateCiubar)
+  //   )
+  // }, [fromDate, fromDateCiubar])
 
-  useEffect(() => {
-    setIsPayDisabled(
-      !(fromDate || fromDateCiubar)
-    )
-  }, [fromDate, fromDateCiubar])
-  
   function disableDatesGood(current) {
     return (
       (current && current < moment().endOf("day")) ||
@@ -203,7 +165,7 @@ const RezervareTeamplate = ({
       )
     );
   }
- 
+
   return (
     <>
       <Grid
@@ -213,12 +175,15 @@ const RezervareTeamplate = ({
         alignItems="flex-start"
         style={margin}
       >
-        <Grid
-          mb={4}
-          item          
-          sx={{ border: "1px solid black" }}
-        >
-          <Grid container direction="row" alignItems="center" p={2} columnGap={4} rowGap={2}>
+        <Grid mb={4} item sx={{ border: "1px solid black" }}>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            p={2}
+            columnGap={4}
+            rowGap={2}
+          >
             <Grid item md={5} lg={3}>
               <Stack height="200px" bgcolor="#9e9e9e" width="240px"></Stack>
             </Grid>
@@ -280,23 +245,14 @@ const RezervareTeamplate = ({
                         <RangePicker
                           allowClear={false}
                           showTime={{ format: "HH" }}
-                          format="MMM DD yyyy HH"
+                          format="DD MM yyyy HH"
                           onChange={ciubarDates}
                           disabledHours={getDisabledHours}
                           disabledDate={disableDatesGood}
                         />
                       </Space>
                     )}
-
-                    <StripeCheckout
-                      disabled={isPayDisabled}
-                      token={onToken}
-                      currency="RON"
-                      amount={amount * 100}
-                      stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
-                    >
-                      <Button disabled={isPayDisabled} variant="text">Book now</Button>
-                    </StripeCheckout>
+                    <Button variant="text">Book now</Button>
                   </AccordionDetails>
                 </Accordion>
                 {/* </Stack> */}
