@@ -10,6 +10,9 @@ const stripe = new Stripe(
 export const booking = async (req, res) => {
   const { token } = req.body;
 
+
+  // console.log(req.body);
+  
   try {
     const customer = await stripe.customers.create({
       email: token.email,

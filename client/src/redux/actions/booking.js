@@ -7,8 +7,6 @@ export const bookingHouse = (reqObj) => async (dispatch) => {
     
     await api.bookingHouse(reqObj);
     // await axios.post("http://localhost:5000/booking/bookingHouse" , reqObj);
-    // console.log(data);
-    // const { data } =
     
   
   } catch (error) {

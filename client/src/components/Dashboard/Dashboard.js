@@ -35,7 +35,7 @@ const btnStyle = {
   },
 };
 
-const Userdashboard = () => {
+const Dashboard = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -191,12 +191,11 @@ const Userdashboard = () => {
       </Grid>
     );
   }
-  console.log("Aici",data);
   return (
     <>
       <NavbarRezervare from="userDashboard" />
-      <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 }}>
-        <Grid container spacing={2} justifyContent="center" height='100%'>
+      <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 , }}>
+        <Grid container spacing={2} justifyContent="center" height='100%' sx={{marginBottom:10}}>
           <Grid item xs={12} md={2} className="list">
             <List component="nav" >
               <ListItem>
@@ -219,7 +218,7 @@ const Userdashboard = () => {
                     setNav("bookings");
                   }}
                 >
-                  My Bookings
+                   {isAdmin ? "All bookings":"My bookings"}
                 </Button>
               </ListItem>
               <Divider light />
@@ -282,11 +281,11 @@ const Userdashboard = () => {
               </Paper>
             )}
             {nav === "bookings" && (
-              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh' }}>
+              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh'}}>
                 <Typography variant="h3" color="initial">
-                  My bookings
+                 {isAdmin ? "All bookings":"My bookings"}
                 </Typography>
-                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '80vh' }}>
+                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '70vh' }}>
                   <Table size="medium" aria-label="a dense table" height="100%">
                     <TableHead>
                       <TableRow>
@@ -386,4 +385,4 @@ const Userdashboard = () => {
   );
 };
 
-export default Userdashboard;
+export default Dashboard;

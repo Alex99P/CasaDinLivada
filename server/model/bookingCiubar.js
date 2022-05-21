@@ -9,8 +9,8 @@ const bookingSchema = new mongoose.Schema({
         fromDateCiubar : {type : String} ,
         toDateCiubar : {type : String}
       },
-      name: {type: String}
-      // totalAmount : {type : Number},
+      name: {type: String},
+      amount : {type : Number}
 },
   {timestamps : true}
 )

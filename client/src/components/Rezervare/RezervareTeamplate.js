@@ -25,6 +25,7 @@ const RezervareTeamplate = ({
   checkBox,
   mTop,
   setnumberNights,
+  setnumberHours,
   setfromMonth,
   settoMonth,
   setfromDay,
@@ -34,6 +35,9 @@ const RezervareTeamplate = ({
   setid,
   setfromDateCiubar,
   settoDateCiubar,
+  withCiubar,
+  setwithCiubar
+
 }) => {
   const btnStyle = {
     marginTop: "20px",
@@ -59,13 +63,9 @@ const RezervareTeamplate = ({
   }
   // variables for room
   const [showRoom, setShowRoom] = useState(false);
-  const [checked, setChecked] = useState(false);
   const { RangePicker } = DatePicker;
   const dateFormat = "DD-MM-YYYY";
   const disabledHours = [];
-  const [totalHours, setTotalHours] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
-  // const [id, setid] = useState("");
   const [disabledDates, setDisabledDates] = useState([]);
 
   const handleRoomOpen = () => {
@@ -82,37 +82,37 @@ const RezervareTeamplate = ({
     // var tomorrow = moment(today).add(-1, 'days');
 
     if (date !== null) {
+      const a=moment(date[0]);
+
       setfromDate(moment(date[0]).format("DD-MM-YYYY"));
       setfromMonth(moment(date[0]).format("MMMM"));
       setfromDay(moment(date[0]).format("DD"));
 
+      const b=moment(date[1]);
       settoDate(moment(date[1]).format("DD-MM-YYYY"));
       settoMonth(moment(date[1]).format("MMMM"));
       settoDay(moment(date[1]).format("DD"));
       setid("cabana");
-      // setnumberNights(moment.duration(toDate.diff(fromDate)).asDays());
+      setnumberNights(b.diff(a,"days"));
+      
     }
   }
-  // console.log(totalHours);
 
-  function ciubarDates(date) {
-    // console.log(moment(date[0]).format("DD MM yyyy HH"));
-    
+  function ciubarDates(date) {    
     if (date !== null) {
+      const a=moment(date[0]);
+      const b=moment(date[1]);
       setfromDateCiubar(moment(date[0]).format("DD MM yyyy HH"));
       settoDateCiubar(moment(date[1]).format("DD MM yyyy HH"));
 
-      setTotalHours(date[1].diff(date[0], "hours"));
-      // console.log("Ore",totalHours);
+      setnumberHours(b.diff(a,"hours")+1)
 
       setid("ciubar");
     }
   }
-  // console.log("Ore",totalHours);
 
   function getDisabledHours() {
     var hours = [];
-    // console.log(moment());
 
     for (let i = 0; i < moment().hour(); i++) {
       if (moment()) {
@@ -146,12 +146,6 @@ const RezervareTeamplate = ({
   useEffect(() => {
     getAllBookings();
   }, []);
-
-  // useEffect(() => {
-  //   setIsPayDisabled(
-  //     !(fromDate || fromDateCiubar)
-  //   )
-  // }, [fromDate, fromDateCiubar])
 
   function disableDatesGood(current) {
     return (
@@ -212,11 +206,11 @@ const RezervareTeamplate = ({
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={checked}
-                        onChange={() => setChecked(!checked)}
+                        checked={withCiubar}
+                        onChange={() => setwithCiubar(!withCiubar)}
                       />
                     }
-                    label="Cu mic dejun"
+                    label="Cu ciubar"
                   />
                 ) : (
                   <Stack></Stack>
