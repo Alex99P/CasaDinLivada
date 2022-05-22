@@ -72,6 +72,7 @@ const User = ({ from }) => {
                     ? <MenuItem onClick={myprofile}>Profile</MenuItem>
                     : <MenuItem onClick={myprofile}>My account</MenuItem>
                 }
+                <MenuItem onClick={()=>{navigate("/")}}>Home</MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
         </>

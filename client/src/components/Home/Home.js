@@ -1,7 +1,7 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import img from "../../imagini/imaginea1.jpg";
-import Menu from "../Menu";
+import Menu from "../Menu/Menu";
 import "./Home.scss";
 
 

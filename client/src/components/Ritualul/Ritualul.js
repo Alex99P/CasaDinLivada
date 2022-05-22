@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaAirbnb } from "react-icons/fa";
 import img from "../../imagini/imaginea2.jpg";
 import "../Home/Home.scss";
-import Menu from "../Menu";
+import Menu from "../Menu/Menu";
 import "./Ritualul.scss";
 //alt+shift+f  pentru indentare
 
@@ -126,7 +126,7 @@ const Ritualul = () => {
             maxWidth="500px"
           />
           {/* aici o sa vina poza */}
-          <Grid item xs={12} md={7} maxmaxWidth="600px"  >
+          <Grid item xs={12} md={7} maxWidth="600px"  >
             <Typography variant="h5" gutterBottom>
               Pasul 1
             </Typography>

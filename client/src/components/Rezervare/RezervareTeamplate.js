@@ -36,8 +36,7 @@ const RezervareTeamplate = ({
   setfromDateCiubar,
   settoDateCiubar,
   withCiubar,
-  setwithCiubar
-
+  setwithCiubar,
 }) => {
   const btnStyle = {
     marginTop: "20px",
@@ -75,52 +74,49 @@ const RezervareTeamplate = ({
     setShowRoom(false);
   };
   function Dates(date) {
-    console.log(moment(date[0]).format("DD-MM-YYYY"));
+    // console.log(moment(date[0]).format("DD-MM-YYYY"));
 
     // Trebuie sa fac sa apara disable toate zilele selectate
     // var today = moment();
     // var tomorrow = moment(today).add(-1, 'days');
 
     if (date !== null) {
-      const a=moment(date[0]);
+      const a = moment(date[0]);
 
       setfromDate(moment(date[0]).format("DD-MM-YYYY"));
       setfromMonth(moment(date[0]).format("MMMM"));
       setfromDay(moment(date[0]).format("DD"));
 
-      const b=moment(date[1]);
+      const b = moment(date[1]);
       settoDate(moment(date[1]).format("DD-MM-YYYY"));
       settoMonth(moment(date[1]).format("MMMM"));
       settoDay(moment(date[1]).format("DD"));
       setid("cabana");
-      setnumberNights(b.diff(a,"days"));
-      
+      setnumberNights(b.diff(a, "days"));
     }
   }
 
-  function ciubarDates(date) {    
+  function ciubarDates(date) {
     if (date !== null) {
-      const a=moment(date[0]);
-      const b=moment(date[1]);
-      setfromDateCiubar(moment(date[0]).format("DD MM yyyy HH"));
-      settoDateCiubar(moment(date[1]).format("DD MM yyyy HH"));
+      const a = moment(date[0]);
+      const b = moment(date[1]);
+      setfromDateCiubar(moment(date[0]).format("DD-MM-YYYY HH"));
+      settoDateCiubar(moment(date[1]).format("DD-MM-YYYY HH"));
 
-      setnumberHours(b.diff(a,"hours")+1)
+      setnumberHours(b.diff(a, "hours") + 1);
 
       setid("ciubar");
     }
   }
 
-  function getDisabledHours() {
-    var hours = [];
-
-    for (let i = 0; i < moment().hour(); i++) {
-      if (moment()) {
-        hours.push(i);
-      }
+  function range(start, end) {
+    const result = [];
+    for (let i = start; i <= end; i++) {
+      result.push(i);
     }
-    return hours;
+    return result;
   }
+
   async function getAllBookings() {
     const response = await axios.get("http://localhost:5000/booking/house");
     const responseC = await axios.get("http://localhost:5000/booking/ciubar");
@@ -135,6 +131,8 @@ const RezervareTeamplate = ({
 
     // console.log("!!!!!!!",response?.data);
 
+    console.log(responseC);
+
     const result = response?.data.map((res) => {
       return {
         start: moment(res?.bookTime?.fromDate, dateFormat),
@@ -143,6 +141,7 @@ const RezervareTeamplate = ({
     });
     setDisabledDates([...disabledDates, ...result]);
   }
+
   useEffect(() => {
     getAllBookings();
   }, []);
@@ -158,6 +157,13 @@ const RezervareTeamplate = ({
         )
       )
     );
+  }
+  function disabledTime(current) {
+    if (current && current.format("YYYY-MM-DD") === "2022-05-27") {
+      return {
+        disabledHours: () => range(1, 3),
+      };
+    }
   }
 
   return (
@@ -228,7 +234,8 @@ const RezervareTeamplate = ({
                     {name === "cabana" ? (
                       <Space direction="vertical">
                         <RangePicker
-                          allowClear={false}
+                          placement={"topRight"}
+                          // allowClear={false}
                           format="DD-MM-YYYY"
                           onChange={Dates}
                           disabledDate={disableDatesGood}
@@ -237,16 +244,17 @@ const RezervareTeamplate = ({
                     ) : (
                       <Space direction="vertical">
                         <RangePicker
-                          allowClear={false}
+                          placement={"topLeft"}
+                          // allowClear={false}
                           showTime={{ format: "HH" }}
                           format="DD MM yyyy HH"
                           onChange={ciubarDates}
-                          disabledHours={getDisabledHours}
+                          disabledTime={disabledTime}
                           disabledDate={disableDatesGood}
                         />
                       </Space>
                     )}
-                    <Button variant="text">Book now</Button>
+                    {/* <Button variant="text">Book now</Button> */}
                   </AccordionDetails>
                 </Accordion>
                 {/* </Stack> */}

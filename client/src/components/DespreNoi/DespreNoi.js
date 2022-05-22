@@ -8,8 +8,8 @@ const DespreNoi = () => {
 
   const from=16;
   const to =19; 
-
-
+  
+  
   function range(start, end) {
     const result = [];
     for (let i = start; i < end; i++) {
@@ -22,7 +22,8 @@ const DespreNoi = () => {
     // Can not select days before today and today
     return current && current < moment().endOf("day");
   }
-  function disabledDateTime() {
+  function disabledDateTime(current) {
+// console.log(current);
 
     return {
       disabledHours: () => range(from, to),

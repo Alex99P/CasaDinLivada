@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 //rface
-import Navbar from "./Navbar/Navbar";
+import Navbar from "../Navbar/Navbar";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   IconButton,

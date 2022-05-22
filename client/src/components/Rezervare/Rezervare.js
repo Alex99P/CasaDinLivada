@@ -58,20 +58,17 @@ const useStyles = makeStyles({
 
 const Rezervare = () => {
   const btnStyle = {
-    marginTop: "20px",
-    padding: "10px",
-    color: "black",
-    backgroundColor: "white",
-    border: "1px solid black",
+    color: "white",
+    backgroundColor: "black",
+    border: "none",
     "&:hover": {
       backgroundColor: "#e1e3e1",
-      border: "black",
+      border: "none",
     },
   };
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
 
   const [fromMonth, setfromMonth] = useState();
   const [toMonth, settoMonth] = useState();
@@ -93,8 +90,8 @@ const Rezervare = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsPayDisabled(!(fromDate));
-    setIsPayDisabledC(!(fromDateCiubar));
+    setIsPayDisabled(!fromDate);
+    setIsPayDisabledC(!fromDateCiubar);
   }, [fromDate, fromDateCiubar]);
 
   function onToken(token) {
@@ -124,7 +121,6 @@ const Rezervare = () => {
         },
         name: id,
         amount,
-     
       };
       console.log(reqObj);
 
@@ -132,7 +128,6 @@ const Rezervare = () => {
     }
   }
 
-  
   return (
     <>
       <NavbarRezervare />
@@ -145,7 +140,6 @@ const Rezervare = () => {
         <Container maxWidth="lg">
           <Stack
             direction={isMobile ? "column" : "row"}
-            // justifyContent="space-between"
             alignItems="flex-start"
           >
             <RezervareTeamplate
@@ -187,15 +181,20 @@ const Rezervare = () => {
                   // borderTop: "none",
                   margin: "0 !important",
                 }}
+                spacing={2}
               >
-                <Typography variant="h5"  >Cabana 200lei/noapte</Typography>
+                <Typography variant="h5">Cabana 200lei/noapte</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
-                <Stack direction="row" justifyContent="flex-start" mt={1} mb={2}>
+                <Stack
+                  direction="row"
+                  justifyContent="flex-start"
+                  mt={1}
+                  mb={2}
+                >
                   <Stack direction="row" alignItems="center" spacing={0.8}>
                     <FontAwesomeIcon
                       icon={faPersonWalkingLuggage}
                       fontSize="30px"
-                      justifyContent="flex-end"
                     />
                     <Typography sx={{ fontSize: "15px" }}>
                       {fromDay} {fromMonth}
@@ -219,7 +218,7 @@ const Rezervare = () => {
                 </Stack>
                 <Typography variant="body2">
                   Rezervare pentru {numberNights}{" "}
-                  {numberNights === 1 ? "o noapte" : "nopti"}
+                  {numberNights === 1 ? "noapte" : "nopti"}
                 </Typography>
                 <StripeCheckout
                   disabled={isPayDisabled}
@@ -228,18 +227,23 @@ const Rezervare = () => {
                   amount={amount * 100}
                   stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                 >
-                  {/* <Tooltip title="Trebui sa selectati data"> */}
-                    <Button variant="outlined" disabled={isPayDisabled}>
-                      Booknow
-                    </Button>
-                  {/* </Tooltip> */}
+                  <Tooltip title="Trebuie selectata data intai" enterTouchDelay={0}>
+                    <span>
+                      <Button
+                        variant="contained"
+                        style={btnStyle}
+                        disabled={isPayDisabled}
+                      >
+                        Booknow
+                      </Button>
+                    </span>
+                  </Tooltip>
                 </StripeCheckout>
               </Stack>
             </Stack>
           </Stack>
           <Stack
             direction={isMobile ? "column" : "row"}
-            // justifyContent="space-between"
             alignItems="flex-start"
           >
             <RezervareTeamplate
@@ -274,21 +278,23 @@ const Rezervare = () => {
             >
               <Stack
                 p={2}
+                // pl={10}
                 mt={0}
                 sx={{
                   border: "1px solid black",
                   // borderTop: "none",
                   margin: "0 !important",
                 }}
+                justifyContent="center"
+                spacing={2}
               >
-                <Typography variant="h5"  >Ciubar</Typography>
+                <Typography variant="h5">Ciubar</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
                   <Stack direction="row" alignItems="center" spacing={0.8}>
                     <FontAwesomeIcon
                       icon={faPersonWalkingLuggage}
                       fontSize="30px"
-                      justifyContent="flex-end"
                     />
                     <Typography sx={{ fontSize: "15px" }}>
                       {fromDay} {fromMonth}
@@ -321,18 +327,24 @@ const Rezervare = () => {
                   amount={amount * 100}
                   stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                 >
-                  {/* <Tooltip title="Trebui sa selectati data"> */}
-                    <Button variant="outlined" disabled={isPayDisabledC}>
-                      Booknow
-                    </Button>
-                  {/* </Tooltip> */}
+                  {" "}
+                  <Tooltip title="Trebuie selectata data intai" enterTouchDelay={0}>
+                    <span>
+                      <Button
+                        variant="contained"
+                        style={btnStyle}
+                        disabled={isPayDisabledC}
+                      >
+                        Booknow
+                      </Button>
+                    </span>
+                  </Tooltip>
                 </StripeCheckout>
               </Stack>
             </Stack>
           </Stack>
           <Stack
             direction={isMobile ? "column" : "row"}
-            // justifyContent="space-between"
             alignItems="flex-start"
           ></Stack>
         </Container>
