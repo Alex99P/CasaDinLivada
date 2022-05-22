@@ -4,7 +4,6 @@
   background-size: cover !important;
   height: 100vh;
   margin: 0;   
-  position: relative; 
   width: 100vw;
 
   .description {
@@ -32,11 +31,5 @@
       font-weight: 300;
       text-align: center;
     }
-  }
-
-  .menuWraper{
-    position: fixed;
-    top: 0;
-    right: 0;
   }
 }

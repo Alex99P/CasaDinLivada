@@ -1,43 +1,38 @@
 import React from 'react'
-import {Toolbar,IconButton,Button, AppBar} from '@mui/material';
+import { Toolbar, IconButton, Button, AppBar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-
-
-const Navbar = ({showMenu,setShowMenu}) => {
-  
+const Navbar = ({ showMenu, setShowMenu, bgBlack = false }) => {
   return (
-  <>
- {!showMenu && <AppBar sx={{backgroundColor:'transparent', boxShadow:0, alignItems:'flex-end'}} >
-      <Toolbar >  
-        <Button 
-         href="/rezervare"
-        variant="contained"
-        size='medium'
-        sx={{ 
-          backgroundColor:'transparent',
-          marginRight:'20px',
-          boxShadow:'0',
-          border: '1px solid white',
-          "&.MuiButtonBase-root:hover": {
-            bgcolor: "transparent"
-          },
-          "&:hover": {
-            color: "white",}
-        }}
-        >
-          Rezerva acum
-        </Button>
-      <IconButton aria-label="app" size='medium' style={{color:'white' }} onClick={setShowMenu} >
-        <MenuIcon  fontSize="large" />       
-      </IconButton>
-      </Toolbar>
-    </AppBar>}
-   
-   
- 
+    <>
+      {!showMenu && <AppBar sx={{ backgroundColor: bgBlack ? 'black' : 'transparent', boxShadow: 0, alignItems: 'flex-end' }} >
+        <Toolbar >
+          <Button
+            href="/rezervare"
+            variant="contained"
+            size='medium'
+            sx={{
+              backgroundColor: 'transparent',
+              marginRight: '20px',
+              boxShadow: '0',
+              border: '1px solid white',
+              "&.MuiButtonBase-root:hover": {
+                bgcolor: "transparent"
+              },
+              "&:hover": {
+                color: "white",
+              }
+            }}
+          >
+            Rezerva acum
+          </Button>
+          <IconButton aria-label="app" size='medium' style={{ color: 'white' }} onClick={setShowMenu} >
+            <MenuIcon fontSize="large" />
+          </IconButton>
+        </Toolbar>
+      </AppBar>}
     </>
-  
+
   )
 }
 
