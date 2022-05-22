@@ -18,7 +18,8 @@ import "./Ritualul.scss";
 
 const useStyles = makeStyles({
   textField: {
-    width: 300,
+    maxWidth: 300,
+    width: '100%',
     "& .MuiInputBase-root": {
       color: "white",
     },
@@ -42,6 +43,7 @@ const useStyles = makeStyles({
     color: "black",
     backgroundColor: "white",
     border: "none",
+    whiteSpace: 'nowrap',
     "&:hover": {
       backgroundColor: "#e1e3e1",
       border: "none",
@@ -53,6 +55,8 @@ const btnStyle = {
   color: "black",
   backgroundColor: "white",
   border: "none",
+  height: '56px',
+  padding: '0 36px',
   "&:hover": {
     backgroundColor: "#e1e3e1",
     border: "none",
@@ -72,22 +76,21 @@ const Ritualul = () => {
     if (pageContent.current) {
       intersectionObserver.observe(pageContent.current)
     }
+
+    return () => {
+      intersectionObserver?.unobserve(pageContent.current)
+    }
   }, [pageContent])
 
   return (
     <>
       <Menu bgBlack={toggleHeaderBg} />
-      <Grid
-        container
-        mt={0}
-        direction="column"
-      >
-        <Box
-          className="containerHome"
-          style={{ backgroundImage: ` linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)), url(${img})` }}
-        />
-      </Grid>
-      <Grid item xs={12} ref={pageContent}>
+      <Box
+        className="containerHome"
+        style={{ backgroundImage: ` linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)), url(${img})` }}
+        ref={pageContent}
+      />
+      <Grid item xs={12}>
         <Stack
           direction="column"
           justifyContent="center"
@@ -95,7 +98,6 @@ const Ritualul = () => {
           bgcolor="black"
           color="white"
           p={4}
-          px={20}
           spacing={3}
         >
           <Typography variant="h3" sx={{ color: "white" }}>
@@ -113,19 +115,18 @@ const Ritualul = () => {
           </Box>
         </Stack>
       </Grid>
-      <Grid mt={6} item ml={5} mr={5}>
-        <Grid container direction="row" xs={12} p={2}>
+      <Grid mt={6} item >
+        <Grid container direction="row" p={2} gap={5}>
           <Grid
             item
             md={4}
             xs={12}
-            ml={6}
             height="400px"
             bgcolor="#9e9e9e"
-            width="500px"
-          ></Grid>
+            maxWidth="500px"
+          />
           {/* aici o sa vina poza */}
-          <Grid item ml={8} xs={12} md={6} width="600px" >
+          <Grid item xs={12} md={7} maxmaxWidth="600px"  >
             <Typography variant="h5" gutterBottom>
               Pasul 1
             </Typography>
@@ -142,9 +143,9 @@ const Ritualul = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid mt={6} item ml={5} mr={5}>
-        <Grid container direction="row" xs={12} p={2}>
-          <Grid item ml={8} xs={12} md={6} width="600px">
+      <Grid mt={6} item >
+        <Grid container direction="row" p={2} gap={5}>
+          <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 2
             </Typography>
@@ -163,27 +164,25 @@ const Ritualul = () => {
             item
             md={4}
             xs={12}
-            ml={6}
             height="400px"
             bgcolor="#9e9e9e"
-            width="500px"
+            maxWidth="500px"
           ></Grid>
           {/* aici o sa vina poza */}
         </Grid>
       </Grid>
-      <Grid mt={6} item ml={5} mr={5}>
-        <Grid container direction="row" xs={12} p={2}>
+      <Grid mt={6} item >
+        <Grid container direction="row" p={2} gap={5}>
           <Grid
             item
             md={4}
             xs={12}
-            ml={6}
             height="400px"
             bgcolor="#9e9e9e"
             width="500px"
           ></Grid>
           {/* aici o sa vina poza */}
-          <Grid item ml={8} xs={12} md={6} width="600px">
+          <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 3
             </Typography>
@@ -200,9 +199,9 @@ const Ritualul = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid mt={6} item ml={5} mr={5}>
-        <Grid container direction="row" xs={12} p={2}>
-          <Grid item ml={8} xs={12} md={6} width="600px" >
+      <Grid mt={6} item >
+        <Grid container direction="row" p={2} gap={5}>
+          <Grid item xs={12} md={7} maxWidth="600px" >
             <Typography variant="h5" gutterBottom>
               Pasul 4
             </Typography>
@@ -222,7 +221,6 @@ const Ritualul = () => {
             item
             md={4}
             xs={12}
-            ml={6}
             height="400px"
             bgcolor="#9e9e9e"
             width="500px"
@@ -258,6 +256,7 @@ const Ritualul = () => {
               variant="outlined"
               style={btnStyle}
               className={classes.button}
+              height={'56px'}
             >
               Aboneza-te
             </Button>
