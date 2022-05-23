@@ -4,11 +4,16 @@ import {
   Stack,
   Typography,
   Button,
-  TextField,
+  Dialog,
   Container,
   useMediaQuery,
   useTheme,
   Tooltip,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Divider,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import moment from "moment";
@@ -74,6 +79,8 @@ const Rezervare = () => {
   const [toMonth, settoMonth] = useState();
   const [fromDay, setfromDay] = useState();
   const [toDay, settoDay] = useState();
+  const [fromHour, setfromHour] = useState();
+  const [toHour, settoHour] = useState();
 
   const [numberNights, setnumberNights] = useState(0);
   const [numberHours, setnumberHours] = useState(0);
@@ -85,7 +92,25 @@ const Rezervare = () => {
   const [toDateCiubar, settoDateCiubar] = useState();
   const [withCiubar, setwithCiubar] = useState(false);
   const [id, setid] = useState("");
-  let amount = 10;
+  const [amountCabana,setAmountCabana]=useState(200);
+  const [amountCiubar,setAmountCiubar]=useState(50);
+  
+  // let amount = 10;
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpenCabana = () => {
+    setid("cabana")
+    setOpen(true);
+  };
+  const handleClickOpenCiubar = () => {
+    setid("ciubar")
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const dispatch = useDispatch();
 
@@ -105,7 +130,7 @@ const Rezervare = () => {
           toDate,
         },
         name: id,
-        amount,
+        amount:totalAmountCabana(),
         withCiubar,
       };
       console.log(reqObj);
@@ -120,14 +145,30 @@ const Rezervare = () => {
           toDateCiubar,
         },
         name: id,
-        amount,
+        amount:totalAmountCiubar(),
       };
-      console.log(reqObj);
+      // console.log(reqObj);
 
       dispatch(bookingCiubar(reqObj));
     }
   }
 
+  const totalAmountCabana=()=>{
+    if(withCiubar)
+    {
+      
+      return (amountCabana+50)*numberNights
+      
+    }else
+    {
+      return amountCabana*numberNights
+    }
+
+   
+  }
+  const totalAmountCiubar=()=>{return amountCiubar*numberHours}
+  
+  
   return (
     <>
       <NavbarRezervare />
@@ -183,7 +224,7 @@ const Rezervare = () => {
                 }}
                 spacing={2}
               >
-                <Typography variant="h5">Cabana 200lei/noapte</Typography>
+                <Typography variant="h6">Cabana {totalAmountCabana() !== 0 ? totalAmountCabana(): amountCabana }ron/noapte</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack
                   direction="row"
@@ -220,25 +261,22 @@ const Rezervare = () => {
                   Rezervare pentru {numberNights}{" "}
                   {numberNights === 1 ? "noapte" : "nopti"}
                 </Typography>
-                <StripeCheckout
-                  disabled={isPayDisabled}
-                  token={onToken}
-                  currency="RON"
-                  amount={amount * 100}
-                  stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
+
+                <Tooltip
+                  title="Trebuie selectata data intai"
+                  enterTouchDelay={0}
                 >
-                  <Tooltip title="Trebuie selectata data intai" enterTouchDelay={0}>
-                    <span>
-                      <Button
-                        variant="contained"
-                        style={btnStyle}
-                        disabled={isPayDisabled}
-                      >
-                        Booknow
-                      </Button>
-                    </span>
-                  </Tooltip>
-                </StripeCheckout>
+                  <span>
+                    <Button
+                      variant="contained"
+                      style={btnStyle}
+                      disabled={isPayDisabled}
+                      onClick={handleClickOpenCabana}
+                    >
+                      Booknow
+                    </Button>
+                  </span>
+                </Tooltip>
               </Stack>
             </Stack>
           </Stack>
@@ -266,6 +304,8 @@ const Rezervare = () => {
               setid={setid}
               setfromDateCiubar={setfromDateCiubar}
               settoDateCiubar={settoDateCiubar}
+              setfromHour={setfromHour}
+              settoHour={settoHour}
             />
             <Stack
               // mt={isMobile ? 1 : 1}
@@ -288,7 +328,7 @@ const Rezervare = () => {
                 justifyContent="center"
                 spacing={2}
               >
-                <Typography variant="h5">Ciubar</Typography>
+                <Typography variant="h6">Ciubar {totalAmountCiubar() !== 0 ? totalAmountCiubar(): amountCiubar }ron/ora</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
                   <Stack direction="row" alignItems="center" spacing={0.8}>
@@ -320,26 +360,141 @@ const Rezervare = () => {
                   Rezervare pentru {numberHours}{" "}
                   {numberHours === 1 ? "o ora" : "ore"}
                 </Typography>
-                <StripeCheckout
-                  disabled={isPayDisabledC}
-                  token={onToken}
-                  currency="RON"
-                  amount={amount * 100}
-                  stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
+                <Tooltip
+                  title="Trebuie selectata data intai"
+                  enterTouchDelay={0}
                 >
-                  {" "}
-                  <Tooltip title="Trebuie selectata data intai" enterTouchDelay={0}>
-                    <span>
-                      <Button
-                        variant="contained"
-                        style={btnStyle}
-                        disabled={isPayDisabledC}
+                  <span>
+                    <Button
+                      variant="contained"
+                      style={btnStyle}
+                      disabled={isPayDisabledC}
+                      onClick={handleClickOpenCiubar}
+                    >
+                      Booknow
+                    </Button>
+                  </span>
+                </Tooltip>
+                <Dialog
+                  //open
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Order Summary"}
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                      <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={3}
                       >
+                        <Stack
+                          width="200px"
+                          height="200px"
+                          bgcolor="#9e9e9e"
+                          maxWidth="500px"
+                        />
+                        <Stack direction="column" spacing={1}>
+                          <Stack direction="row" spacing={2}>
+                            <Typography variant="body1">Select:</Typography>
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              {id}
+                            </Typography>
+                          </Stack>
+                          {id === "cabana" ? (
+                            <Stack direction="row" spacing={2}>
+                              <Typography variant="body1">Dates:</Typography>
+
+                              <Typography
+                                variant="body1"
+                                sx={{ fontWeight: "bold" }}
+                              >
+                                {" "}
+                                {fromDay} {fromMonth} - {toDay} {toMonth}
+                              </Typography>
+                            </Stack>
+                          ) : (
+                            <>
+                              <Stack direction="row" spacing={2}>
+                                {" "}
+                                <Typography variant="body1">Dates:</Typography>
+                                <Typography
+                                  variant="body1"
+                                  sx={{ fontWeight: "bold" }}
+                                >
+                                  {" "}
+                                  {fromDay} {fromMonth}
+                                </Typography>
+                              </Stack>
+                              <Stack direction="row" spacing={2}>
+                                <Typography variant="body1">Hours:</Typography>
+                                <Typography
+                                  variant="body1"
+                                  sx={{ fontWeight: "bold" }}
+                                >
+                                  {" "}
+                                  {fromHour}:00 - {toHour}:00
+                                </Typography>
+                              </Stack>
+                            </>
+                          )}
+
+                          <Stack direction="row" spacing={2}>
+                            <Typography variant="body1">
+                              {id === "cabana"
+                                ? "No. of nights"
+                                : " No. of hours"}
+                            </Typography>
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              {id === "cabana" ? numberNights : numberHours}
+                            </Typography>
+                          </Stack>
+                          <Divider />
+                          <Stack direction="row" spacing={2}>
+                            <Typography variant="body1">Total:</Typography>
+                            <Typography
+                              variant="body1"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                             {id === "cabana" ? totalAmountCabana() :totalAmountCiubar()}ron
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </Stack>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      variant="contained"
+                      style={btnStyle}
+                      onClick={handleClose}
+                      sx={{margin:1}}
+                    >
+                      Cancel
+                    </Button>
+                    <StripeCheckout
+                      token={onToken}
+                      currency="RON"
+                      amount={id==="cabana" ? totalAmountCabana() * 100 : totalAmountCiubar()*100 }
+                      stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
+                    >
+                      <Button variant="contained"  onClick={handleClose} style={btnStyle} sx={{margin:1}} >
                         Booknow
                       </Button>
-                    </span>
-                  </Tooltip>
-                </StripeCheckout>
+                    </StripeCheckout>
+                  </DialogActions>
+                </Dialog>
               </Stack>
             </Stack>
           </Stack>

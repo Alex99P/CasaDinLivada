@@ -37,6 +37,8 @@ const RezervareTeamplate = ({
   settoDateCiubar,
   withCiubar,
   setwithCiubar,
+  setfromHour,
+  settoHour
 }) => {
   const btnStyle = {
     marginTop: "20px",
@@ -64,8 +66,9 @@ const RezervareTeamplate = ({
   const [showRoom, setShowRoom] = useState(false);
   const { RangePicker } = DatePicker;
   const dateFormat = "DD-MM-YYYY";
-  const disabledHours = [];
+  const dateFormatHour = "DD-MM-YYYY HH";
   const [disabledDates, setDisabledDates] = useState([]);
+  const [disabledHour, setDisabledHour]=useState([]);
 
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -102,6 +105,15 @@ const RezervareTeamplate = ({
       const b = moment(date[1]);
       setfromDateCiubar(moment(date[0]).format("DD-MM-YYYY HH"));
       settoDateCiubar(moment(date[1]).format("DD-MM-YYYY HH"));
+      // console.log("!!!!",moment(date[0]).format("DD-MM-YYYY HH").slice(11));
+      setfromMonth(moment(date[0]).format("MMMM"));
+      setfromDay(moment(date[0]).format("DD"));
+
+      settoDay(moment(date[1]).format("DD"));
+      settoMonth(moment(date[1]).format("MMMM"));
+      
+      setfromHour(moment(date[0]).format("DD-MM-YYYY HH").slice(11));
+      settoHour(moment(date[1]).format("DD-MM-YYYY HH").slice(11));
 
       setnumberHours(b.diff(a, "hours") + 1);
 
@@ -114,24 +126,14 @@ const RezervareTeamplate = ({
     for (let i = start; i <= end; i++) {
       result.push(i);
     }
+    console.log("Result: ",result);
+    
     return result;
   }
 
   async function getAllBookings() {
     const response = await axios.get("http://localhost:5000/booking/house");
     const responseC = await axios.get("http://localhost:5000/booking/ciubar");
-    //Trebuie sa fac ca si la dates
-    // console.log(responseC?.data?.[0]?.bookTime?.fromDateCiubar);
-    // var lastFive = (responseC?.data?.[0]?.bookTime?.fromDateCiubar).substr(
-    //   (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    // );
-    // var lastFivee = (responseC?.data?.[0]?.bookTime?.toDateCiubar).substr(
-    //   (responseC?.data?.[0]?.bookTime?.fromDateCiubar).length - 5
-    // );
-
-    // console.log("!!!!!!!",response?.data);
-
-    console.log(responseC);
 
     const result = response?.data.map((res) => {
       return {
@@ -139,14 +141,25 @@ const RezervareTeamplate = ({
         end: moment(res?.bookTime?.toDate, dateFormat),
       };
     });
+    // console.log(result);
     setDisabledDates([...disabledDates, ...result]);
+
+    const resultHour = responseC?.data.map((res) => {
+      return {
+        start: moment(res?.bookTime?.fromDateCiubar, dateFormatHour),
+        end: moment(res?.bookTime?.toDateCiubar, dateFormatHour),
+      };
+    });
+  setDisabledHour([...disabledHour,...resultHour])
   }
+// console.log(disabledHour);
 
   useEffect(() => {
     getAllBookings();
   }, []);
+ 
 
-  function disableDatesGood(current) {
+  function disableDatesGood(current) {    
     return (
       (current && current < moment().endOf("day")) ||
       disabledDates.some((date) =>
@@ -158,12 +171,32 @@ const RezervareTeamplate = ({
       )
     );
   }
+  
+
   function disabledTime(current) {
-    if (current && current.format("YYYY-MM-DD") === "2022-05-27") {
+    let date="23-05-2022";
+    // let  todate;
+    let fromhour=10;
+    let tohour=23; 
+    // let date;
+    // let fromhour
+    // let tohour 
+
+    disabledHour.map((res)=>{
+      const start=res.start._i;
+      const end=res.end._i;
+      // date=start.slice(0, -2)
+      // fromhour=start.slice(11)
+      // tohour=end.slice(11)
+    })
+
+    //aceasta face disable la ore
+     if(current && current.format("DD-MM-YYYY") === date) {
       return {
-        disabledHours: () => range(1, 3),
+        disabledHours: () => range(fromhour,tohour),
       };
     }
+
   }
 
   return (
@@ -245,9 +278,9 @@ const RezervareTeamplate = ({
                       <Space direction="vertical">
                         <RangePicker
                           placement={"topLeft"}
-                          // allowClear={false}
+                          allowClear={false}
                           showTime={{ format: "HH" }}
-                          format="DD MM yyyy HH"
+                          format="DD-MM-YYYY HH"
                           onChange={ciubarDates}
                           disabledTime={disabledTime}
                           disabledDate={disableDatesGood}

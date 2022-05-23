@@ -155,6 +155,8 @@ const Dashboard = () => {
         );
       }
 
+      console.log(response);
+      
       setData(
         [
           ...response?.data.map((cabana) => ({
@@ -167,18 +169,20 @@ const Dashboard = () => {
           ...responseCiubar?.data.map((ciubar) => ({
             ...ciubar,
             bookTime: {
-              fromDate: ciubar.bookTime.fromDateCiubar,
-              toDate: ciubar.bookTime.toDateCiubar,
+              fromDate: ciubar.bookTime.fromDateCiubar.split("-").reverse().join("-"),
+              toDate: ciubar.bookTime.toDateCiubar.split("-").reverse().join("-"),
             },
           })),
         ].sort((a, b) =>
           new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
         )
       );
+
     } catch (error) {
       console.error(error);
     }
   }
+  console.log(data);
 
   useEffect(() => {
     getDate();
@@ -328,10 +332,10 @@ const Dashboard = () => {
                             {reservation.name}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.fromDate}
+                            {reservation.bookTime.fromDate.split("-").reverse().join("-")}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.toDate}
+                            {reservation.bookTime.toDate.split("-").reverse().join("-")}
                           </TableCell>
                           <TableCell align="left">
                             <Button
