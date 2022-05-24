@@ -66,7 +66,7 @@ const RezervareTeamplate = ({
   const [showRoom, setShowRoom] = useState(false);
   const { RangePicker } = DatePicker;
   const dateFormat = "DD-MM-YYYY";
-  const dateFormatHour = "DD-MM-YYYY HH";
+  const dateFormatHour = "YYYY-MM-DD HH";
   const [disabledDates, setDisabledDates] = useState([]);
   const [disabledHour, setDisabledHour]=useState([]);
 
@@ -103,17 +103,17 @@ const RezervareTeamplate = ({
     if (date !== null) {
       const a = moment(date[0]);
       const b = moment(date[1]);
-      setfromDateCiubar(moment(date[0]).format("DD-MM-YYYY HH"));
-      settoDateCiubar(moment(date[1]).format("DD-MM-YYYY HH"));
-      // console.log("!!!!",moment(date[0]).format("DD-MM-YYYY HH").slice(11));
+      setfromDateCiubar(moment(date[0]).format("YYYY-MM-DD HH"));
+      settoDateCiubar(moment(date[1]).format("YYYY-MM-DD HH"));
+      // console.log("!!!!",moment(date[0]).format("YYYY-MM-DD HH").slice(11));
       setfromMonth(moment(date[0]).format("MMMM"));
       setfromDay(moment(date[0]).format("DD"));
 
       settoDay(moment(date[1]).format("DD"));
       settoMonth(moment(date[1]).format("MMMM"));
       
-      setfromHour(moment(date[0]).format("DD-MM-YYYY HH").slice(11));
-      settoHour(moment(date[1]).format("DD-MM-YYYY HH").slice(11));
+      setfromHour(moment(date[0]).format("YYYY-MM-DD HH").slice(11));
+      settoHour(moment(date[1]).format("YYYY-MM-DD HH").slice(11));
 
       setnumberHours(b.diff(a, "hours") + 1);
 
@@ -126,7 +126,7 @@ const RezervareTeamplate = ({
     for (let i = start; i <= end; i++) {
       result.push(i);
     }
-    console.log("Result: ",result);
+    // console.log("Result: ",result);
     
     return result;
   }
@@ -146,8 +146,10 @@ const RezervareTeamplate = ({
 
     const resultHour = responseC?.data.map((res) => {
       return {
-        start: moment(res?.bookTime?.fromDateCiubar, dateFormatHour),
-        end: moment(res?.bookTime?.toDateCiubar, dateFormatHour),
+        // start: moment(res?.bookTime?.fromDateCiubar, dateFormatHour),
+        // end: moment(res?.bookTime?.toDateCiubar, dateFormatHour),
+        from: res?.bookTime?.fromDateCiubar,
+        to: res?.bookTime?.toDateCiubar
       };
     });
   setDisabledHour([...disabledHour,...resultHour])
@@ -173,31 +175,35 @@ const RezervareTeamplate = ({
   }
   
 
-  function disabledTime(current) {
-    let date="23-05-2022";
-    // let  todate;
-    let fromhour=10;
-    let tohour=23; 
-    // let date;
-    // let fromhour
-    // let tohour 
+//Disable hours
+const FULL_DAY = [...Array(24).keys()];
 
-    disabledHour.map((res)=>{
-      const start=res.start._i;
-      const end=res.end._i;
-      // date=start.slice(0, -2)
-      // fromhour=start.slice(11)
-      // tohour=end.slice(11)
-    })
+const ciubarDays = disabledHour.map(({from}) =>
+moment(from).format("YYYY-MM-DD")
+ );
+  const handleDisabled = (time) => {
+    
+    return {
+      disabledHours: () => {
+        if (!time) {
+          return FULL_DAY;
+        }
+        if (!ciubarDays.includes(time?.format("YYYY-MM-DD"))) {
+          return [];
+        }
+        const { from, to } = disabledHour[
+          ciubarDays.indexOf(time?.format("YYYY-MM-DD"))
+        ];
 
-    //aceasta face disable la ore
-     if(current && current.format("DD-MM-YYYY") === date) {
-      return {
-        disabledHours: () => range(fromhour,tohour),
-      };
-    }
+        return range(
+          parseInt(moment(from).format("HH")),
+          parseInt(moment(to).format("HH"))
+        );
+      }
+    };
+  };
 
-  }
+
 
   return (
     <>
@@ -282,7 +288,7 @@ const RezervareTeamplate = ({
                           showTime={{ format: "HH" }}
                           format="DD-MM-YYYY HH"
                           onChange={ciubarDates}
-                          disabledTime={disabledTime}
+                          disabledTime={handleDisabled}
                           disabledDate={disableDatesGood}
                         />
                       </Space>

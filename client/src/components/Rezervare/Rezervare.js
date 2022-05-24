@@ -25,6 +25,8 @@ import "antd/dist/antd.min.css";
 import StripeCheckout from "react-stripe-checkout";
 import { useDispatch } from "react-redux";
 import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Style
 const useStyles = makeStyles({
@@ -71,6 +73,7 @@ const Rezervare = () => {
       border: "none",
     },
   };
+  
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -94,8 +97,8 @@ const Rezervare = () => {
   const [id, setid] = useState("");
   const [amountCabana,setAmountCabana]=useState(200);
   const [amountCiubar,setAmountCiubar]=useState(50);
+
   
-  // let amount = 10;
 
   const [open, setOpen] = useState(false);
 
@@ -224,7 +227,7 @@ const Rezervare = () => {
                 }}
                 spacing={2}
               >
-                <Typography variant="h6">Cabana {totalAmountCabana() !== 0 ? totalAmountCabana(): amountCabana }ron/noapte</Typography>
+                <Typography variant="h6">Cabana {totalAmountCabana() !== 0 ? totalAmountCabana(): amountCabana } ron/noapte</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack
                   direction="row"
@@ -328,7 +331,7 @@ const Rezervare = () => {
                 justifyContent="center"
                 spacing={2}
               >
-                <Typography variant="h6">Ciubar {totalAmountCiubar() !== 0 ? totalAmountCiubar(): amountCiubar }ron/ora</Typography>
+                <Typography variant="h6">Ciubar {totalAmountCiubar() !== 0 ? totalAmountCiubar(): amountCiubar } ron/ora</Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
                   <Stack direction="row" alignItems="center" spacing={0.8}>
@@ -467,7 +470,7 @@ const Rezervare = () => {
                               variant="body1"
                               sx={{ fontWeight: "bold" }}
                             >
-                             {id === "cabana" ? totalAmountCabana() :totalAmountCiubar()}ron
+                             {id === "cabana" ? totalAmountCabana() :totalAmountCiubar()} ron
                             </Typography>
                           </Stack>
                         </Stack>

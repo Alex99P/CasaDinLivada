@@ -8,6 +8,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./redux/reducers";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const middleware = [thunk];
 
@@ -23,6 +25,7 @@ ReactDOM.render(
         <App />
       </React.StrictMode>
     </Router>
+    <ToastContainer/>
   </Provider>,
 
   document.getElementById("root")

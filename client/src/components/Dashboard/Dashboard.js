@@ -169,8 +169,8 @@ const Dashboard = () => {
           ...responseCiubar?.data.map((ciubar) => ({
             ...ciubar,
             bookTime: {
-              fromDate: ciubar.bookTime.fromDateCiubar.split("-").reverse().join("-"),
-              toDate: ciubar.bookTime.toDateCiubar.split("-").reverse().join("-"),
+              fromDate: ciubar.bookTime.fromDateCiubar,
+              toDate: ciubar.bookTime.toDateCiubar,
             },
           })),
         ].sort((a, b) =>
@@ -190,7 +190,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <Grid container spacing={2} justifyContent="center" marginTop={"50%"}>
+      <Grid container spacing={2} justifyContent="center" marginTop={4}>
         <CircularProgress />
       </Grid>
     );
@@ -332,10 +332,10 @@ const Dashboard = () => {
                             {reservation.name}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.fromDate.split("-").reverse().join("-")}
+                            {reservation.bookTime.fromDate}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.toDate.split("-").reverse().join("-")}
+                            {reservation.bookTime.toDate}
                           </TableCell>
                           <TableCell align="left">
                             <Button
