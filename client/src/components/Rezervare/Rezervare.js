@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 // Style
 const useStyles = makeStyles({
@@ -97,6 +98,8 @@ const Rezervare = () => {
   const [id, setid] = useState("");
   const [amountCabana,setAmountCabana]=useState(200);
   const [amountCiubar,setAmountCiubar]=useState(50);
+  const { t, i18n } = useTranslation();   
+
 
   
 
@@ -188,7 +191,7 @@ const Rezervare = () => {
           >
             <RezervareTeamplate
               name={"cabana"}
-              title={"CASA DIN LIVADA(ADULTI/FAMILII)"}
+              title={t('rezervareCabana.1')}
               body={
                 "Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."
               }
@@ -276,7 +279,7 @@ const Rezervare = () => {
                       disabled={isPayDisabled}
                       onClick={handleClickOpenCabana}
                     >
-                      Booknow
+                      {t('butoane.1')}
                     </Button>
                   </span>
                 </Tooltip>
@@ -374,7 +377,7 @@ const Rezervare = () => {
                       disabled={isPayDisabledC}
                       onClick={handleClickOpenCiubar}
                     >
-                      Booknow
+                       {t('butoane.1')}
                     </Button>
                   </span>
                 </Tooltip>
@@ -493,7 +496,7 @@ const Rezervare = () => {
                       stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                     >
                       <Button variant="contained"  onClick={handleClose} style={btnStyle} sx={{margin:1}} >
-                        Booknow
+                      {t('butoane.1')}
                       </Button>
                     </StripeCheckout>
                   </DialogActions>

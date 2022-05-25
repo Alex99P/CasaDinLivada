@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Cazare from "./components/Cazare/Cazare";
 import Home from "./components/Home/Home";
@@ -12,9 +12,14 @@ import Foto from "./components/GalerieFoto/Foto";
 import Rezervare from "./components/Rezervare/Rezervare"
 import Auth from "./components/Auth/Auth";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ReactGA from 'react-ga4';
 
 
 function App() {
+  ReactGA.initialize("G-D036LHWL8X");
+// ReactGA.send(window.location.pathname + window.location.search);
+// ReactGA.send({ hitType: "pageview", page: "/my-path" });
+
   return (
     <React.Fragment>
       <Routes>

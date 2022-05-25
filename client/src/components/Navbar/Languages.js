@@ -1,21 +1,30 @@
 import { MenuItem, Select } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 const languages = [
     {
-        value: "Romana",
+        value: "ro",
         label: "RO",
     },
     {
-        value: "Engleza",
+        value: "en",
         label: "EN",
     },
 ];
 
 const Languages = () => {
     const [language, setLanguage] = useState(languages[0].value);
+    const { t, i18n } = useTranslation();   
+    // i18n.changeLanguage('en-US');
 
-    const handleChangeLanguage = (event) => setLanguage(event.target.value);
+    const handleChangeLanguage = (event) =>{ 
+        setLanguage(event.target.value);
+        // console.log(event.target.value);
+        i18n.changeLanguage(event.target.value);
+
+    }
+    
 
     return (
         <Select
