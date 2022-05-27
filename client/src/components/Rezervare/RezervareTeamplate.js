@@ -16,6 +16,10 @@ import { DatePicker, Space } from "antd";
 import moment from "moment";
 import "antd/dist/antd.min.css";
 import axios from "axios";
+import ciubar1 from "../../imagini/ciubar1.jpg";
+import cabana1 from "../../imagini/cabana1.jpg";
+
+import "./Rezervare.scss";
 
 const RezervareTeamplate = ({
   name,
@@ -38,7 +42,9 @@ const RezervareTeamplate = ({
   withCiubar,
   setwithCiubar,
   setfromHour,
-  settoHour
+  settoHour,
+  setDayCiubar,
+  setMonthCiubar,
 }) => {
   const btnStyle = {
     marginTop: "20px",
@@ -68,7 +74,7 @@ const RezervareTeamplate = ({
   const dateFormat = "DD-MM-YYYY";
   const dateFormatHour = "YYYY-MM-DD HH";
   const [disabledDates, setDisabledDates] = useState([]);
-  const [disabledHour, setDisabledHour]=useState([]);
+  const [disabledHour, setDisabledHour] = useState([]);
 
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -105,13 +111,11 @@ const RezervareTeamplate = ({
       const b = moment(date[1]);
       setfromDateCiubar(moment(date[0]).format("YYYY-MM-DD HH"));
       settoDateCiubar(moment(date[1]).format("YYYY-MM-DD HH"));
-      // console.log("!!!!",moment(date[0]).format("YYYY-MM-DD HH").slice(11));
-      setfromMonth(moment(date[0]).format("MMMM"));
-      setfromDay(moment(date[0]).format("DD"));
 
-      settoDay(moment(date[1]).format("DD"));
-      settoMonth(moment(date[1]).format("MMMM"));
-      
+      setMonthCiubar(moment(date[0]).format("MMMM"));
+      setDayCiubar(moment(date[0]).format("DD"));
+
+
       setfromHour(moment(date[0]).format("YYYY-MM-DD HH").slice(11));
       settoHour(moment(date[1]).format("YYYY-MM-DD HH").slice(11));
 
@@ -127,7 +131,7 @@ const RezervareTeamplate = ({
       result.push(i);
     }
     // console.log("Result: ",result);
-    
+
     return result;
   }
 
@@ -146,22 +150,19 @@ const RezervareTeamplate = ({
 
     const resultHour = responseC?.data.map((res) => {
       return {
-        // start: moment(res?.bookTime?.fromDateCiubar, dateFormatHour),
-        // end: moment(res?.bookTime?.toDateCiubar, dateFormatHour),
         from: res?.bookTime?.fromDateCiubar,
-        to: res?.bookTime?.toDateCiubar
+        to: res?.bookTime?.toDateCiubar,
       };
     });
-  setDisabledHour([...disabledHour,...resultHour])
+    setDisabledHour([...disabledHour, ...resultHour]);
   }
-// console.log(disabledHour);
+  // console.log(disabledHour);
 
   useEffect(() => {
     getAllBookings();
   }, []);
- 
 
-  function disableDatesGood(current) {    
+  function disableDatesGood(current) {
     return (
       (current && current < moment().endOf("day")) ||
       disabledDates.some((date) =>
@@ -173,16 +174,14 @@ const RezervareTeamplate = ({
       )
     );
   }
-  
 
-//Disable hours
-const FULL_DAY = [...Array(24).keys()];
+  //Disable hours
+  const FULL_DAY = [...Array(24).keys()];
 
-const ciubarDays = disabledHour.map(({from}) =>
-moment(from).format("YYYY-MM-DD")
- );
+  const ciubarDays = disabledHour.map(({ from }) =>
+    moment(from).format("YYYY-MM-DD")
+  );
   const handleDisabled = (time) => {
-    
     return {
       disabledHours: () => {
         if (!time) {
@@ -191,19 +190,16 @@ moment(from).format("YYYY-MM-DD")
         if (!ciubarDays.includes(time?.format("YYYY-MM-DD"))) {
           return [];
         }
-        const { from, to } = disabledHour[
-          ciubarDays.indexOf(time?.format("YYYY-MM-DD"))
-        ];
+        const { from, to } =
+          disabledHour[ciubarDays.indexOf(time?.format("YYYY-MM-DD"))];
 
         return range(
           parseInt(moment(from).format("HH")),
           parseInt(moment(to).format("HH"))
         );
-      }
+      },
     };
   };
-
-
 
   return (
     <>
@@ -224,7 +220,26 @@ moment(from).format("YYYY-MM-DD")
             rowGap={2}
           >
             <Grid item md={5} lg={3}>
-              <Stack height="200px" bgcolor="#9e9e9e" width="240px"></Stack>
+              {name === "cabana" ? (
+                <Stack
+                  className="imagine"
+                  height="200px"
+                  bgcolor="#9e9e9e"
+                  width="240px"
+                  style={{
+                    backgroundImage: `url(${cabana1})`,
+                  }}
+                ></Stack>
+              ) : (
+                <Stack
+                  className="imagine" height="200px" bgcolor="#9e9e9e"
+                  width="240px" 
+                  style={{
+                    backgroundImage: `url(${ciubar1})`,
+                  }}
+                  >
+                </Stack>
+              )}
             </Grid>
             <Grid item md={6} lg={8}>
               <Typography variant="h6" gutterBottom>
@@ -305,6 +320,7 @@ moment(from).format("YYYY-MM-DD")
                   openPopup={showRoom}
                   setOpenPopup={handleRoomClose}
                   title={title}
+                  name={name}
                   // va mai trebui si alte props
                 ></Popup>
               </Stack>

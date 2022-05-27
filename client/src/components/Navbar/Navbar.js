@@ -1,14 +1,19 @@
 import React from 'react'
 import { Toolbar, IconButton, Button, AppBar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Currencies from "./Currencies";
+import Languages from "./Languages";
+
+
 
 const Navbar = ({ showMenu, setShowMenu, bgBlack = false }) => {
+  const homestyle=true;
   return (
     <>
       {!showMenu && <AppBar sx={{ backgroundColor: bgBlack ? 'black' : 'transparent', boxShadow: 0, alignItems: 'flex-end' }} >
         <Toolbar >
           <Button
-            href="/rezervare"
+            href="/reservation"
             variant="contained"
             size='medium'
             sx={{
@@ -26,6 +31,7 @@ const Navbar = ({ showMenu, setShowMenu, bgBlack = false }) => {
           >
             Rezerva acum
           </Button>
+          <Languages homestyle={homestyle}  />
           <IconButton aria-label="app" size='medium' style={{ color: 'white' }} onClick={setShowMenu} >
             <MenuIcon fontSize="large" />
           </IconButton>

@@ -14,6 +14,7 @@ import User from "./User";
 const NavbarRezervare = (from) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const homestyle=false;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const NavbarRezervare = (from) => {
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/rezervare");
+    navigate("/reservation");
     setUser(null);
   };
 
@@ -95,7 +96,7 @@ const NavbarRezervare = (from) => {
           <div  className="navbar">
           <User from={from}  />
           <Currencies />
-          <Languages />
+          <Languages  homestyle={homestyle}/>
           </div>
         </Box>}
       </AppBar>

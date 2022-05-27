@@ -26,15 +26,15 @@ function App() {
         <Route path="/" element={<Home />} exact />
         <Route path="/myprofile" element={<Dashboard />} exact />
         <Route path="/auth" element={<Auth />} exact />
-        <Route path="/ritualul" element={<Ritualul />} exact />
-        <Route path="/rezervare" element={<Rezervare />} exact />
-        <Route path="/cazare" element={<Cazare />} exact />
-        <Route path="/relaxare" element={<Relaxare />} exact />
-        <Route path="/tarife" element={<Tarife />} exact />
-        <Route path="/intrebari-frecvente" element={<Intrebari />} exact />
-        <Route path="/despre-noi" element={<DespreNoi />} exact />
-        <Route path="/locatie" element={<Locatie />} exact />
-        <Route path="/galerie-foto" element={<Foto />} exact />
+        <Route path="/ritual" element={<Ritualul />} exact />
+        <Route path="/reservation" element={<Rezervare />} exact />
+        <Route path="/housing" element={<Cazare />} exact />
+        <Route path="/relaxation" element={<Relaxare />} exact />
+        <Route path="/prices" element={<Tarife />} exact />
+        <Route path="/frequent-questions" element={<Intrebari />} exact />
+        <Route path="/about-us" element={<DespreNoi />} exact />
+        <Route path="/location" element={<Locatie />} exact />
+        <Route path="/photos" element={<Foto />} exact />
       </Routes>
     </React.Fragment>
   );

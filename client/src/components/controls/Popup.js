@@ -1,14 +1,12 @@
 import React from "react";
-import {
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import { Stack, IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import SignalWifi4BarIcon from "@mui/icons-material/SignalWifi4Bar";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import Carousel from "./Carousel/Carousel";
 
 const useStyles = makeStyles(() => ({
   ".green": {
@@ -19,9 +17,12 @@ const useStyles = makeStyles(() => ({
   // }
 }));
 
-export default function Popup( {  openPopup, setOpenPopup, title }) {
+export default function Popup({ openPopup, setOpenPopup, title,name }) {
   const classes = useStyles();
   // const [maxWidth, setMaxWidth] = React.useState<DialogProps['maxWidth']>('sm');
+
+  // console.log(name);
+  
 
   return (
     <Dialog
@@ -53,32 +54,35 @@ export default function Popup( {  openPopup, setOpenPopup, title }) {
         </Stack>
       </Stack>
       {/* </DialogTitle> */}
-      <Stack>
-        <Stack height="200px" bgcolor="#9e9e9e" width="auto"></Stack>
-      </Stack>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        // spacing={10}
-        p={2}
-      >
-        <Stack direction="row" spacing={1} alignItems="center">
-          <PersonIcon />
-          <Typography variant="body2">MAX 2</Typography>
+      <Stack justifyContent="center">
+        <Stack height="200px" width="auto">
+          <Carousel name={name} />
         </Stack>
-        <Stack direction="row" alignItems="center" spacing={2}>
+        {/* </Stack> */}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          // spacing={10}
+          p={2}
+        >
           <Stack direction="row" spacing={1} alignItems="center">
-            <SignalWifi4BarIcon className={classes[".green"]} />
-            <Typography variant="body2" className={classes[".green"]}>
-              Internet
-            </Typography>
+            <PersonIcon />
+            <Typography variant="body2">MAX 2</Typography>
           </Stack>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <DirectionsCarIcon className={classes[".green"]} />
-            <Typography variant="body2" className={classes[".green"]}>
-              Parcare gratuita
-            </Typography>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <SignalWifi4BarIcon className={classes[".green"]} />
+              <Typography variant="body2" className={classes[".green"]}>
+                Internet
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <DirectionsCarIcon className={classes[".green"]} />
+              <Typography variant="body2" className={classes[".green"]}>
+                Parcare gratuita
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
@@ -130,7 +134,6 @@ export default function Popup( {  openPopup, setOpenPopup, title }) {
             <li>Zona de relaxare</li>
             <li>Birou</li>
           </ul>
-        
         </Stack>
       </Stack>
     </Dialog>

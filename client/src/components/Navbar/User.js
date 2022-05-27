@@ -21,7 +21,7 @@ const User = ({ from }) => {
 
     const myprofile = () => {
         if (from.from === "userDashboard") {
-            navigate("/rezervare");
+            navigate("/reservation");
         } else {
             navigate("/myprofile");
         }

@@ -92,7 +92,7 @@ const Menu = ({ bgBlack = false }) => {
               >
                 <Link
                   className={classes.link}
-                  href="/ritualul"
+                  href="/ritual"
                   underline="hover"
                   color="black"
                   variant="h5"
@@ -101,7 +101,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
-                  href="/cazare"
+                  href="/housing"
                   underline="hover"
                   color="black"
                   variant="h5"
@@ -110,7 +110,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
-                  href="/relaxare"
+                  href="/relaxation"
                   underline="hover"
                   color="black"
                   variant="h5"
@@ -119,7 +119,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
-                  href="/tarife"
+                  href="/prices"
                   underline="hover"
                   color="black"
                   variant="h5"
@@ -134,7 +134,7 @@ const Menu = ({ bgBlack = false }) => {
                 >
                   <Link
                     className={classes.link}
-                    href="/intrebari-frecvente"
+                    href="/frequent-questions"
                     underline="hover"
                     color="black"
                     variant="body1"
@@ -143,7 +143,7 @@ const Menu = ({ bgBlack = false }) => {
                   </Link>
                   <Link
                     className={classes.link}
-                    href="/locatie"
+                    href="/location"
                     underline="hover"
                     color="black"
                     variant="body1"
@@ -152,7 +152,7 @@ const Menu = ({ bgBlack = false }) => {
                   </Link>
                   <Link
                     className={classes.link}
-                    href="/despre-noi"
+                    href="/about-us"
                     underline="hover"
                     color="black"
                     variant="body1"
@@ -161,7 +161,7 @@ const Menu = ({ bgBlack = false }) => {
                   </Link>
                   <Link
                     className={classes.link}
-                    href="/galerie-foto"
+                    href="/photos"
                     underline="hover"
                     color="black"
                     variant="body1"

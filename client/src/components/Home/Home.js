@@ -15,11 +15,12 @@ const Home = () => {
     `}}>
       <Box className="description">
         <Box
-          height="5rem"
-          width="5rem"
+          height="4rem"
+          width="4rem"
           bgcolor="white"
           borderRadius={50}
           marginBottom={'1rem'}
+          marginTop={'1rem'}
         ></Box>
         <Typography variant="h2">Casa din livada</Typography>
         <Typography variant="body1">Reînvieți simțurile la firul ierbii</Typography>

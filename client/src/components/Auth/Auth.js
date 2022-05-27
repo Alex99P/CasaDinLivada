@@ -88,7 +88,7 @@ const Auth = () => {
     const token = res?.tokenId;
     try {
       dispatch({ type: AUTH, data: { result, token } });
-      navigate("/rezervare");
+      navigate("/reservation");
     } catch (error) {
       console.log(error);
     }

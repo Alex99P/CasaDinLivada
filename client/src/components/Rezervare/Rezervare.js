@@ -25,9 +25,9 @@ import "antd/dist/antd.min.css";
 import StripeCheckout from "react-stripe-checkout";
 import { useDispatch } from "react-redux";
 import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 // Style
 const useStyles = makeStyles({
@@ -74,7 +74,6 @@ const Rezervare = () => {
       border: "none",
     },
   };
-  
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -83,6 +82,8 @@ const Rezervare = () => {
   const [toMonth, settoMonth] = useState();
   const [fromDay, setfromDay] = useState();
   const [toDay, settoDay] = useState();
+  const [dayCiubar, setDayCiubar] = useState();
+  const [monthCiubar, setMonthCiubar] = useState();
   const [fromHour, setfromHour] = useState();
   const [toHour, settoHour] = useState();
 
@@ -96,21 +97,18 @@ const Rezervare = () => {
   const [toDateCiubar, settoDateCiubar] = useState();
   const [withCiubar, setwithCiubar] = useState(false);
   const [id, setid] = useState("");
-  const [amountCabana,setAmountCabana]=useState(200);
-  const [amountCiubar,setAmountCiubar]=useState(50);
-  const { t, i18n } = useTranslation();   
-
-
-  
+  const [amountCabana, setAmountCabana] = useState(200);
+  const [amountCiubar, setAmountCiubar] = useState(50);
+  const { t, i18n } = useTranslation();
 
   const [open, setOpen] = useState(false);
 
   const handleClickOpenCabana = () => {
-    setid("cabana")
+    setid("cabana");
     setOpen(true);
   };
   const handleClickOpenCiubar = () => {
-    setid("ciubar")
+    setid("ciubar");
     setOpen(true);
   };
 
@@ -136,7 +134,7 @@ const Rezervare = () => {
           toDate,
         },
         name: id,
-        amount:totalAmountCabana(),
+        amount: totalAmountCabana(),
         withCiubar,
       };
       console.log(reqObj);
@@ -151,7 +149,7 @@ const Rezervare = () => {
           toDateCiubar,
         },
         name: id,
-        amount:totalAmountCiubar(),
+        amount: totalAmountCiubar(),
       };
       // console.log(reqObj);
 
@@ -159,22 +157,18 @@ const Rezervare = () => {
     }
   }
 
-  const totalAmountCabana=()=>{
-    if(withCiubar)
-    {
-      
-      return (amountCabana+50)*numberNights
-      
-    }else
-    {
-      return amountCabana*numberNights
+  const totalAmountCabana = () => {
+    if (withCiubar) {
+      return (amountCabana + 50) * numberNights;
+    } else {
+      return amountCabana * numberNights;
     }
+  };
+  const totalAmountCiubar = () => {
+    return amountCiubar * numberHours;
+  };
 
-   
-  }
-  const totalAmountCiubar=()=>{return amountCiubar*numberHours}
-  
-  
+
   return (
     <>
       <NavbarRezervare />
@@ -191,7 +185,7 @@ const Rezervare = () => {
           >
             <RezervareTeamplate
               name={"cabana"}
-              title={t('rezervareCabana.1')}
+              title={t("rezervareCabana.1")}
               body={
                 "Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."
               }
@@ -230,7 +224,13 @@ const Rezervare = () => {
                 }}
                 spacing={2}
               >
-                <Typography variant="h6">Cabana {totalAmountCabana() !== 0 ? totalAmountCabana(): amountCabana } ron/noapte</Typography>
+                <Typography variant="h6">
+                  Cabana{" "}
+                  {totalAmountCabana() !== 0
+                    ? totalAmountCabana()
+                    : amountCabana}
+                  {totalAmountCabana() !== 0 ? " ron" : " ron/noapte"}{" "}
+                </Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack
                   direction="row"
@@ -279,7 +279,7 @@ const Rezervare = () => {
                       disabled={isPayDisabled}
                       onClick={handleClickOpenCabana}
                     >
-                      {t('butoane.1')}
+                      {t("butoane.1")}
                     </Button>
                   </span>
                 </Tooltip>
@@ -291,7 +291,7 @@ const Rezervare = () => {
             alignItems="flex-start"
           >
             <RezervareTeamplate
-              name={"sauna"}
+              name={"ciubar"}
               title={"CIUBARUL DIN LIVADA(ADULTI/FAMILII)"}
               body={
                 "Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."
@@ -312,6 +312,8 @@ const Rezervare = () => {
               settoDateCiubar={settoDateCiubar}
               setfromHour={setfromHour}
               settoHour={settoHour}
+              setDayCiubar={setDayCiubar}
+              setMonthCiubar={setMonthCiubar}
             />
             <Stack
               // mt={isMobile ? 1 : 1}
@@ -334,7 +336,13 @@ const Rezervare = () => {
                 justifyContent="center"
                 spacing={2}
               >
-                <Typography variant="h6">Ciubar {totalAmountCiubar() !== 0 ? totalAmountCiubar(): amountCiubar } ron/ora</Typography>
+                <Typography variant="h6">
+                  Ciubar{" "}
+                  {totalAmountCiubar() !== 0
+                    ? totalAmountCiubar()
+                    : amountCiubar}
+                  {totalAmountCiubar() !== 0 ? " ron" : " ron/ora"}
+                </Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
                   <Stack direction="row" alignItems="center" spacing={0.8}>
@@ -342,8 +350,9 @@ const Rezervare = () => {
                       icon={faPersonWalkingLuggage}
                       fontSize="30px"
                     />
+
                     <Typography sx={{ fontSize: "15px" }}>
-                      {fromDay} {fromMonth}
+                      {dayCiubar} {monthCiubar} {fromHour} {fromHour !== undefined ? ":00" : ""}
                     </Typography>
                   </Stack>
                   <ArrowForwardIcon sx={{ margin: "0px 10px 0px 10px" }} />
@@ -358,7 +367,7 @@ const Rezervare = () => {
                       fontSize="30px"
                     />
                     <Typography sx={{ fontSize: "15px" }}>
-                      {toDay} {toMonth}
+                      {dayCiubar} {monthCiubar} {toHour} {toHour !== undefined ? ":00" : ""}
                     </Typography>
                   </Stack>
                 </Stack>
@@ -377,7 +386,7 @@ const Rezervare = () => {
                       disabled={isPayDisabledC}
                       onClick={handleClickOpenCiubar}
                     >
-                       {t('butoane.1')}
+                      {t("butoane.1")}
                     </Button>
                   </span>
                 </Tooltip>
@@ -473,7 +482,10 @@ const Rezervare = () => {
                               variant="body1"
                               sx={{ fontWeight: "bold" }}
                             >
-                             {id === "cabana" ? totalAmountCabana() :totalAmountCiubar()} ron
+                              {id === "cabana"
+                                ? totalAmountCabana()
+                                : totalAmountCiubar()}{" "}
+                              ron
                             </Typography>
                           </Stack>
                         </Stack>
@@ -485,18 +497,27 @@ const Rezervare = () => {
                       variant="contained"
                       style={btnStyle}
                       onClick={handleClose}
-                      sx={{margin:1}}
+                      sx={{ margin: 1 }}
                     >
                       Cancel
                     </Button>
                     <StripeCheckout
                       token={onToken}
                       currency="RON"
-                      amount={id==="cabana" ? totalAmountCabana() * 100 : totalAmountCiubar()*100 }
+                      amount={
+                        id === "cabana"
+                          ? totalAmountCabana() * 100
+                          : totalAmountCiubar() * 100
+                      }
                       stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
                     >
-                      <Button variant="contained"  onClick={handleClose} style={btnStyle} sx={{margin:1}} >
-                      {t('butoane.1')}
+                      <Button
+                        variant="contained"
+                        onClick={handleClose}
+                        style={btnStyle}
+                        sx={{ margin: 1 }}
+                      >
+                        {t("butoane.1")}
                       </Button>
                     </StripeCheckout>
                   </DialogActions>
