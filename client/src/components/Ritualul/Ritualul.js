@@ -5,7 +5,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import {
   Box, Button,
   Divider, Grid, IconButton, Stack,
-  TextField
+  TextField, useMediaQuery, useTheme
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +14,7 @@ import img from "../../imagini/imaginea2.jpg";
 import "../Home/Home.scss";
 import Menu from "../Menu/Menu";
 import "./Ritualul.scss";
+
 //alt+shift+f  pentru indentare
 
 const useStyles = makeStyles({
@@ -68,6 +69,10 @@ const Ritualul = () => {
   const pageContent = useRef()
   const [toggleHeaderBg, setToggleHeaderBg] = useState(false)
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+
   const intersectionObserver = new IntersectionObserver(([{ isIntersecting }]) => {
     setToggleHeaderBg(!isIntersecting)
   });
@@ -90,6 +95,23 @@ const Ritualul = () => {
         style={{ backgroundImage: ` linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)), url(${img})` }}
         ref={pageContent}
       />
+      <Box className="descriptionRitual">
+        <Box
+          height="2rem"
+          width="2rem"
+          bgcolor="white"
+          borderRadius={50}
+          // marginBottom={'1rem'}
+          marginTop={'1rem'}
+        ></Box>
+        <Typography variant="h4" className="title">Casa din livada</Typography>
+      </Box>
+      {!isMobile &&
+      <Box className="descriptionRitual2">
+        <Typography variant="h4" className="title">La umbra nucului </Typography>
+        <Typography variant="body1" className="subtitle">Hraneste-ti simturile</Typography>
+      </Box>
+      }
       <Grid item xs={12}>
         <Stack
           direction="column"
@@ -115,17 +137,11 @@ const Ritualul = () => {
           </Box>
         </Stack>
       </Grid>
+
+      {/* Trebuie sa le aranjez!!!! */}
       <Grid mt={6} item >
         <Grid container direction="row" p={2} gap={5}>
-          <Grid
-            item
-            md={4}
-            xs={12}
-            height="400px"
-            bgcolor="#9e9e9e"
-            maxWidth="500px"
-          />
-          {/* aici o sa vina poza */}
+         
           <Grid item xs={12} md={7} maxWidth="600px"  >
             <Typography variant="h5" gutterBottom>
               Pasul 1
@@ -141,6 +157,15 @@ const Ritualul = () => {
               aliqua nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
+          <Grid
+            item
+            md={4}
+            xs={12}
+            height="400px"
+            bgcolor="#9e9e9e"
+            maxWidth="500px"
+          />
+          {/* aici o sa vina poza */}
         </Grid>
       </Grid>
       <Grid mt={6} item >
