@@ -13,16 +13,22 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^4.19.5",
+    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.17.3",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4",
+    "node-fetch": "^3.2.4",
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.15",
     "stripe": "^9.1.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23",
+    "xml2json-light": "^1.0.6"
   }
 }

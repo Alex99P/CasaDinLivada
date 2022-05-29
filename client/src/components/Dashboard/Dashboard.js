@@ -48,8 +48,6 @@ const Dashboard = () => {
   const lastName = words[1];
   const phoneNumber = user?.result?.phoneNumber;
   const id = user?.result?._id;
-  const [fromDate, setfromDate] = useState([]);
-  const [toDate, settoDate] = useState([]);
   const [data, setData] = useState([]);
   const [dataCiubar, setDataCiubar] = useState([]);
   const [reservationId, setReservationId] = useState();
@@ -157,37 +155,58 @@ const Dashboard = () => {
 
       console.log(response);
       
-      setData(
-        [
-          ...response?.data.map((cabana) => ({
-            ...cabana,
-            bookTime: {
-              fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
-              toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
-            },
-          })),
-          ...responseCiubar?.data.map((ciubar) => ({
+      // setData(
+      //   [
+      //     ...response?.data.map((cabana) => ({
+      //       ...cabana,
+      //       bookTime: {
+      //         fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
+      //         toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
+      //       },
+      //     })),
+      //     ...responseCiubar?.data.map((ciubar) => ({
+      //       ...ciubar,
+      //       bookTime: {
+      //         fromDate: ciubar.bookTime.fromDateCiubar,
+      //         toDate: ciubar.bookTime.toDateCiubar,
+      //       },
+      //     })),
+      //   ].sort((a, b) =>
+      //     new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
+      //   )
+      // );
+
+      setData([ 
+           ...response?.data.map((cabana) => ({
+              ...cabana,
+              bookTime: {
+                fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
+                toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
+              },
+            }))].sort((a, b) =>
+                new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
+              )
+            )
+
+      setDataCiubar([ 
+              ...responseCiubar?.data.map((ciubar) => ({
             ...ciubar,
             bookTime: {
               fromDate: ciubar.bookTime.fromDateCiubar,
               toDate: ciubar.bookTime.toDateCiubar,
             },
-          })),
-        ].sort((a, b) =>
-          new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
-        )
-      );
+      }))])
 
     } catch (error) {
       console.error(error);
     }
   }
-  console.log(data);
 
   useEffect(() => {
     getDate();
   }, []);
 
+  
   if (loading) {
     return (
       <Grid container spacing={2} justifyContent="center" marginTop={4}>
@@ -197,7 +216,8 @@ const Dashboard = () => {
   }
   return (
     <>
-      <NavbarRezervare from="userDashboard" />
+    
+      <NavbarRezervare from={"userDashboard"}  />
       <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 , }}>
         <Grid container spacing={2} justifyContent="center" height='100%' sx={{marginBottom:10}}>
           <Grid item xs={12} md={2} className="list">
@@ -227,8 +247,11 @@ const Dashboard = () => {
               </ListItem>
               <Divider light />
               <ListItem>
-                <Button style={btnStyle} fullWidth component={Link}>
-                  LogOut
+                <Button style={btnStyle} fullWidth component={Link}  
+                onClick={() => {
+                    setNav("bookingsCiubar");
+                  }}>
+                  All bookings Ciubar
                 </Button>
               </ListItem>
             </List>
@@ -358,6 +381,87 @@ const Dashboard = () => {
                 </TableContainer>
               </Paper>
             )}
+
+            {nav === "bookingsCiubar" && (
+              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh'}}>
+                <Typography variant="h3" color="initial">
+                 {isAdmin ? "All bookings":"My bookings"}
+                </Typography>
+                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '70vh' }}>
+                  <Table size="medium" aria-label="a dense table" height="100%">
+                    <TableHead>
+                      <TableRow>
+                        {isAdmin && (
+                          <>
+                            <TableCell align="left">User Name </TableCell>
+                            <TableCell align="left">Email</TableCell>
+                            <TableCell align="left">Phone Number</TableCell>
+                          </>
+                        )}
+                        <TableCell align="left">Select</TableCell>
+                        <TableCell align="left">From Date</TableCell>
+                        <TableCell align="left">To Date</TableCell>
+                        <TableCell align="left"></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {dataCiubar.map((reservation) => (
+                        <TableRow
+                          key={reservation._id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                          {isAdmin && (
+                            <>
+                              <TableCell align="left">
+                                {reservation.user?.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {reservation.user?.email}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {reservation.user?.phoneNumber}
+                              </TableCell>
+                              
+                            </>
+                          )}
+                          <TableCell component="th" scope="row">
+                            {reservation.name}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.fromDate}
+                          </TableCell>
+                          <TableCell align="left">
+                            {reservation.bookTime.toDate}
+                          </TableCell>
+                          <TableCell align="left">
+                            <Button
+                              variant="outlined"
+                              color="error"
+                              onClick={() =>
+                                handleClickOpen(
+                                  reservation._id,
+                                  reservation.name
+                                )
+                              }
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            )}
+
+
+
+
+
+
             <Dialog
               open={open}
               onClose={handleClose}

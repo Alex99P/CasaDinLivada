@@ -1,0 +1,44 @@
+.containerDespreNoi{
+  background-blend-mode: saturation;
+  background-position: center !important;
+  background-size: cover !important;
+  background-color: rgb(11, 11, 11);
+  height: 120vh;
+  margin: 0;   
+  width: 100vw;
+  z-index: -20 ;
+  overflow: hidden;
+
+}
+.containerDespreNoi2{
+  // display: flex;
+  // position: absolute;
+  // top: 12%;
+  // z-index: -2;
+  margin-top: 20px;
+  height: 100vh;
+  // z-index: 1;
+
+
+}
+.containerWrite, .containerform{
+  // margin: 60px 0px 0px 60px;  
+}
+.containerMaps>div{
+
+ width: 30px !important;
+ height: 10px !important;
+
+}
+
+
+@media (max-width: 768px) {
+  
+  .containerMaps>div{
+
+    // width: 10px !important;
+    // height: 10px !important;
+   
+   }
+
+}

@@ -81,12 +81,13 @@ const NavbarRezervare = (from) => {
             </IconButton>
             :
             <>
-              <User from={from} />
+              
               <Stack
                 direction="row"
                 marginRight={-3.5}
                 divider={<Divider orientation="vertical" color="white" flexItem />}
               >
+                <User from={from} />
                 <Currencies />
                 <Languages />
               </Stack>

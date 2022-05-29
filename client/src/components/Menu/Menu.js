@@ -56,6 +56,7 @@ const Menu = ({ bgBlack = false }) => {
                 top: 0,
                 right: 0,
                 bottom: 0,
+                zIndex: 10
               }}
               elevation={0}
             >
@@ -133,6 +134,7 @@ const Menu = ({ bgBlack = false }) => {
                   alignItems="center"
                 >
                   <Link
+                  mt={10}
                     className={classes.link}
                     href="/frequent-questions"
                     underline="hover"
@@ -141,7 +143,7 @@ const Menu = ({ bgBlack = false }) => {
                   >
                     Intrebari frecvente{" "}
                   </Link>
-                  <Link
+                  {/* <Link
                     className={classes.link}
                     href="/location"
                     underline="hover"
@@ -149,15 +151,15 @@ const Menu = ({ bgBlack = false }) => {
                     variant="body1"
                   >
                     Cum ajung aici?
-                  </Link>
+                  </Link> */}
                   <Link
                     className={classes.link}
-                    href="/about-us"
+                    href="/contact"
                     underline="hover"
                     color="black"
                     variant="body1"
                   >
-                    Despre noi
+                    Contact
                   </Link>
                   <Link
                     className={classes.link}

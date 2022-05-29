@@ -4,9 +4,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-    
-
-
 export const signin = (formData, navigate) => async (dispatch) => {
       
   try {

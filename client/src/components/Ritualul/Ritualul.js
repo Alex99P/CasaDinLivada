@@ -3,9 +3,16 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailIcon from "@mui/icons-material/Mail";
 import {
-  Box, Button,
-  Divider, Grid, IconButton, Stack,
-  TextField, useMediaQuery, useTheme
+  Box,
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+  TextField,
+  useMediaQuery,
+  useTheme,
+  Link,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React, { useEffect, useRef, useState } from "react";
@@ -20,7 +27,7 @@ import "./Ritualul.scss";
 const useStyles = makeStyles({
   textField: {
     maxWidth: 300,
-    width: '100%',
+    width: "100%",
     "& .MuiInputBase-root": {
       color: "white",
     },
@@ -44,7 +51,7 @@ const useStyles = makeStyles({
     color: "black",
     backgroundColor: "white",
     border: "none",
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     "&:hover": {
       backgroundColor: "#e1e3e1",
       border: "none",
@@ -56,8 +63,8 @@ const btnStyle = {
   color: "black",
   backgroundColor: "white",
   border: "none",
-  height: '56px',
-  padding: '0 36px',
+  height: "56px",
+  padding: "0 36px",
   "&:hover": {
     backgroundColor: "#e1e3e1",
     border: "none",
@@ -66,33 +73,36 @@ const btnStyle = {
 
 const Ritualul = () => {
   const classes = useStyles();
-  const pageContent = useRef()
-  const [toggleHeaderBg, setToggleHeaderBg] = useState(false)
+  const pageContent = useRef();
+  const [toggleHeaderBg, setToggleHeaderBg] = useState(false);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-
-  const intersectionObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-    setToggleHeaderBg(!isIntersecting)
-  });
+  const intersectionObserver = new IntersectionObserver(
+    ([{ isIntersecting }]) => {
+      setToggleHeaderBg(!isIntersecting);
+    }
+  );
 
   useEffect(() => {
     if (pageContent.current) {
-      intersectionObserver.observe(pageContent.current)
+      intersectionObserver.observe(pageContent.current);
     }
 
     return () => {
-      intersectionObserver?.unobserve(pageContent.current)
-    }
-  }, [pageContent])
+      intersectionObserver?.unobserve(pageContent.current);
+    };
+  }, [pageContent]);
 
   return (
-    <>
+    <div className="containerRitual">
       <Menu bgBlack={toggleHeaderBg} />
       <Box
         className="containerHome"
-        style={{ backgroundImage: ` linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)), url(${img})` }}
+        style={{
+          backgroundImage: ` linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)), url(${img})`,
+        }}
         ref={pageContent}
       />
       <Box className="descriptionRitual">
@@ -102,16 +112,24 @@ const Ritualul = () => {
           bgcolor="white"
           borderRadius={50}
           // marginBottom={'1rem'}
-          marginTop={'1rem'}
+          marginTop={"1rem"}
         ></Box>
-        <Typography variant="h4" className="title">Casa din livada</Typography>
+        <Link href="/" underline="none" color="black" variant="h5">
+          <Typography variant="h4" className="title">
+            Casa din livada
+          </Typography>
+        </Link>
       </Box>
-      {!isMobile &&
-      <Box className="descriptionRitual2">
-        <Typography variant="h4" className="title">La umbra nucului </Typography>
-        <Typography variant="body1" className="subtitle">Hraneste-ti simturile</Typography>
-      </Box>
-      }
+      {!isMobile && (
+        <Box className="descriptionRitual2">
+          <Typography variant="h4" className="title">
+            La umbra nucului{" "}
+          </Typography>
+          <Typography variant="body1" className="subtitle">
+            Hraneste-ti simturile
+          </Typography>
+        </Box>
+      )}
       <Grid item xs={12}>
         <Stack
           direction="column"
@@ -130,19 +148,17 @@ const Ritualul = () => {
               &nbsp; &nbsp;Irure et aliquip magna non nulla occaecat ad anim
               aute do. Et sint adipisicing laboris eu culpa amet sit eu
               deserunt. Excepteur ullamco sint fugiat dolore culpa officia ea
-              enim nulla. Veniam aliqua ea elit laboris velit voluptate.
-              Aliquip eiusmod nostrud anim in enim cupidatat tempor irure
-              velit.
+              enim nulla. Veniam aliqua ea elit laboris velit voluptate. Aliquip
+              eiusmod nostrud anim in enim cupidatat tempor irure velit.
             </Typography>
           </Box>
         </Stack>
       </Grid>
 
       {/* Trebuie sa le aranjez!!!! */}
-      <Grid mt={6} item >
+      <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
-         
-          <Grid item xs={12} md={7} maxWidth="600px"  >
+          <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 1
             </Typography>
@@ -152,9 +168,9 @@ const Ritualul = () => {
             <Typography variant="body1">
               Sit sit ullamco magna ad est esse ea Lorem ullamco cupidatat.
               Nulla laboris do amet consequat sit. Irure occaecat officia ut
-              tempor. Laboris qui labore ad consectetur velit laborum sint
-              ipsum culpa tempor incididunt aute. Incididunt nostrud veniam
-              aliqua nulla excepteur cupidatat excepteur.
+              tempor. Laboris qui labore ad consectetur velit laborum sint ipsum
+              culpa tempor incididunt aute. Incididunt nostrud veniam aliqua
+              nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
           <Grid
@@ -168,7 +184,7 @@ const Ritualul = () => {
           {/* aici o sa vina poza */}
         </Grid>
       </Grid>
-      <Grid mt={6} item >
+      <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
           <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
@@ -180,9 +196,9 @@ const Ritualul = () => {
             <Typography variant="body1">
               Sit sit ullamco magna ad est esse ea Lorem ullamco cupidatat.
               Nulla laboris do amet consequat sit. Irure occaecat officia ut
-              tempor. Laboris qui labore ad consectetur velit laborum sint
-              ipsum culpa tempor incididunt aute. Incididunt nostrud veniam
-              aliqua nulla excepteur cupidatat excepteur.
+              tempor. Laboris qui labore ad consectetur velit laborum sint ipsum
+              culpa tempor incididunt aute. Incididunt nostrud veniam aliqua
+              nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
           <Grid
@@ -196,7 +212,7 @@ const Ritualul = () => {
           {/* aici o sa vina poza */}
         </Grid>
       </Grid>
-      <Grid mt={6} item >
+      <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
           <Grid
             item
@@ -217,16 +233,16 @@ const Ritualul = () => {
             <Typography variant="body1">
               Sit sit ullamco magna ad est esse ea Lorem ullamco cupidatat.
               Nulla laboris do amet consequat sit. Irure occaecat officia ut
-              tempor. Laboris qui labore ad consectetur velit laborum sint
-              ipsum culpa tempor incididunt aute. Incididunt nostrud veniam
-              aliqua nulla excepteur cupidatat excepteur.
+              tempor. Laboris qui labore ad consectetur velit laborum sint ipsum
+              culpa tempor incididunt aute. Incididunt nostrud veniam aliqua
+              nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Grid mt={6} item >
+      <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
-          <Grid item xs={12} md={7} maxWidth="600px" >
+          <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 4
             </Typography>
@@ -237,9 +253,9 @@ const Ritualul = () => {
             <Typography variant="body1">
               Sit sit ullamco magna ad est esse ea Lorem ullamco cupidatat.
               Nulla laboris do amet consequat sit. Irure occaecat officia ut
-              tempor. Laboris qui labore ad consectetur velit laborum sint
-              ipsum culpa tempor incididunt aute. Incididunt nostrud veniam
-              aliqua nulla excepteur cupidatat excepteur.
+              tempor. Laboris qui labore ad consectetur velit laborum sint ipsum
+              culpa tempor incididunt aute. Incididunt nostrud veniam aliqua
+              nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
           <Grid
@@ -281,16 +297,12 @@ const Ritualul = () => {
               variant="outlined"
               style={btnStyle}
               className={classes.button}
-              height={'56px'}
+              height={"56px"}
             >
               Aboneza-te
             </Button>
           </Stack>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-end"
-          >
+          <Stack direction="row" justifyContent="center" alignItems="flex-end">
             <IconButton sx={{ color: "white" }}>
               <FacebookIcon />
             </IconButton>
@@ -309,7 +321,7 @@ const Ritualul = () => {
           </Stack>
         </Stack>
       </Grid>
-    </>
+    </div>
   );
 };
 
