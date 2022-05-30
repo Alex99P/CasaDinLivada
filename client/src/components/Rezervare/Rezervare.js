@@ -100,6 +100,8 @@ const Rezervare = () => {
   const [amountCabana, setAmountCabana] = useState(200);
   const [amountCiubar, setAmountCiubar] = useState(50);
   const { t, i18n } = useTranslation();
+  const [currency, setCurrency] = useState("RON");
+
 
   const [open, setOpen] = useState(false);
 
@@ -137,7 +139,7 @@ const Rezervare = () => {
         amount: totalAmountCabana(),
         withCiubar,
       };
-      console.log(reqObj);
+      // console.log(reqObj);
 
       dispatch(bookingHouse(reqObj));
     } else {
@@ -171,7 +173,12 @@ const Rezervare = () => {
 
   return (
     <>
-      <NavbarRezervare />
+  
+
+      <NavbarRezervare  
+      currency={currency}
+      setCurrency={setCurrency}
+      />
 
       <Stack
         direction={isMobile ? "column" : "row"}
@@ -224,13 +231,13 @@ const Rezervare = () => {
                 }}
                 spacing={2}
               >
-                <Typography variant="h6">
+                <Typography variant="body1">
                   Cabana{" "}
                   {totalAmountCabana() !== 0
                     ? totalAmountCabana()
                     : amountCabana}
-                  {totalAmountCabana() !== 0 ? " ron" : " ron/noapte"}{" "}
-                </Typography>
+                  {totalAmountCabana() !== 0 ? currency :`${currency} /noaptea`}
+                </Typography> 
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack
                   direction="row"
@@ -336,12 +343,12 @@ const Rezervare = () => {
                 justifyContent="center"
                 spacing={2}
               >
-                <Typography variant="h6">
+                <Typography variant="body1">
                   Ciubar{" "}
                   {totalAmountCiubar() !== 0
                     ? totalAmountCiubar()
                     : amountCiubar}
-                  {totalAmountCiubar() !== 0 ? " ron" : " ron/ora"}
+                  {totalAmountCiubar() !== 0 ? currency :` ${currency} /ora`}
                 </Typography>
                 <Typography variant="body1">Rezervarea mea</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
@@ -401,7 +408,6 @@ const Rezervare = () => {
                     {"Order Summary"}
                   </DialogTitle>
                   <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
                       <Stack
                         direction="row"
                         justifyContent="center"
@@ -490,7 +496,6 @@ const Rezervare = () => {
                           </Stack>
                         </Stack>
                       </Stack>
-                    </DialogContentText>
                   </DialogContent>
                   <DialogActions>
                     <Button

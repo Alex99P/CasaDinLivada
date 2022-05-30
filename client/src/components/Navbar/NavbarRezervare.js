@@ -1,6 +1,13 @@
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import {
-  AppBar, Box, Divider, IconButton, Stack, Toolbar, useMediaQuery, useTheme
+  AppBar,
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Toolbar,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import decode from "jwt-decode";
 import React, { useEffect, useRef, useState } from "react";
@@ -11,17 +18,17 @@ import Languages from "./Languages";
 import Logo from "./Logo";
 import User from "./User";
 
-const NavbarRezervare = (from) => {
+const NavbarRezervare = ({ from, currency, setCurrency }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const homestyle=false;
+  const homestyle = false;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isAdmin, setIsAdmin] = useState(user?.result?.admin);
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -44,10 +51,8 @@ const NavbarRezervare = (from) => {
   // const authData = useSelector((state) => state.auth.authData);
   // console.log(authData?.message);
 
-
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(open);
@@ -60,16 +65,18 @@ const NavbarRezervare = (from) => {
     prevOpen.current = open;
   }, [open]);
 
-  const handleMenuClick = () => setIsMenuOpen(!isMenuOpen)
+  const handleMenuClick = () => setIsMenuOpen(!isMenuOpen);
+
+  
 
   return (
     <>
       <AppBar sx={{ backgroundColor: "black", boxShadow: 0 }}>
         <Toolbar>
-          <Box display="flex" flexGrow={1} >
+          <Box display="flex" flexGrow={1}>
             <Logo />
           </Box>
-          {isMobile ?
+          {isMobile ? (
             <IconButton
               size="large"
               edge="start"
@@ -79,27 +86,37 @@ const NavbarRezervare = (from) => {
             >
               <MenuIcon />
             </IconButton>
-            :
+          ) : (
             <>
-              
               <Stack
                 direction="row"
                 marginRight={-3.5}
-                divider={<Divider orientation="vertical" color="white" flexItem />}
+                divider={
+                  <Divider orientation="vertical" color="white" flexItem />
+                }
               >
                 <User from={from} />
-                <Currencies />
+               {from !=="userDashboard" && <Currencies currency={currency} setCurrency={setCurrency} />}
                 <Languages />
               </Stack>
-            </>}
+            </>
+          )}
         </Toolbar>
-        {isMenuOpen && <Box display="flex" flexDirection='column' alignItems='end' paddingRight={2} sx={{borderTop: '1px solid gray'}}  >
-          <div  className="navbar">
-          <User from={from}  />
-          <Currencies />
-          <Languages  homestyle={homestyle}/>
-          </div>
-        </Box>}
+        {isMenuOpen && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="end"
+            paddingRight={2}
+            sx={{ borderTop: "1px solid gray" }}
+          >
+            <div className="navbar">
+              <User from={from} />
+              {from !=="userDashboard" && <Currencies currency={currency} setCurrency={setCurrency} />}
+              <Languages homestyle={homestyle} />
+            </div>
+          </Box>
+        )}
       </AppBar>
     </>
   );

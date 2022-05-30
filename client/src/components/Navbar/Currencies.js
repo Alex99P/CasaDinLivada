@@ -20,12 +20,10 @@ const currencies = [
     },
 ];
 
-const Currencies = () => {
-    const [currency, setCurrency] = useState(currencies[0].value);
-
+const Currencies = ({currency,setCurrency}) => {
+   
     const handleChangeCurrency = (event) => setCurrency(event.target.value);
-
-
+  
     return (
         <Select
             variant="outlined"
@@ -42,7 +40,7 @@ const Currencies = () => {
             value={currency}
             onChange={handleChangeCurrency}
         >
-            {currencies.map((option) => (
+            {currencies.map((option) => ( 
                 <MenuItem key={option.value} value={option.value}>
                     {option.label}
                 </MenuItem>

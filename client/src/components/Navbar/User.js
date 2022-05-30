@@ -20,7 +20,7 @@ const User = ({ from }) => {
     };
 
     const myprofile = () => {
-        if (from.from === "userDashboard") {
+        if (from === "userDashboard") {
             navigate("/reservation");
         } else {
             navigate("/myprofile");
@@ -68,7 +68,7 @@ const User = ({ from }) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                {from.from === "userDashboard"
+                {from === "userDashboard"
                     ? <MenuItem onClick={myprofile}>Profile</MenuItem>
                     : <MenuItem onClick={myprofile}>My account</MenuItem>
                 }

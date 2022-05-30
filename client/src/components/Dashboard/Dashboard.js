@@ -214,10 +214,11 @@ const Dashboard = () => {
       </Grid>
     );
   }
+  let from = "userDashboard";
   return (
     <>
     
-      <NavbarRezervare from={"userDashboard"}  />
+      <NavbarRezervare from={from}  />
       <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 , }}>
         <Grid container spacing={2} justifyContent="center" height='100%' sx={{marginBottom:10}}>
           <Grid item xs={12} md={2} className="list">
