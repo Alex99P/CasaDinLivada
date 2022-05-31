@@ -14,10 +14,10 @@ const currencies = [
         value: "EUR",
         label: "EURO",
     },
-    {
-        value: "BTC",
-        label: "฿",
-    },
+    // {
+    //     value: "BTC",
+    //     label: "฿",
+    // },
 ];
 
 const Currencies = ({currency,setCurrency}) => {

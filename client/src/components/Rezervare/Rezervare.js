@@ -25,6 +25,7 @@ import "antd/dist/antd.min.css";
 import StripeCheckout from "react-stripe-checkout";
 import { useDispatch } from "react-redux";
 import { bookingCiubar, bookingHouse } from "../../redux/actions/booking.js";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
@@ -76,7 +77,7 @@ const Rezervare = () => {
   };
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [fromMonth, setfromMonth] = useState();
   const [toMonth, settoMonth] = useState();
@@ -97,10 +98,12 @@ const Rezervare = () => {
   const [toDateCiubar, settoDateCiubar] = useState();
   const [withCiubar, setwithCiubar] = useState(false);
   const [id, setid] = useState("");
-  const [amountCabana, setAmountCabana] = useState(200);
-  const [amountCiubar, setAmountCiubar] = useState(50);
+  const [amountCabana, setAmountCabana] = useState();
+  const [amountCiubar, setAmountCiubar] = useState();
   const { t, i18n } = useTranslation();
   const [currency, setCurrency] = useState("RON");
+  const [usd,setUsd]=useState();
+  const [euro,setEuro]=useState();
 
 
   const [open, setOpen] = useState(false);
@@ -159,9 +162,29 @@ const Rezervare = () => {
     }
   }
 
+  function setAmountforCabana(){
+    if(currency==="USD")
+    {
+      setAmountCabana(Math.round(200/usd))
+      setAmountCiubar(Math.round(50/usd))
+    }
+    else if(currency==="EUR")
+    {
+      setAmountCabana(Math.round(200/euro))
+      setAmountCiubar(Math.round(50/euro))
+
+    }
+    else{
+      setAmountCabana(200)
+      setAmountCiubar(50)
+    }
+  }
+
+
   const totalAmountCabana = () => {
     if (withCiubar) {
-      return (amountCabana + 50) * numberNights;
+
+      return (amountCabana + amountCiubar) * numberNights;
     } else {
       return amountCabana * numberNights;
     }
@@ -169,6 +192,24 @@ const Rezervare = () => {
   const totalAmountCiubar = () => {
     return amountCiubar * numberHours;
   };
+
+  async function getCurrency(){
+    const response = await axios.get("http://localhost:5000/booking/currency");
+  // console.log(response.data.USD);
+  setUsd(response.data.USD)
+  setEuro(response.data.EURO)
+  
+  }
+ 
+
+  useEffect(() => {
+    setAmountforCabana();;
+    });
+  
+
+  useEffect(() => {
+    getCurrency();
+    }, []);
 
 
   return (
@@ -491,7 +532,7 @@ const Rezervare = () => {
                               {id === "cabana"
                                 ? totalAmountCabana()
                                 : totalAmountCiubar()}{" "}
-                              ron
+                              {currency}
                             </Typography>
                           </Stack>
                         </Stack>
@@ -508,7 +549,7 @@ const Rezervare = () => {
                     </Button>
                     <StripeCheckout
                       token={onToken}
-                      currency="RON"
+                      currency={currency}
                       amount={
                         id === "cabana"
                           ? totalAmountCabana() * 100
