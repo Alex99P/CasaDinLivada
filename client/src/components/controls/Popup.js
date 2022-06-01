@@ -29,7 +29,7 @@ export default function Popup({ openPopup, setOpenPopup, title,name }) {
       open={openPopup}
       onClose={setOpenPopup}
       aria-labelledby="responsive-dialog-title"
-      maxWidth={"md"}
+      maxWidth={"sm"}
     >
       {/* <DialogTitle id="responsive-dialog-title"> */}
       <Stack

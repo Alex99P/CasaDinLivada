@@ -16,7 +16,6 @@ import {
   Divider,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
-import moment from "moment";
 import RezervareTeamplate from "./RezervareTeamplate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonWalkingLuggage } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +28,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
+import Feedback from "./Feedback";
 
 // Style
 const useStyles = makeStyles({
@@ -141,6 +141,7 @@ const Rezervare = () => {
         name: id,
         amount: totalAmountCabana(),
         withCiubar,
+        currency
       };
       // console.log(reqObj);
 
@@ -155,6 +156,7 @@ const Rezervare = () => {
         },
         name: id,
         amount: totalAmountCiubar(),
+        currency
       };
       // console.log(reqObj);
 
@@ -272,6 +274,7 @@ const Rezervare = () => {
                 }}
                 spacing={2}
               >
+                <Feedback/>
                 <Typography variant="body1">
                   Cabana{" "}
                   {totalAmountCabana() !== 0

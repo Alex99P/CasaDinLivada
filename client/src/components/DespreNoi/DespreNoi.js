@@ -154,17 +154,17 @@ const DespreNoi = () => {
           mt={10}
         >
           <Stack className="containerWrite" spacing={1} 
-          marginLeft={isMobile ? 0 : -37  }
+          marginLeft={isMobile ? 0 : -40  }
           
           >
             <Typography variant="body1" color="black">
               Cum se ajunge la cabana ?
             </Typography>
             <Typography variant="body2" color="black">
-              Str bla bla bla
+              Str Garii, nr. 1177, sat Maneciu-Pamanteni
             </Typography>
           </Stack>
-          <Stack marginLeft={isMobile ? -7 : 0} mt={isMobile ? 4 : 0}>
+          <Stack marginLeft={isMobile ? -7 : 10} mt={isMobile ? 4 : 0}>
             <Maps />
           </Stack>
         </Stack>

@@ -20,7 +20,7 @@ import User from "./User";
 
 const NavbarRezervare = ({ from, currency, setCurrency }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const homestyle = false;
 
   const dispatch = useDispatch();

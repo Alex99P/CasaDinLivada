@@ -4,6 +4,7 @@ import bodyparser from "body-parser";
 import cors from "cors";
 import userRouter from "./Routes/user.js";
 import bookingRouter from "./Routes/booking.js";
+import feedbackRouter from "./Routes/feedback.js"
 
 
 const app =express();
@@ -15,7 +16,7 @@ app.use(bodyparser.json())
 app.use(cors());
 
 
-// app.use('/',route);
+app.use('/feedback',feedbackRouter);
 app.use('/user',userRouter);
 app.use('/booking',bookingRouter);
 app.listen(port,()=>console.log( `Running on http://localhost:${port}`))

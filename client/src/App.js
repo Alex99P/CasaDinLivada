@@ -33,7 +33,7 @@ function App() {
         <Route path="/prices" element={<Tarife />} exact />
         <Route path="/frequent-questions" element={<Intrebari />} exact />
         <Route path="/contact" element={<DespreNoi />} exact />
-        {/* <Route path="/location" element={<Locatie />} exact /> */}
+        <Route path="/location" element={<Locatie />} exact />
         <Route path="/photos" element={<Foto />} exact />
       </Routes>
     </React.Fragment>

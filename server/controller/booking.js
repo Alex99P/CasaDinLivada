@@ -8,7 +8,9 @@ const stripe = new Stripe(
 );
 
 export const booking = async (req, res) => {
-  const { token } = req.body;
+  const { token, currency } = req.body;
+
+  
   
   try {
     const customer = await stripe.customers.create({
@@ -19,7 +21,7 @@ export const booking = async (req, res) => {
     const payment = await stripe.charges.create(
       {
         amount: req.body.amount * 100,
-        currency: "RON",
+        currency: currency,
         customer: customer.id,
         receipt_email: token.email,
       },
