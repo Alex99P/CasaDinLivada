@@ -11,7 +11,6 @@ import {
   Tooltip,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Divider,
 } from "@mui/material";
@@ -143,7 +142,6 @@ const Rezervare = () => {
         withCiubar,
         currency
       };
-      // console.log(reqObj);
 
       dispatch(bookingHouse(reqObj));
     } else {
@@ -158,7 +156,6 @@ const Rezervare = () => {
         amount: totalAmountCiubar(),
         currency
       };
-      // console.log(reqObj);
 
       dispatch(bookingCiubar(reqObj));
     }
@@ -197,13 +194,11 @@ const Rezervare = () => {
 
   async function getCurrency(){
     const response = await axios.get("http://localhost:5000/booking/currency");
-  // console.log(response.data.USD);
   setUsd(response.data.USD)
   setEuro(response.data.EURO)
   
   }
  
-
   useEffect(() => {
     setAmountforCabana();;
     });
@@ -216,13 +211,10 @@ const Rezervare = () => {
 
   return (
     <>
-  
-
       <NavbarRezervare  
       currency={currency}
       setCurrency={setCurrency}
       />
-
       <Stack
         direction={isMobile ? "column" : "row"}
         justifyContent="space-between"
@@ -237,7 +229,7 @@ const Rezervare = () => {
               name={"cabana"}
               title={t("rezervareCabana.1")}
               body={
-                "Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."
+                t("descriereCamera.1")
               }
               textBtn={"Descriere camera"}
               checkBox={true}

@@ -2,6 +2,11 @@
   "rezervareCabana":{
     "1": "Casa din Livada (Adulti/Famili)"
   },
+  "descriereCamera":{
+    "1":"Casa din livadă este gandita ca un loc născut din sufletul satului, în livada unei gospodării, în intimitatea naturii, departe de zgomotul și frenezia orașului. Este doar un cadru care dorește să faciliteze un întreg proces de înviorare, de detoxifiere fizică și psihică.Însăși casa este integral construită din elemente naturale ( lemn și lână de oaie) astfel încât să intre complet în acord cu puritatea locului.",
+    "2": "Este gândită la pachet și cu o zonă de relaxare sauna și ciubăr, alcătuind un ritual complet, toate acestea realizându-se într-un mediu 100% natural. Oferim oaspetilor posibilitatea de a servi mancarea facută-n casă de către gazde - acestea pot fi servite în căsuță;Toate produsele folosite atât cele de infrumusetare dar și pentru servirea meselor sunt produse local, de către oamenii din sat, fapt ce creeaza o experienta inedita.*Parcare gratuită în incinta proprietății; *WI-FI internet gratuit în casuta *Acces în toata livada, fructe proaspete direct din copac și relaxare în hamace;"
+    
+  },
   "butoane":{
     "1": "Rezerva acum"
   }

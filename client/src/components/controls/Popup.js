@@ -7,6 +7,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import SignalWifi4BarIcon from "@mui/icons-material/SignalWifi4Bar";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "./Carousel/Carousel";
+import { useTranslation } from "react-i18next";
+
 
 const useStyles = makeStyles(() => ({
   ".green": {
@@ -19,8 +21,8 @@ const useStyles = makeStyles(() => ({
 
 export default function Popup({ openPopup, setOpenPopup, title,name }) {
   const classes = useStyles();
-  // const [maxWidth, setMaxWidth] = React.useState<DialogProps['maxWidth']>('sm');
-
+ 
+const { t, i18n } = useTranslation();
   // console.log(name);
   
 
@@ -29,7 +31,7 @@ export default function Popup({ openPopup, setOpenPopup, title,name }) {
       open={openPopup}
       onClose={setOpenPopup}
       aria-labelledby="responsive-dialog-title"
-      maxWidth={"sm"}
+      maxWidth={"md"}
     >
       {/* <DialogTitle id="responsive-dialog-title"> */}
       <Stack
@@ -102,15 +104,7 @@ export default function Popup({ openPopup, setOpenPopup, title,name }) {
         >
           <Typography variant="h5">Descriere camera</Typography>
           <Typography variant="body2">
-            Qui enim sint Lorem sunt. Sunt ea voluptate pariatur duis
-            exercitation ex eiusmod anim irure do minim qui. Lorem aute cillum
-            dolor sint elit aute dolore laborum sunt. Aliquip laboris nisi
-            excepteur reprehenderit esse ullamco aliqua occaecat do ut. Qui
-            consectetur ipsum proident fugiat. Culpa occaecat culpa enim labore.
-            Exercitation quis et excepteur aute. Aliquip laboris nisi excepteur
-            reprehenderit esse ullamco aliqua occaecat do ut. Qui consectetur
-            ipsum proident fugiat. Culpa occaecat culpa enim labore.
-            Exercitation quis et excepteur aute.
+         { t("descriereCamera.2")}
           </Typography>
         </Stack>
         <Stack

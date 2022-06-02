@@ -21,6 +21,10 @@ import img from "../../imagini/imaginea2.jpg";
 import "../Home/Home.scss";
 import Menu from "../Menu/Menu";
 import "./Ritualul.scss";
+import sauna from "../../imagini/sauna1.jpg";
+import dus from "../../imagini/dus.jpg";
+import lotiune from "../../imagini/lotiune.jpg";
+import ciubar1 from "../../imagini/ciubar1.jpg";
 
 //alt+shift+f  pentru indentare
 
@@ -140,7 +144,7 @@ const Ritualul = () => {
           p={4}
           spacing={3}
         >
-          <Typography variant="h3" sx={{ color: "white" }}>
+          <Typography variant="h5" sx={{ color: "white" }}>
             Experimenteaza cei 4 pasi ai ritualului
           </Typography>
           <Box maxWidth="800px">
@@ -174,18 +178,17 @@ const Ritualul = () => {
             </Typography>
           </Grid>
           <Grid
-            item
-            md={4}
-            xs={12}
-            height="400px"
-            bgcolor="#9e9e9e"
-            maxWidth="500px"
-          />
-          {/* aici o sa vina poza */}
+            className="imagine"
+            height="270px"
+            width="350px"
+            style={{
+              backgroundImage: `url(${sauna})`,
+            }}
+          ></Grid>
         </Grid>
       </Grid>
       <Grid mt={6} item>
-        <Grid container direction="row" p={2} gap={5}>
+        <Grid container direction="row-reverse" p={2} gap={5}>
           <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 2
@@ -202,27 +205,19 @@ const Ritualul = () => {
             </Typography>
           </Grid>
           <Grid
-            item
-            md={4}
-            xs={12}
-            height="400px"
-            bgcolor="#9e9e9e"
-            maxWidth="500px"
+            className="imagine"
+            height="270px"
+            width="350px"
+            style={{
+              backgroundImage: `url(${lotiune})`,
+            }}
           ></Grid>
-          {/* aici o sa vina poza */}
         </Grid>
       </Grid>
+
+
       <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
-          <Grid
-            item
-            md={4}
-            xs={12}
-            height="400px"
-            bgcolor="#9e9e9e"
-            width="500px"
-          ></Grid>
-          {/* aici o sa vina poza */}
           <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 3
@@ -238,15 +233,22 @@ const Ritualul = () => {
               nulla excepteur cupidatat excepteur.
             </Typography>
           </Grid>
+          <Grid
+            className="imagine"
+            height="270px"
+            width="350px"
+            style={{
+              backgroundImage: `url(${dus})`,
+            }}
+          ></Grid>
         </Grid>
       </Grid>
       <Grid mt={6} item>
-        <Grid container direction="row" p={2} gap={5}>
+        <Grid container direction="row-reverse" p={2} gap={5}>
           <Grid item xs={12} md={7} maxWidth="600px">
             <Typography variant="h5" gutterBottom>
               Pasul 4
             </Typography>
-
             <Typography variant="h4" gutterBottom>
               <b>Ciubar</b>
             </Typography>
@@ -259,14 +261,13 @@ const Ritualul = () => {
             </Typography>
           </Grid>
           <Grid
-            item
-            md={4}
-            xs={12}
-            height="400px"
-            bgcolor="#9e9e9e"
-            width="500px"
+            className="imagine"
+            height="270px"
+            width="350px"
+            style={{
+              backgroundImage: `url(${ciubar1})`,
+            }}
           ></Grid>
-          {/* aici o sa vina poza */}
         </Grid>
       </Grid>
       <Grid item xs={12}>

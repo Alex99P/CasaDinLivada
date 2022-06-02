@@ -40,15 +40,14 @@ const Feedback = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [ratingValue, setratingValue] = useState(5);
   const [textareaValue, setTextareaValue] = useState("");
-  const { _id, name } =JSON.parse(localStorage.getItem("profile")).result;
   const dispatch = useDispatch();
   const [showFeedback, setShowFeedback] = useState(false);
-
+  const [sumRating, setsumRating] = useState(0);
 
   const handleFeedback = () => {
     setShowFeedback(!showFeedback);
   };
-  const handleTextarea = (value) => {    
+  const handleTextarea = (value) => {
     setTextareaValue(value.target.value);
   };
 
@@ -62,8 +61,14 @@ const Feedback = () => {
     const fetchPosts = async () => {
       setLoading(true);
       const res = await axios.get("http://localhost:5000/feedback");
+
       setPosts(res.data);
-      console.log(res);
+      let sum = 0;
+      res.data.map((rate) => {
+        sum = sum + rate.rating;
+      });
+      console.log();
+      setsumRating((sum / Object.keys(res.data).length).toFixed(1));
 
       setLoading(false);
     };
@@ -71,30 +76,28 @@ const Feedback = () => {
     fetchPosts();
   }, []);
 
-  
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-  console.log(currentPosts);
-  
+  // console.log(currentPosts);
+
   const handleChange = (event, value) => {
     setCurrentPage(value);
   };
 
-  
-
-function onToken(){
-  
-  const reqObj = {
-    user: _id,
-    name: name,
-    feedback: textareaValue,
-    rating:ratingValue
-    
-  };
-  dispatch(feedback(reqObj))
-}
-
+  function onToken() {
+    const { _id, name } = JSON.parse(localStorage.getItem("profile")).result;
+    const reqObj = {
+      user: _id,
+      name: name,
+      feedback: textareaValue,
+      rating: ratingValue,
+    };
+    dispatch(feedback(reqObj));
+  }
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div>
@@ -114,7 +117,7 @@ function onToken(){
           alignItems="center"
         >
           <Typography variant="body1" sx={{ color: "white" }}>
-            9.9
+            {sumRating}
           </Typography>
         </Stack>
         <Typography variant="body1">Excelent</Typography>
@@ -125,7 +128,7 @@ function onToken(){
             className="link"
             onClick={handleFeedback}
           >
-           {posts.length} evaluari
+            {posts.length} evaluari
           </Typography>
           <DoubleArrowIcon fontSize="small" />
         </Stack>
@@ -168,7 +171,9 @@ function onToken(){
                   >
                     <Typography variant="h4">9.9</Typography>
                     <Typography variant="h6">Excelent</Typography>
-                    <Typography variant="body1">{posts.length} evaluari</Typography>
+                    <Typography variant="body1">
+                      {posts.length} evaluari
+                    </Typography>
                   </Stack>
                   <Stack
                     direction="column"
@@ -194,11 +199,11 @@ function onToken(){
                 >
                   <Rating
                     name="half-rating"
-                    value={ratingValue/2}
+                    value={ratingValue / 2}
                     precision={0.5}
                     size="large"
                     onChange={(event, newValue) => {
-                      setratingValue(newValue*2);
+                      setratingValue(newValue * 2);
                     }}
                   />
                   <form>
@@ -209,10 +214,13 @@ function onToken(){
                       placeholder="Type your message here..."
                       style={{ resize: "none", width: "250px" }}
                       onChange={handleTextarea}
-
                     />
                     {/*  type="submit" */}
-                    <Button variant="outlined" onClick={onToken} style={btnStyle}>
+                    <Button
+                      variant="outlined"
+                      onClick={onToken}
+                      style={btnStyle}
+                    >
                       Submit
                     </Button>
                   </form>
@@ -223,11 +231,7 @@ function onToken(){
                     // alignItems="flex-end"
                   > */}
 
-  
-          
-
-
-                    <Posts posts={currentPosts} loading={loading} />
+                  <Posts posts={currentPosts} loading={loading} />
                   {/* </Stack> */}
                   <Stack direction="row">
                     <PaginationComponent

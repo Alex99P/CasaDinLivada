@@ -46,17 +46,8 @@ export const bookingCiubar = (reqObj) => async (dispatch) => {
 };
 export const feedback = (reqObj) => async (dispatch) => {
   try {
-    // console.log(reqObj);
     
     await api.feedback(reqObj);
-    toast.success('Booking successfully', {
-      position: "top-center",
-      autoClose: 2000,
-      pauseOnHover: false,
-      }
-      );
-    
-  
   } catch (error) {
     console.log(error);
     dispatch({ type: "ERROR", data: error?.response.data });

@@ -42,6 +42,3 @@ const Maps = ({ google }) => {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyCoZTdZwMeIyWEvQNqHgmd-x9CGk1NSaTg",
 })(Maps);
-
-// AIzaSyCoZTdZwMeIyWEvQNqHgmd-x9CGk1NSaTg
-// AIzaSyCqzm6FpKHAsKPvHHf3hb77pSt4sUx21oY

@@ -115,7 +115,6 @@ const RezervareTeamplate = ({
       setMonthCiubar(moment(date[0]).format("MMMM"));
       setDayCiubar(moment(date[0]).format("DD"));
 
-
       setfromHour(moment(date[0]).format("YYYY-MM-DD HH").slice(11));
       settoHour(moment(date[1]).format("YYYY-MM-DD HH").slice(11));
 
@@ -224,7 +223,6 @@ const RezervareTeamplate = ({
                 <Stack
                   className="imagine"
                   height="200px"
-                  bgcolor="#9e9e9e"
                   width="240px"
                   style={{
                     backgroundImage: `url(${cabana1})`,
@@ -232,13 +230,14 @@ const RezervareTeamplate = ({
                 ></Stack>
               ) : (
                 <Stack
-                  className="imagine" height="200px" bgcolor="#9e9e9e"
-                  width="240px" 
+                  className="imagine"
+                  height="200px"
+                  bgcolor="#9e9e9e"
+                  width="240px"
                   style={{
                     backgroundImage: `url(${ciubar1})`,
                   }}
-                  >
-                </Stack>
+                ></Stack>
               )}
             </Grid>
             <Grid item md={6} lg={8}>

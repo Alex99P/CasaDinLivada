@@ -2,6 +2,10 @@
   "rezervareCabana":{
     "1": "The house in Livada (adults/families)"
   },
+  "descriereCamera":{
+    "1": "The house in the orchard is conceived as a place born from the soul of the village, in the orchard of a farm, in the intimacy of nature, far from the noise and frenzy of the city. It is simply a setting that aims to facilitate a whole process of refreshment, of physical and mental detoxification.The house itself is made entirely of natural elements (wood and sheep's wool) so that it is completely in keeping with the purity of the place.",
+    "2" : "It is also designed with a relaxation area sauna and cypress, making up a complete ritual, all of which is carried out in a 100% natural environment. We offer guests the possibility to have homemade food served by the hosts - these can be served in the cottage; All the products used both for the decoration and for serving the meals are locally produced by the people of the village, which creates a unique experience. *Free parking on the property; *Free WiFi internet in the cottage *Access throughout the orchard, fresh fruit straight from the tree and relaxing in the hammocks;"
+  },
   "butoane":{
     "1": "Book now"
   }
