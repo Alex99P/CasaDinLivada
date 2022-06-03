@@ -172,11 +172,12 @@ const Auth = () => {
             )}
           </Grid>
           <Button
+            className="loginButton"
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            // className={classes.submit}
             sx={{ margin: "24px 0 16px 0px" }}
           >
             {isSignup ? "Sign Up" : "Sign In"}
@@ -205,7 +206,7 @@ const Auth = () => {
           />
           <Grid container justify="flex-end">
             <Grid item>
-              <Button onClick={switchMode} sx={{color:"black"}}>
+              <Button onClick={switchMode} sx={{color:"black"}} className="swapAuth">
                 {isSignup
                   ? "Already have an account? Sign in"
                   : "Don't have an account? Sign Up"}

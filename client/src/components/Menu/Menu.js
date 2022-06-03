@@ -93,6 +93,7 @@ const Menu = ({ bgBlack = false }) => {
               >
                 <Link
                   className={classes.link}
+                  id={"ritual"}
                   href="/ritual"
                   underline="hover"
                   color="black"
@@ -102,6 +103,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
+                  id={"cazare"}
                   href="/housing"
                   underline="hover"
                   color="black"
@@ -111,6 +113,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
+                  id={"relaxare"}
                   href="/relaxation"
                   underline="hover"
                   color="black"
@@ -120,6 +123,7 @@ const Menu = ({ bgBlack = false }) => {
                 </Link>
                 <Link
                   className={classes.link}
+                  id={"tarife"}
                   href="/prices"
                   underline="hover"
                   color="black"
@@ -136,6 +140,7 @@ const Menu = ({ bgBlack = false }) => {
                   <Link
                   mt={10}
                     className={classes.link}
+                    id={"intrebari"}
                     href="/frequent-questions"
                     underline="hover"
                     color="black"
@@ -154,6 +159,7 @@ const Menu = ({ bgBlack = false }) => {
                   </Link> */}
                   <Link
                     className={classes.link}
+                    id={"contact"}
                     href="/contact"
                     underline="hover"
                     color="black"
@@ -163,6 +169,7 @@ const Menu = ({ bgBlack = false }) => {
                   </Link>
                   <Link
                     className={classes.link}
+                    id={"galerie"}
                     href="/photos"
                     underline="hover"
                     color="black"
