@@ -158,8 +158,6 @@ const Ritualul = () => {
           </Box>
         </Stack>
       </Grid>
-
-      {/* Trebuie sa le aranjez!!!! */}
       <Grid mt={6} item>
         <Grid container direction="row" p={2} gap={5}>
           <Grid item xs={12} md={7} maxWidth="600px">

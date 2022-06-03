@@ -1,9 +1,26 @@
 import { makeStyles } from "@material-ui/core";
 import {
-  Box, Button, CircularProgress, Dialog, DialogActions, DialogContent,
-  DialogContentText, Divider, Grid, Link, List,
-  ListItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead,
-  TableRow, Typography
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Divider,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Stack,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -53,6 +70,9 @@ const Dashboard = () => {
   const [reservationId, setReservationId] = useState();
   const [nameId, setNameId] = useState();
   const [isAdmin, setIsAdmin] = useState(user?.result?.admin);
+  const [posts, setPosts] = useState([]);
+
+  let from = "userDashboard";
 
   const [open, setOpen] = useState(false);
 
@@ -141,11 +161,9 @@ const Dashboard = () => {
       let responseCiubar;
       if (isAdmin) {
         response = await axios.get(`http://localhost:5000/booking/house`);
-
         responseCiubar = await axios.get(
           `http://localhost:5000/booking/ciubar`
         );
-
       } else {
         response = await axios.get(`http://localhost:5000/booking/house/${id}`);
         responseCiubar = await axios.get(
@@ -153,50 +171,29 @@ const Dashboard = () => {
         );
       }
 
-      // console.log(response);
-      
-      // setData(
-      //   [
-      //     ...response?.data.map((cabana) => ({
-      //       ...cabana,
-      //       bookTime: {
-      //         fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
-      //         toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
-      //       },
-      //     })),
-      //     ...responseCiubar?.data.map((ciubar) => ({
-      //       ...ciubar,
-      //       bookTime: {
-      //         fromDate: ciubar.bookTime.fromDateCiubar,
-      //         toDate: ciubar.bookTime.toDateCiubar,
-      //       },
-      //     })),
-      //   ].sort((a, b) =>
-      //     new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
-      //   )
-      // );
-
-      setData([ 
-           ...response?.data.map((cabana) => ({
-              ...cabana,
-              bookTime: {
-                fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
-                toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
-              },
-            }))].sort((a, b) =>
-                new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
-              )
-            )
-
-      setDataCiubar([ 
-              ...responseCiubar?.data.map((ciubar) => ({
-            ...ciubar,
+      setData(
+        [
+          ...response?.data.map((cabana) => ({
+            ...cabana,
             bookTime: {
-              fromDate: ciubar.bookTime.fromDateCiubar,
-              toDate: ciubar.bookTime.toDateCiubar,
+              fromDate: cabana.bookTime.fromDate.split("-").reverse().join("-"),
+              toDate: cabana.bookTime.toDate.split("-").reverse().join("-"),
             },
-      }))])
+          })),
+        ].sort((a, b) =>
+          new Date(a.bookTime.fromDate) > new Date(b.bookTime.fromDate) ? 1 : -1
+        )
+      );
 
+      setDataCiubar([
+        ...responseCiubar?.data.map((ciubar) => ({
+          ...ciubar,
+          bookTime: {
+            fromDate: ciubar.bookTime.fromDateCiubar,
+            toDate: ciubar.bookTime.toDateCiubar,
+          },
+        })),
+      ]);
     } catch (error) {
       console.error(error);
     }
@@ -206,7 +203,25 @@ const Dashboard = () => {
     getDate();
   }, []);
 
-  
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      const res = await axios.get("http://localhost:5000/feedback");
+
+      setPosts(res.data);
+      let sum = 0;
+      res.data.map((rate) => {
+        sum = sum + rate.rating;
+      });
+
+      setLoading(false);
+    };
+
+    fetchPosts();
+  }, []);
+
+  console.log(posts);
+
   if (loading) {
     return (
       <Grid container spacing={2} justifyContent="center" marginTop={4}>
@@ -214,15 +229,19 @@ const Dashboard = () => {
       </Grid>
     );
   }
-  let from = "userDashboard";
   return (
     <>
-    
-      <NavbarRezervare from={from}  />
-      <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 , }}>
-        <Grid container spacing={2} justifyContent="center" height='100%' sx={{marginBottom:10}}>
+      <NavbarRezervare from={from} />
+      <Box className="container" sx={{ flexGrow: 1, margin: 0, marginTop: 10 }}>
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          height="100%"
+          sx={{ marginBottom: 10 }}
+        >
           <Grid item xs={12} md={2} className="list">
-            <List component="nav" >
+            <List component="nav">
               <ListItem>
                 <Button
                   style={btnStyle}
@@ -243,18 +262,40 @@ const Dashboard = () => {
                     setNav("bookings");
                   }}
                 >
-                   {isAdmin ? "All bookings":"My bookings"}
+                  {isAdmin ? "All bookings Cabana" : "My bookings Cabana"}
                 </Button>
               </ListItem>
               <Divider light />
               <ListItem>
-                <Button style={btnStyle} fullWidth component={Link}  
-                onClick={() => {
+                <Button
+                  style={btnStyle}
+                  fullWidth
+                  component={Link}
+                  onClick={() => {
                     setNav("bookingsCiubar");
-                  }}>
-                  All bookings Ciubar
+                  }}
+                >
+                  {isAdmin ? "All bookings Ciubar" : "My bookings Ciubar"}
                 </Button>
               </ListItem>
+
+              {isAdmin && (
+                <>
+                  <Divider light />
+                  <ListItem>
+                    <Button
+                      style={btnStyle}
+                      fullWidth
+                      component={Link}
+                      onClick={() => {
+                        setNav("feedback");
+                      }}
+                    >
+                      All feedbacks
+                    </Button>
+                  </ListItem>
+                </>
+              )}
             </List>
           </Grid>
           <Grid item xs={12} md={10}>
@@ -309,22 +350,30 @@ const Dashboard = () => {
               </Paper>
             )}
             {nav === "bookings" && (
-              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh'}}>
+              <Paper
+                variant="outlined"
+                className="paper"
+                sx={{ p: 3, maxHeight: "100vh" }}
+              >
                 <Typography variant="h3" color="initial">
-                 {isAdmin ? "All bookings":"My bookings"}
+                  {isAdmin ? "All bookings Cabana" : "My bookings Cabana"}
                 </Typography>
-                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '70vh' }}>
+                <TableContainer
+                  component={Paper}
+                  mb={5}
+                  sx={{ maxHeight: "70vh" }}
+                >
                   <Table size="medium" aria-label="a dense table" height="100%">
                     <TableHead>
                       <TableRow>
                         {isAdmin && (
                           <>
-                            <TableCell align="left">User Name </TableCell>
+                            <TableCell align="left">Name </TableCell>
                             <TableCell align="left">Email</TableCell>
                             <TableCell align="left">Phone Number</TableCell>
                           </>
                         )}
-                        <TableCell align="left">Select</TableCell>
+                        <TableCell align="left">With Ciubar</TableCell>
                         <TableCell align="left">From Date</TableCell>
                         <TableCell align="left">To Date</TableCell>
                         <TableCell align="left"></TableCell>
@@ -349,17 +398,16 @@ const Dashboard = () => {
                               <TableCell component="th" scope="row">
                                 {reservation.user?.phoneNumber}
                               </TableCell>
-                              
                             </>
                           )}
                           <TableCell component="th" scope="row">
-                            {reservation.name}
+                            {reservation?.withCiubar ? "Da" : "Nu"}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.fromDate}
+                            {reservation?.bookTime?.fromDate}
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.toDate}
+                            {reservation?.bookTime?.toDate}
                           </TableCell>
                           <TableCell align="left">
                             <Button
@@ -384,22 +432,29 @@ const Dashboard = () => {
             )}
 
             {nav === "bookingsCiubar" && (
-              <Paper variant="outlined" className="paper" sx={{ p: 3, maxHeight: '100vh'}}>
+              <Paper
+                variant="outlined"
+                className="paper"
+                sx={{ p: 3, maxHeight: "100vh" }}
+              >
                 <Typography variant="h3" color="initial">
-                 {isAdmin ? "All bookings":"My bookings"}
+                  {isAdmin ? "All bookings" : "My bookings"}
                 </Typography>
-                <TableContainer component={Paper} mb={5} sx={{ maxHeight: '70vh' }}>
+                <TableContainer
+                  component={Paper}
+                  mb={5}
+                  sx={{ maxHeight: "70vh" }}
+                >
                   <Table size="medium" aria-label="a dense table" height="100%">
                     <TableHead>
                       <TableRow>
                         {isAdmin && (
                           <>
-                            <TableCell align="left">User Name </TableCell>
+                            <TableCell align="left">Name </TableCell>
                             <TableCell align="left">Email</TableCell>
                             <TableCell align="left">Phone Number</TableCell>
                           </>
                         )}
-                        <TableCell align="left">Select</TableCell>
                         <TableCell align="left">From Date</TableCell>
                         <TableCell align="left">To Date</TableCell>
                         <TableCell align="left"></TableCell>
@@ -424,18 +479,34 @@ const Dashboard = () => {
                               <TableCell component="th" scope="row">
                                 {reservation.user?.phoneNumber}
                               </TableCell>
-                              
                             </>
                           )}
-                          <TableCell component="th" scope="row">
-                            {reservation.name}
+                          <TableCell align="left">
+                            <Stack direction="column">
+                              <Typography variant="body2" color="initial">
+                                {" "}
+                                {reservation?.bookTime?.fromDate}
+                              </Typography>
+
+                              <Typography variant="body2" color="initial">
+                                Ora{" "}
+                                {(reservation?.bookTime?.fromDate).slice(-2)}
+                              </Typography>
+                            </Stack>
                           </TableCell>
                           <TableCell align="left">
-                            {reservation.bookTime.fromDate}
+                            <Stack direction="column">
+                              <Typography variant="body2" color="initial">
+                                {" "}
+                                {reservation?.bookTime?.toDate}
+                              </Typography>
+
+                              <Typography variant="body2" color="initial">
+                                Ora {(reservation?.bookTime?.toDate).slice(-2)}
+                              </Typography>
+                            </Stack>
                           </TableCell>
-                          <TableCell align="left">
-                            {reservation.bookTime.toDate}
-                          </TableCell>
+
                           <TableCell align="left">
                             <Button
                               variant="outlined"
@@ -458,10 +529,55 @@ const Dashboard = () => {
               </Paper>
             )}
 
+            {nav === "feedback" && (
+              <Paper
+                variant="outlined"
+                className="paper"
+                sx={{ p: 3, maxHeight: "100vh" }}
+              >
+                <Typography variant="h3" color="initial">
+                  All feedbacks
+                </Typography>
+                <TableContainer
+                  component={Paper}
+                  mb={5}
+                  sx={{ maxHeight: "70vh" }}
+                >
+                  <Table size="small" aria-label="a dense table" height="100%">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="left">Name </TableCell>
+                        <TableCell align="left">Feedback</TableCell>
+                        <TableCell align="left">Rating</TableCell>
+                        <TableCell align="left"></TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {posts.map((post) => (
+                        <TableRow
+                          key={post._id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                        >
+                         
+                              <TableCell align="left">
+                                {post?.name}
+                              </TableCell>
+                              <TableCell align="left">
+                                {post?.feedback}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {post?.rating}
+                              </TableCell>
 
-
-
-
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            )}
 
             <Dialog
               open={open}

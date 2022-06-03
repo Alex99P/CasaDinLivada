@@ -29,7 +29,7 @@ const User = ({ from }) => {
 
     const logout = () => {
         dispatch({ type: "LOGOUT" });
-        navigate("/rezervare");
+        navigate("/");
         setUser(null);
     };
 

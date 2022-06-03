@@ -32,7 +32,7 @@ const NavbarRezervare = ({ from, currency, setCurrency }) => {
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/reservation");
+    navigate("/");
     setUser(null);
   };
 

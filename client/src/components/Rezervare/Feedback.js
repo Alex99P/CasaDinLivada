@@ -49,6 +49,7 @@ const Feedback = () => {
   };
   const handleTextarea = (value) => {
     setTextareaValue(value.target.value);
+   
   };
 
   //Pagination
@@ -93,11 +94,10 @@ const Feedback = () => {
       feedback: textareaValue,
       rating: ratingValue,
     };
+    setTextareaValue("")
     dispatch(feedback(reqObj));
   }
-  if (loading) {
-    return <h2>Loading...</h2>;
-  }
+
 
   return (
     <div>
@@ -211,11 +211,11 @@ const Feedback = () => {
                       className={"textarea"}
                       aria-label="minimum height"
                       minRows={4}
+                      value={textareaValue}
                       placeholder="Type your message here..."
                       style={{ resize: "none", width: "250px" }}
                       onChange={handleTextarea}
                     />
-                    {/*  type="submit" */}
                     <Button
                       variant="outlined"
                       onClick={onToken}

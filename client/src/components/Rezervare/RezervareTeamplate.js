@@ -217,6 +217,7 @@ const RezervareTeamplate = ({
             p={2}
             columnGap={4}
             rowGap={2}
+            // spacing={5}
           >
             <Grid item md={5} lg={3}>
               {name === "cabana" ? (
@@ -240,7 +241,7 @@ const RezervareTeamplate = ({
                 ></Stack>
               )}
             </Grid>
-            <Grid item md={6} lg={8}>
+            <Grid item md={6} lg={8} ml={2}>
               <Typography variant="h6" gutterBottom>
                 {title}
               </Typography>
