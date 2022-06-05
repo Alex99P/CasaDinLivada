@@ -1,0 +1,31 @@
+.css-g1zb7f-MuiButtonBase-root-MuiButton-root-MuiTypography-root{
+  color: black !important;
+  font-size: 14px !important;
+  padding:1px !important;
+  text-transform: none !important;
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+.paperFeedback{
+  width: 50%;
+  overflow-y: auto;
+}
+.textarea{
+  margin-left: 25%;
+}
+.postContainer{
+  width:"500px"
+}
+
+@media (max-width: 768px) {
+  .paperFeedback{
+    width: 100%;
+  }
+  .textarea{
+    margin-left: 18%;
+  }
+  
+
+}
