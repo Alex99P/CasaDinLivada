@@ -9,13 +9,10 @@ import feedbackRouter from "./Routes/feedback.js"
 
 const app =express();
 const port=5000;
-
 connectDB();
 app.use(bodyparser.urlencoded({ extended : true}));
 app.use(bodyparser.json())
 app.use(cors());
-
-
 app.use('/feedback',feedbackRouter);
 app.use('/user',userRouter);
 app.use('/booking',bookingRouter);

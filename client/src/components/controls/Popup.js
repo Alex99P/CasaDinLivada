@@ -70,7 +70,7 @@ const { t, i18n } = useTranslation();
         >
           <Stack direction="row" spacing={1} alignItems="center">
             <PersonIcon />
-            <Typography variant="body2">MAX 2</Typography>
+            <Typography variant="body2">{name==="cabana" ? "MAX 2" : "MAX 4" }</Typography>
           </Stack>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Stack direction="row" spacing={1} alignItems="center">
@@ -102,7 +102,7 @@ const { t, i18n } = useTranslation();
           spacing={2}
           width="500px"
         >
-          <Typography variant="h5">Descriere camera</Typography>
+          <Typography variant="h5">{name==="cabana" ? t("butoane.2"): t("butoane.3")}</Typography>
           <Typography variant="body2">
          { t("descriereCamera.2")}
           </Typography>
@@ -113,6 +113,8 @@ const { t, i18n } = useTranslation();
           alignItems="flex-start"
           // spacing={2}
         >
+          {name==="cabana" &&
+          <>
           <p>
             <b>Suprafata camera: </b> 20 m^2
           </p>
@@ -128,6 +130,8 @@ const { t, i18n } = useTranslation();
             <li>Zona de relaxare</li>
             <li>Birou</li>
           </ul>
+          </>
+}
         </Stack>
       </Stack>
     </Dialog>

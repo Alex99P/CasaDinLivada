@@ -9,16 +9,16 @@ import Locatie from "./components/Locatie/Locatie";
 import Intrebari from "./components/IntrebariFrecvente/Intrebari";
 import DespreNoi from "./components/DespreNoi/DespreNoi";
 import Foto from "./components/GalerieFoto/Foto";
-import Rezervare from "./components/Rezervare/Rezervare"
+import Rezervare from "./components/Rezervare/Rezervare";
 import Auth from "./components/Auth/Auth";
 import Dashboard from "./components/Dashboard/Dashboard";
-import ReactGA from 'react-ga4';
-
+import ReactGA from "react-ga4";
 
 function App() {
-  ReactGA.initialize("G-D036LHWL8X");
-// ReactGA.send(window.location.pathname + window.location.search);
-// ReactGA.send({ hitType: "pageview", page: "/my-path" });
+  ReactGA.initialize("UA-229990260-1");
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   return (
     <React.Fragment>

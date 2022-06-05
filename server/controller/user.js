@@ -30,8 +30,6 @@ export const signin = async (req, res) => {
 
 export const signup = async (req, res) => {
   const { email, password, confirmPassword,firstName, lastName,phoneNumber } = req.body;
-  // console.log(req.body);
-  
 
   try {
     const oldUser = await UserModal.findOne({ email });
@@ -41,17 +39,14 @@ export const signup = async (req, res) => {
 
       function ValidateEmail(mail) 
       {
-       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-        {
+       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)){
           return (true)
         }
           return (false)
       }
-
       if(!ValidateEmail(email)) 
       return res.status(400).json({ message: "The email is dont't valid" });
       
-
       if (password!=confirmPassword)
       return res.status(400).json({ message: "The passwords don't match" });
 
@@ -72,7 +67,6 @@ export const signup = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
 
-    console.log(error);
   }
 };
 

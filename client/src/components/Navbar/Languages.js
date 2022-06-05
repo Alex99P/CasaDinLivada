@@ -89,21 +89,4 @@ if(homestyle)
 };
 
 export default Languages;
-/*sx={{
-                marginRight: 2,
-                marginLeft:2,
-                height:40,
-                border: '1px solid white',
-                color: "#fff",
-                "& .MuiSvgIcon-root": {
-                    color: "white",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    // borderColor: "black",
-                },
-                "&:hover": {
-                    "&& fieldset": {
-                      border: "1px solid white"
-                    }
-                  }
-            }}*/
+

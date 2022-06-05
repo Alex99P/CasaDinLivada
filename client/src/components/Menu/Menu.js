@@ -89,8 +89,17 @@ const Menu = ({ bgBlack = false }) => {
                 justifyContent="flex-start"
                 alignItems="center"
                 spacing={0.7}
-              // mt={-40}
               >
+                 <Link
+                  className={classes.link}
+                  id={"ritual"}
+                  href="/reservation"
+                  underline="hover"
+                  color="black"
+                  variant="h5"
+                >
+                  Rezerva acum
+                </Link>
                 <Link
                   className={classes.link}
                   id={"ritual"}

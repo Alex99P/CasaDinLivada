@@ -13,6 +13,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { DatePicker, Space } from "antd";
+import { useTranslation } from "react-i18next";
 import moment from "moment";
 import "antd/dist/antd.min.css";
 import axios from "axios";
@@ -75,6 +76,7 @@ const RezervareTeamplate = ({
   const dateFormatHour = "YYYY-MM-DD HH";
   const [disabledDates, setDisabledDates] = useState([]);
   const [disabledHour, setDisabledHour] = useState([]);
+  const { t, i18n } = useTranslation();
 
   const handleRoomOpen = () => {
     setShowRoom(true);
@@ -270,7 +272,7 @@ const RezervareTeamplate = ({
                         onChange={() => setwithCiubar(!withCiubar)}
                       />
                     }
-                    label="Cu ciubar"
+                    label={t("checkbox.1")}
                   />
                 ) : (
                   <Stack></Stack>
@@ -282,7 +284,7 @@ const RezervareTeamplate = ({
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <p style={{ fontSize: "1.25rem" }}>Rezervati perioada</p>
+                    <p style={{ fontSize: "1.25rem" }}>{t("diverseTexte.1")}</p>
                   </AccordionSummary>
                   <AccordionDetails>
                     {name === "cabana" ? (
@@ -299,7 +301,7 @@ const RezervareTeamplate = ({
                       <Space direction="vertical">
                         <RangePicker
                           placement={"topLeft"}
-                          allowClear={false}
+                          // allowClear={false}
                           showTime={{ format: "HH" }}
                           format="DD-MM-YYYY HH"
                           onChange={ciubarDates}

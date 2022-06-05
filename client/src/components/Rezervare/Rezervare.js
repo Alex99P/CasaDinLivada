@@ -28,6 +28,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import Feedback from "./Feedback";
+import cabana1 from "../../imagini/cabana1.jpg";
+
 
 // Style
 const useStyles = makeStyles({
@@ -128,7 +130,6 @@ const Rezervare = () => {
   }, [fromDate, fromDateCiubar]);
 
   function onToken(token) {
-    //  console.log(token);
     if (id === "cabana") {
       const reqObj = {
         token,
@@ -142,7 +143,6 @@ const Rezervare = () => {
         withCiubar,
         currency
       };
-
       dispatch(bookingHouse(reqObj));
     } else {
       const reqObj = {
@@ -231,7 +231,7 @@ const Rezervare = () => {
               body={
                 t("descriereCamera.1")
               }
-              textBtn={"Descriere camera"}
+              textBtn={t("butoane.2")}
               checkBox={true}
               mTop={true}
               setnumberNights={setnumberNights}
@@ -272,9 +272,9 @@ const Rezervare = () => {
                   {totalAmountCabana() !== 0
                     ? totalAmountCabana()
                     : amountCabana}
-                  {totalAmountCabana() !== 0 ? currency :`${currency} /noaptea`}
+                  {totalAmountCabana() !== 0 ? currency :`${currency} / ${t("diverseTexte.2")}`}
                 </Typography> 
-                <Typography variant="body1">Rezervarea mea</Typography>
+                <Typography variant="body1">{t("diverseTexte.4")}</Typography>
                 <Stack
                   direction="row"
                   justifyContent="flex-start"
@@ -307,8 +307,8 @@ const Rezervare = () => {
                   </Stack>
                 </Stack>
                 <Typography variant="body2">
-                  Rezervare pentru {numberNights}{" "}
-                  {numberNights === 1 ? "noapte" : "nopti"}
+                  {t("diverseTexte.5")}{" "}{numberNights}{" "}
+                  {numberNights === 1 ?  t("diverseTexte.2") : t("diverseTexte.3")}
                 </Typography>
 
                 <Tooltip
@@ -335,11 +335,11 @@ const Rezervare = () => {
           >
             <RezervareTeamplate
               name={"ciubar"}
-              title={"CIUBARUL DIN LIVADA(ADULTI/FAMILII)"}
+              title={t("rezervareCabana.2")}
               body={
-                "Irure esse mollit laborum duis et proident elit quis etexercitation esse fugiat in velit. Incididunt nisi sit sunt do      voluptate cillum aute nulla ea magna non. Fugiat velit est nisi      velit culpa in ea. Do amet Lorem eu quis quis dolore pariatur         consequat sit adipisicing. Cupidatat est ea fugiat eiusmod.         Dolore nisi cupidatat quis laboris aute incididunt exercitation       sunt voluptate id incididunt. Consectetur duis deserunt cillumpariatur esse commodo proident ad occaecat aute magna consequat quis."
+                t("descriereCiubar.1")
               }
-              textBtn={"Descriere ciubar"}
+              textBtn={ t("butoane.3")}
               checkBox={false}
               mTop={false}
               setnumberNights={setnumberNights}
@@ -379,14 +379,15 @@ const Rezervare = () => {
                 justifyContent="center"
                 spacing={2}
               >
+                <Feedback/>
                 <Typography variant="body1">
                   Ciubar{" "}
                   {totalAmountCiubar() !== 0
                     ? totalAmountCiubar()
                     : amountCiubar}
-                  {totalAmountCiubar() !== 0 ? currency :` ${currency} /ora`}
+                  {totalAmountCiubar() !== 0 ? currency :` ${currency} /${t("diverseTexte.6")}`}
                 </Typography>
-                <Typography variant="body1">Rezervarea mea</Typography>
+                <Typography variant="body1">{t("diverseTexte.4")}</Typography>
                 <Stack direction="row" justifyContent="flex-start" mt={1}>
                   <Stack direction="row" alignItems="center" spacing={0.8}>
                     <FontAwesomeIcon
@@ -415,8 +416,8 @@ const Rezervare = () => {
                   </Stack>
                 </Stack>
                 <Typography variant="body2" mt={2}>
-                  Rezervare pentru {numberHours}{" "}
-                  {numberHours === 1 ? "o ora" : "ore"}
+                 {t("diverseTexte.5")} {numberHours}{" "}
+                  {numberHours === 1 ? t("diverseTexte.6") : t("diverseTexte.7")}
                 </Typography>
                 <Tooltip
                   title="Trebuie selectata data intai"
@@ -451,10 +452,14 @@ const Rezervare = () => {
                         spacing={3}
                       >
                         <Stack
+                         className="imagine"
                           width="200px"
                           height="200px"
-                          bgcolor="#9e9e9e"
-                          maxWidth="500px"
+                          // bgcolor="#9e9e9e"
+                          // maxWidth="500px"
+                          style={{
+                            backgroundImage: `url(${cabana1})`,
+                          }}
                         />
                         <Stack direction="column" spacing={1}>
                           <Stack direction="row" spacing={2}>

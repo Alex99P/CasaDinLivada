@@ -56,7 +56,7 @@ const Feedback = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(4);
+  const [postsPerPage] = useState(3);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -141,7 +141,7 @@ const Feedback = () => {
               className="paperFeedback"
               sx={{
                 marginTop: "55px",
-                marginBottom: "20px",
+                // marginBottom: "20px",
                 // minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
@@ -169,7 +169,7 @@ const Feedback = () => {
                     spacing={1}
                     sx={{ margin: "10px" }}
                   >
-                    <Typography variant="h4">9.9</Typography>
+                    <Typography variant="h4"> {sumRating}</Typography>
                     <Typography variant="h6">Excelent</Typography>
                     <Typography variant="body1">
                       {posts.length} evaluari

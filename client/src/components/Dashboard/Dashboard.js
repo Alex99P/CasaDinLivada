@@ -485,7 +485,7 @@ const Dashboard = () => {
                             <Stack direction="column">
                               <Typography variant="body2" color="initial">
                                 {" "}
-                                {reservation?.bookTime?.fromDate}
+                                {(reservation?.bookTime?.fromDate).substring(0, (reservation?.bookTime?.fromDate).length - 2)}
                               </Typography>
 
                               <Typography variant="body2" color="initial">
@@ -498,7 +498,7 @@ const Dashboard = () => {
                             <Stack direction="column">
                               <Typography variant="body2" color="initial">
                                 {" "}
-                                {reservation?.bookTime?.toDate}
+                                {(reservation?.bookTime?.toDate).substring(0, (reservation?.bookTime?.toDate).length - 2)}
                               </Typography>
 
                               <Typography variant="body2" color="initial">

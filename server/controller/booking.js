@@ -32,19 +32,18 @@ export const booking = async (req, res) => {
 
     if (payment) {
       req.body.transactionId = payment.source.id;
-      // console.log(req.body);
       if (req.body.name === "cabana") {
         let newbooking = new bookingModel(req.body);
         await newbooking.save();
         res
           .status(200)
-          .json({ newbooking, message: "Your booking is successfullyy" });
+          .json({ newbooking, message: "Your booking is successfully" });
       } else {
         let newbooking = new bookingCiubar(req.body);
         await newbooking.save();
         res
           .status(200)
-          .json({ newbooking, message: "Your booking is successfullyy" });
+          .json({ newbooking, message: "Your booking is successfully" });
       }
     } else {
       return res.status(400).json(error);

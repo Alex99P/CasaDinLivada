@@ -28,8 +28,7 @@ export const signin = (formData, navigate) => async (dispatch) => {
       position: "top-center",
       autoClose: 1500,
       pauseOnHover: false,
-      }
-      );
+      });
 
   }
 };
