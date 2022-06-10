@@ -19,6 +19,8 @@ import Posts from "./Pagination/Posts";
 import axios from "axios";
 import { feedback } from "../../redux/actions/booking";
 import { useDispatch } from "react-redux";
+import * as api from '../../api';
+
 
 import "./Feedback.scss";
 
@@ -58,21 +60,22 @@ const Feedback = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(3);
 
+  const fetchPosts = async () => {
+    setLoading(true);
+    const res = await axios.get("http://localhost:5000/feedback");
+
+    setPosts(res.data.reverse());
+    let sum = 0;
+    res.data.map((rate) => {
+      sum = sum + rate.rating;
+    });
+    console.log();
+    setsumRating((sum / Object.keys(res.data).length).toFixed(1));
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      const res = await axios.get("http://localhost:5000/feedback");
-
-      setPosts(res.data);
-      let sum = 0;
-      res.data.map((rate) => {
-        sum = sum + rate.rating;
-      });
-      console.log();
-      setsumRating((sum / Object.keys(res.data).length).toFixed(1));
-
-      setLoading(false);
-    };
 
     fetchPosts();
   }, []);
@@ -86,7 +89,7 @@ const Feedback = () => {
     setCurrentPage(value);
   };
 
-  function onToken() {
+  async function onToken() {
     const { _id, name } = JSON.parse(localStorage.getItem("profile")).result;
     const reqObj = {
       user: _id,
@@ -95,7 +98,10 @@ const Feedback = () => {
       rating: ratingValue,
     };
     setTextareaValue("")
-    dispatch(feedback(reqObj));
+    // dispatch(feedback(reqObj));
+    await api.feedback(reqObj);
+    await fetchPosts();
+
   }
 
 

@@ -131,7 +131,6 @@ const RezervareTeamplate = ({
     for (let i = start; i <= end; i++) {
       result.push(i);
     }
-    // console.log("Result: ",result);
 
     return result;
   }
