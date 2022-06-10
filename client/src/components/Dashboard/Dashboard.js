@@ -55,7 +55,6 @@ const btnStyle = {
 const Dashboard = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-
   const [nav, setNav] = useState("account");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const email = user?.result?.email;

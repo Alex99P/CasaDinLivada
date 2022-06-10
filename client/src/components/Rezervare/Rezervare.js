@@ -143,6 +143,7 @@ const Rezervare = () => {
         withCiubar,
         currency
       };
+      
       dispatch(bookingHouse(reqObj));
     } else {
       const reqObj = {
