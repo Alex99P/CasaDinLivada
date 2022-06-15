@@ -15,7 +15,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import ReactGA from "react-ga4";
 
 function App() {
-  ReactGA.initialize("UA-229990260-1");
+  
+  ReactGA.initialize(process.env.REACT_APP_GA);
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);

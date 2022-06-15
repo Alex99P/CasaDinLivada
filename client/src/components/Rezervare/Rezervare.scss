@@ -5,3 +5,8 @@
   margin: 0;   
   width: 100vw;
 }
+@media(max-width: 576px) { 
+  .ant-picker-panels { 
+    flex-direction: column;
+  } 
+}

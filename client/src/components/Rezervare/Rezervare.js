@@ -208,7 +208,7 @@ const Rezervare = () => {
   useEffect(() => {
     getCurrency();
     }, []);
-
+    
 
   return (
     <>
@@ -556,7 +556,7 @@ const Rezervare = () => {
                           ? totalAmountCabana() * 100
                           : totalAmountCiubar() * 100
                       }
-                      stripeKey="pk_test_51KytTpLuy8CHjVd0G4MYwWK4W02WJuBq8vTR3xijRHkt0Z8nDjpvcWjXXCgftskcgUyWOuJWAe9VgoHvZ9xaUlVW00m9vpL7V9"
+                      stripeKey={process.env.REACT_APP_STRIPE}
                     >
                       <Button
                         variant="contained"

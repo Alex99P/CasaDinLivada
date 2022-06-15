@@ -8,13 +8,11 @@ export const bookingHouse = (reqObj) => async (dispatch) => {
     console.log(reqObj);
     
     await api.bookingHouse(reqObj);
-    // await axios.post("http://localhost:5000/booking/bookingHouse" , reqObj);
     toast.success('Booking successfully', {
       position: "top-center",
       autoClose: 2000,
       pauseOnHover: false,
-      }
-      );
+      });
     
   
   } catch (error) {
