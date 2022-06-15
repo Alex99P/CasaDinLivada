@@ -7,7 +7,9 @@ import "./Home.scss";
 
 
 const Home = () => {
-
+  console.log("Aici",process.env.REACT_APP_TEST);
+  
+  
   return (
     <Box className="containerHome" style={{ backgroundImage: `
     linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,0)),

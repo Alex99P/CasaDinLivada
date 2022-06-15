@@ -26,6 +26,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Input from "../Auth/Input";
 import NavbarRezervare from "../Navbar/NavbarRezervare";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import "./style.css";
 
 const useStyles = makeStyles({
@@ -55,7 +57,6 @@ const btnStyle = {
 const Dashboard = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-
   const [nav, setNav] = useState("account");
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const email = user?.result?.email;
@@ -112,6 +113,12 @@ const Dashboard = () => {
       .then(() => {
         setData(data.filter(({ _id }) => _id !== id));
         console.log("Delete successful");
+        toast.success('Cancel successfully', {
+          position: "top-center",
+          autoClose: 2000,
+          pauseOnHover: false,
+          });
+
       })
       .catch((error) => {
         console.log(`Error: ${error.message}`);
@@ -123,6 +130,11 @@ const Dashboard = () => {
       .delete(`http://localhost:5000/booking/ciubar/${id}`)
       .then(() => {
         setDataCiubar(data.filter(({ _id }) => _id !== id));
+        toast.success('Cancel successfully', {
+          position: "top-center",
+          autoClose: 2000,
+          pauseOnHover: false,
+          });
         console.log("Delete successful");
       })
       .catch((error) => {
@@ -146,6 +158,11 @@ const Dashboard = () => {
         localStorage.setItem("profile", JSON.stringify({ ...profile }));
         setUser(profile);
         setLoading(false);
+        toast.success('Update successfully', {
+          position: "top-center",
+          autoClose: 2000,
+          pauseOnHover: false,
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -219,8 +236,6 @@ const Dashboard = () => {
 
     fetchPosts();
   }, []);
-
-  console.log(posts);
 
   if (loading) {
     return (

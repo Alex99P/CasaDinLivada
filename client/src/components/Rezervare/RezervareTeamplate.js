@@ -85,11 +85,6 @@ const RezervareTeamplate = ({
     setShowRoom(false);
   };
   function Dates(date) {
-    // console.log(moment(date[0]).format("DD-MM-YYYY"));
-
-    // Trebuie sa fac sa apara disable toate zilele selectate
-    // var today = moment();
-    // var tomorrow = moment(today).add(-1, 'days');
 
     if (date !== null) {
       const a = moment(date[0]);
@@ -131,7 +126,6 @@ const RezervareTeamplate = ({
     for (let i = start; i <= end; i++) {
       result.push(i);
     }
-    // console.log("Result: ",result);
 
     return result;
   }
@@ -157,7 +151,6 @@ const RezervareTeamplate = ({
     });
     setDisabledHour([...disabledHour, ...resultHour]);
   }
-  // console.log(disabledHour);
 
   useEffect(() => {
     getAllBookings();
@@ -170,8 +163,8 @@ const RezervareTeamplate = ({
         current.isBetween(
           moment(date["start"], dateFormat),
           moment(date["end"], dateFormat),
-          "day"
-        )
+          "day",'[]'
+        ) 
       )
     );
   }
